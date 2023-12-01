@@ -1,13 +1,13 @@
 # Transletter
 
-[![Pipeline Status](https://gitlab.crja72.ru/django_2023/students/201154-itq-dev-course-967/badges/main/pipeline.svg)](https://gitlab.crja72.ru/django_2023/students/201154-itq-dev-course-967/-/pipelines)
+[![Pipeline Status](https://gitlab.crja72.ru/django_2023/projects/team16/badges/main/pipeline.svg)](https://gitlab.crja72.ru/django_2023/projects/team16/-/pipelines)
 
 ## Cloning project
 
 Run this git command
 
 ```cmd
-> git clone git@gitlab.crja72.ru:django_2023/students/201154-itq-dev-course-967.git
+> git clone git@gitlab.crja72.ru:django_2023/projects/team16.git
 ```
 
 ## Creating translations
