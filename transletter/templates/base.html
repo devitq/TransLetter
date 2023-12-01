@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru" data-bs-theme="dark">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="apple-mobile-web-app-title" content="TransLetter">
+        <meta name="application-name" content="TransLetter">
+        <link rel="icon" href="{% static 'img/favicon.ico' %}">
+        <link rel="apple-touch-icon" href="{% static 'img/apple-touch-icon.ico' %}">
+        <link rel="icon" href="{% static 'img/favicon-32x32.ico' %}">
+        <link rel="icon" href="{% static 'img/favicon-16x16.ico' %}">
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'landing/css/style.css' %}">
+        <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+        <link rel="stylesheet" href="{% static 'css/font_links.css' %}">
+        <link rel="stylesheet" href="{% static 'fontawesome/css/fontawesome.min.css' %}">
+        <link rel="stylesheet" href="{% static 'fontawesome/css/solid.min.css' %}">
+        <script src="{% static 'js/toast.js' %}"></script>
+        <script src="{% static 'js/scrollToTop.js' %}"></script>
+        <title>TransLetter</title>
+    </head>
+    <body class="is-boxed has-animations">
+        {% include "includes/header.html" %}
+        <main>
+            {% block main %}{% endblock main %}
+        </main>
+        {% include "includes/footer.html" %}
+        {% include "includes/toasts.html" %}
+        <script src="{% static 'js/setLocalTimezone.js' %}"></script>   
+        <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+        <script src="{% static 'js/yearInFooter.js' %}"></script>
+        <script>
+            (function(d, w, c) {
+                w.BrevoConversationsID = '656388d31f392432c170b647';
+                w[c] = w[c] || function() {
+                    (w[c].q = w[c].q || []).push(arguments);
+                };
+                var s = d.createElement('script');
+                s.async = true;
+                s.src = 'https://conversations-widget.brevo.com/brevo-conversations.js';
+                if (d.head) d.head.appendChild(s);
+            })(document, window, 'BrevoConversations');
+        </script>
+        <a href="#" class="top" id="ScrollToTop"></a>       
+    </body>
+</html>

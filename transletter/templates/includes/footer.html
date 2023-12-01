@@ -1,0 +1,21 @@
+{% load static i18n %}
+
+<footer class="site-footer">
+    <div class="container">
+        <div class="site-footer-inner">
+            <div class="brand footer-brand">
+                <a href="{% url 'landing:index' %}">
+                    <img width="32px" height="32px" class="header-logo-image" src="{% static 'img/transletter.png' %}" alt="Logo">
+                </a>
+            </div>
+            <ul class="footer-links list-reset">
+                <li>
+                    <a href="mailto:trans.letter@ya.ru">trans.letter@ya.ru</a>
+                </li>
+            </ul>
+            <ul class="footer-social-links list-reset">
+            </ul>
+            <div class="footer-copyright">&copy; <span id="footerYear">{% now "Y" %}</span>&nbsp; TransLetter, {% translate "all rights reserved" %}</div>
+        </div>
+    </div>
+</footer>

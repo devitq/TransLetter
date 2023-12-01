@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block main %}
+{% load i18n %}
+
+<div class="container">
+    <h1>{% translate "Registration" %}</h1>
+    <form method="post">
+        {% csrf_token %}
+        {% include "includes/form.html" %}
+        <input class="btn btn-primary" type="submit" value="{% translate 'Send' %}">
+    </form>
+    <br>
+    <p>{% translate "Already have an account?" %} <a class="bold" href="{% url 'accounts:login' %}">{% translate "Login" %}</a></p>
+</div>
+
+{% endblock %}

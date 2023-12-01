@@ -1,0 +1,11 @@
+[flake8]
+exclude =
+    migrations,
+    __pycache__,
+    venv
+import-order-style=google
+application-import-names =
+    transletter,
+    landing,
+    accounts,
+inline-quotes = "

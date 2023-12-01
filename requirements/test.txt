@@ -1,0 +1,4 @@
+django-debug-toolbar
+freezegun
+parameterized
+-r prod.txt

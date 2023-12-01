@@ -1,0 +1,25 @@
+{% for field in form %}
+    <div class="form-group mb-3">
+        <label for="{{ field.auto_id }}" class="form-label">{{ field.label }}</label>
+        {{ field }}
+        {% if field.errors %}
+            {% for error in field.errors %}
+                <div class="invalid-feedback">
+                    {{ error|safe }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        {% if field.help_text %}
+            <div class="form-text text-muted">
+                <p>{{ field.help_text|safe }}</p>
+            </div>
+        {% endif %}
+    </div>
+{% endfor %}
+{% if form.non_field_errors %}
+    <div class="alert alert-danger">
+        {% for error in form.non_field_errors %}
+            {{ error|safe }}
+        {% endfor %}
+    </div>
+{% endif %}

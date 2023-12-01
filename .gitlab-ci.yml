@@ -1,0 +1,56 @@
+stages:
+  - linting
+  - testing
+  - running
+
+
+flake8:
+  stage: linting
+  image: registry.gitlab.com/pipeline-components/flake8:latest
+  script:
+    - pip install -r requirements/lints.txt
+    - flake8 .
+
+black:
+  stage: linting
+  image: registry.gitlab.com/pipeline-components/black:latest
+  script:
+    - black --diff --check .
+
+pytest:
+  stage: testing
+  image: python:3.10
+  script:
+    - apt-get update -y && apt-get install -y gettext 
+    - pip install -r requirements/test.txt
+    - pip install -r requirements/prod.txt
+    - cd transletter
+    - django-admin compilemessages
+    - python manage.py makemigrations --check
+    - python manage.py migrate
+    - python manage.py loaddata fixtures/data.json
+    - python manage.py test
+
+prod-run:
+  stage: running
+  image: python:3.10
+  variables:
+    DJANGO_DEBUG: "False"
+  script:
+    - pip install -r requirements/prod.txt
+    - cd transletter
+    - python manage.py migrate
+    - gunicorn transletter.wsgi:application &
+    - sleep 5
+    - exit 0
+
+dev-run:
+  stage: running
+  image: python:3.10
+  script:
+    - pip install -r requirements/dev.txt
+    - cd transletter
+    - python manage.py migrate
+    - python manage.py runserver &
+    - sleep 5
+    - exit 0
