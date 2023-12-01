@@ -23,7 +23,6 @@ pytest:
   script:
     - apt-get update -y && apt-get install -y gettext 
     - pip install -r requirements/test.txt
-    - pip install -r requirements/prod.txt
     - cd transletter
     - django-admin compilemessages
     - python manage.py makemigrations --check
