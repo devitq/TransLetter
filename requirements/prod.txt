@@ -1,5 +1,6 @@
 Django~=4.2
-python-magic-bin
+python-magic-bin; sys_platform == "win32"
+python-magic; sys_platform == "linux"
 gunicorn
 python-dotenv
 django-betterforms==2.0.0
