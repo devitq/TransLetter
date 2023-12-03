@@ -25,6 +25,10 @@ class HomeView(TemplateView):
         return context
 
 
+class AboutView(TemplateView):
+    template_name = "landing/about.html"
+
+
 class Handler404View(TemplateView):
     template_name = "errors/404.html"
 

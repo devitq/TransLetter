@@ -13,9 +13,12 @@
       {% with request.resolver_match.view_name as view_name %}
       <div class="collapse navbar-collapse justify-content-end flex-nowrap" id="TransLetter">
         <ul class="nav nav-pills nav-fill mt-xs-2 mt-md-2 mt-lg-2 mt-xl-0 mt-2">
+          <li class="nav-item"><a href="{% url 'landing:about' %}" class="nav-link{% if view_name == 'landing:about' %} active{% endif %}">{% translate "About" %}</a></li>
           {% if request.user.is_anonymous %}
             <li class="nav-item"><a href="{% url 'accounts:login' %}" class="nav-link{% if view_name == 'accounts:login' %} active{% endif %}">{% translate "Login" %}</a></li>
+            <li class="nav-item"><a href="{% url 'accounts:signup' %}" class="nav-link{% if view_name == 'accounts:signup' %} active{% endif %}">{% translate "Signup" %}</a></li>
           {% else %}
+            <li class="nav-item"><a href="#" class="nav-link{% if view_name == 'accounts:logout' %} active{% endif %}">{% translate "Dashboard" %}</a>
             <li class="nav-item"><a href="{% url 'accounts:logout' %}" class="nav-link{% if view_name == 'accounts:logout' %} active{% endif %}">{% translate "Logout" %}</a></li>
           {% endif %}
           {% if request.user.is_superuser %}
