@@ -1,9 +1,9 @@
 Django~=4.2
-python-magic-bin; sys_platform == "win32"
-python-magic; sys_platform == "linux"
+django-betterforms==2.0.0
+django-cleanup==8.0.0
 gunicorn
 python-dotenv
-django-betterforms==2.0.0
-psycopg2-binary
-django-cleanup==8.0.0
 Pillow==10.1.0
+psycopg2-binary
+python-magic-bin; sys_platform == "win32"
+python-magic; sys_platform == "linux"
