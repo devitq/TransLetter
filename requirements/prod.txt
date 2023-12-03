@@ -1,4 +1,5 @@
 Django~=4.2
+python-magic-bin
 gunicorn
 python-dotenv
 django-betterforms==2.0.0
