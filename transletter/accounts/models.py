@@ -2,6 +2,7 @@ import sys
 
 import django.contrib.auth.models
 from django.db import models
+from django.utils.translation import pgettext_lazy as pgettext_lazy
 
 __all__ = ()
 
@@ -42,21 +43,27 @@ class Account(models.Model):
         on_delete=models.CASCADE,
     )
     avatar = models.ImageField(
-        "аватарка",
+        pgettext_lazy("avatar field name", "avatar"),
         null=True,
         blank=True,
         upload_to=get_path_for_file,
     )
     attempts_count = models.PositiveIntegerField(
-        "количество попыток входа",
+        pgettext_lazy("attemps count field name", "attemps count"),
         editable=False,
         default=0,
         blank=True,
     )
+    is_translator = models.BooleanField(
+        default=False,
+    )
 
     class Meta:
-        verbose_name = "профиль"
-        verbose_name_plural = "профили"
+        verbose_name = pgettext_lazy("verbose name for accounts", "account")
+        verbose_name_plural = pgettext_lazy(
+            "verbose name plural for accounts",
+            "accounts",
+        )
 
 
 class User(django.contrib.auth.models.User):

@@ -8,4 +8,8 @@ application-import-names =
     transletter,
     landing,
     accounts,
+    projects,
+    dashboard,
+    resume,
+    translationrequest,
 inline-quotes = "

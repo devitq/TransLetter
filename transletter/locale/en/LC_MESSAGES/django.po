@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-01 17:01+0300\n"
+"POT-Creation-Date: 2023-12-02 14:25+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,57 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\accounts\apps.py:10
+msgctxt "app name"
+msgid "Accounts"
+msgstr ""
+
+#: .\accounts\forms.py:57 .\accounts\forms.py:78
+msgctxt "error message in forms"
+msgid "A user with this email address already exists"
+msgstr ""
+
+#: .\accounts\models.py:46 .\projects\models.py:14
+msgctxt "avatar field name"
+msgid "avatar"
+msgstr ""
+
+#: .\accounts\models.py:52
+msgctxt "attemps count field name"
+msgid "attemps count"
+msgstr ""
+
+#: .\accounts\models.py:62
+msgctxt "verbose name for accounts"
+msgid "account"
+msgstr ""
+
+#: .\accounts\models.py:65
+msgctxt "verbose name plural for accounts"
+msgid "accounts"
+msgstr ""
+
+#: .\accounts\views.py:41 .\accounts\views.py:74
+msgctxt "error message in views"
+msgid "Account successfully activated"
+msgstr ""
+
+#: .\accounts\views.py:48 .\accounts\views.py:81
+msgctxt "error message in views"
+msgid "The link has expired"
+msgstr ""
+
+#: .\accounts\views.py:54 .\accounts\views.py:87
+msgctxt "error message in views"
+msgid "Broken link!"
+msgstr ""
+
+#: .\dashboard\apps.py:10
+msgctxt "app name"
+msgid "Dashboard"
+msgstr ""
+
 #: .\landing\views.py:16
 msgid "feature_1_title"
 msgstr ""
@@ -65,6 +116,61 @@ msgstr ""
 msgid "feature_6_content"
 msgstr ""
 
+#: .\projects\apps.py:10
+msgctxt "app name"
+msgid "Projects"
+msgstr ""
+
+#: .\projects\models.py:20
+msgctxt "name field name"
+msgid "name"
+msgstr ""
+
+#: .\projects\models.py:24
+msgctxt "description field name"
+msgid "description"
+msgstr ""
+
+#: .\projects\models.py:27
+msgctxt "slug field name"
+msgid "slug"
+msgstr ""
+
+#: .\projects\models.py:39
+msgctxt "verbose name for project"
+msgid "project"
+msgstr ""
+
+#: .\projects\models.py:42
+msgctxt "verbose name plural for projects"
+msgid "projects"
+msgstr ""
+
+#: .\projects\models.py:50
+msgctxt "role name"
+msgid "Owner"
+msgstr ""
+
+#: .\projects\models.py:51
+msgctxt "role name"
+msgid "Administrator"
+msgstr ""
+
+#: .\projects\models.py:52
+msgctxt "role name"
+msgid "Proofreader"
+msgstr ""
+
+#: .\projects\models.py:53
+msgctxt "role name"
+msgid "Editor"
+msgstr ""
+
+#: .\projects\models.py:54
+msgctxt "role name"
+msgid "Hired translator"
+msgstr ""
+
 #: .\templates\accounts\login.html:6 .\templates\accounts\signup.html:13
 #: .\templates\includes\header.html:17
 msgid "Login"
@@ -86,9 +192,52 @@ msgstr ""
 msgid "Forgot password?"
 msgstr ""
 
+#: .\templates\accounts\logout.html:6
+msgid "Successful logout"
+msgstr ""
+
+#: .\templates\accounts\logout.html:7
+msgid "You have successfully logged out of your account"
+msgstr ""
+
+#: .\templates\accounts\password_change.html:10
+msgid "Change password"
+msgstr ""
+
+#: .\templates\accounts\password_change_done.html:6
+msgid "Password successfully changed"
+msgstr ""
+
+#: .\templates\accounts\password_change_done.html:7
+msgid "Your password has been successfully changed"
+msgstr ""
+
 #: .\templates\accounts\password_reset.html:6
 #: .\templates\accounts\password_reset.html:10
 msgid "Reset password"
+msgstr ""
+
+#: .\templates\accounts\password_reset_complete.html:6
+msgid "Password successfully reset"
+msgstr ""
+
+#: .\templates\accounts\password_reset_complete.html:7
+msgid "Your password has been successfully reset"
+msgstr ""
+
+#: .\templates\accounts\password_reset_confirm.html:6
+#: .\templates\accounts\password_reset_confirm.html:10
+msgid "Confirm password reset"
+msgstr ""
+
+#: .\templates\accounts\password_reset_done.html:6
+msgid "Password reset email has been sent"
+msgstr ""
+
+#: .\templates\accounts\password_reset_done.html:7
+msgid ""
+"We have sent an email with instructions on how to reset your password to the "
+"email address you specified"
 msgstr ""
 
 #: .\templates\accounts\signup.html:6
@@ -123,10 +272,14 @@ msgid "all rights reserved"
 msgstr ""
 
 #: .\templates\includes\header.html:19
+msgid "Dashboard"
+msgstr ""
+
+#: .\templates\includes\header.html:20
 msgid "Logout"
 msgstr ""
 
-#: .\templates\includes\header.html:22
+#: .\templates\includes\header.html:23
 msgid "Admin"
 msgstr ""
 
@@ -135,7 +288,7 @@ msgid "Best service to translate your services"
 msgstr ""
 
 #: .\templates\landing\index.html:30
-msgid "about"
+msgid "About"
 msgstr ""
 
 #: .\templates\landing\index.html:77
@@ -145,7 +298,7 @@ msgstr ""
 #: .\templates\landing\index.html:78
 msgid ""
 "We have generous free tier, lets you to try our features, also if you want "
-"more, you can buy subscription, and if you want "
+"more, you can buy subscription."
 msgstr ""
 
 #: .\templates\landing\index.html:87 .\templates\landing\index.html:114
@@ -180,10 +333,10 @@ msgstr ""
 msgid "Contact sales"
 msgstr ""
 
-#: .\transletter\settings.py:132
+#: .\transletter\settings.py:133
 msgid "English"
 msgstr ""
 
-#: .\transletter\settings.py:133
+#: .\transletter\settings.py:134
 msgid "Russian"
 msgstr ""

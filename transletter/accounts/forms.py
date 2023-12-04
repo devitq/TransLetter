@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib import auth
+from django.utils.translation import pgettext_lazy
 
 from accounts.models import Account, User
 from transletter.mixins import BaseFormMixin
@@ -51,7 +52,10 @@ class EditUserAdminForm(auth.admin.UserChangeForm):
         )
         if user_exist:
             raise forms.ValidationError(
-                "Пользователь с такой электронной почтой уже существует",
+                pgettext_lazy(
+                    "error message in forms",
+                    "A user with this email address already exists",
+                ),
             )
         return self.cleaned_data["email"]
 
@@ -69,7 +73,10 @@ class CreateUserAdminForm(auth.admin.UserCreationForm):
         )
         if user_exist:
             raise forms.ValidationError(
-                "Пользователь с такой электронной почтой уже существует",
+                pgettext_lazy(
+                    "error message in forms",
+                    "A user with this email address already exists",
+                ),
             )
         return self.cleaned_data["email"]
 
