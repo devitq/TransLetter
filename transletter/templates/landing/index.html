@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block main %}
 {% load static i18n %}
+
 <script src="{% static 'js/anime.min.js' %}"></script>
 <script src="{% static 'js/scrollreveal.min.js' %}"></script>
 <div class="body-wrap">
@@ -26,8 +27,8 @@
                         <h1 class="hero-title mt-0">TransLetter</h1>
                         <p class="hero-paragraph">{% translate "Best service to translate your services" %}</p>
                         <div class="hero-cta">
-                            <a class="button button-primary" href="#">{% translate "Signup" %}</a>
-                            <a class="button" href="#">{% translate "about" %}</a>
+                            <a class="button button-primary" href="{% url 'accounts:signup' %}">{% translate "Signup" %}</a>
+                            <a class="button" href="{% url 'landing:about' %}">{% translate "About" %}</a>
                         </div>
                     </div>
                     <div class="hero-figure anime-element">
@@ -75,7 +76,7 @@
                 <div class="pricing-inner section-inner">
                     <div class="pricing-header text-center">
                         <h2 class="section-title mt-0">{% translate "Tiers" %}</h2>
-                        <p class="section-paragraph mb-0">{% translate "We have generous free tier, lets you to try our features, also if you want more, you can buy subscription, and if you want " %}</p>
+                        <p class="section-paragraph mb-0">{% translate "We have generous free tier, lets you to try our features, also if you want more, you can buy subscription." %}</p>
                     </div>
                     <div class="pricing-tables-wrap">
                         <div class="pricing-table">

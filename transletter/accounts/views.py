@@ -7,6 +7,7 @@ from django.core.signing import BadSignature, SignatureExpired, TimestampSigner
 from django.shortcuts import redirect, render
 from django.urls import reverse, reverse_lazy
 from django.utils import timezone
+from django.utils.translation import pgettext_lazy
 from django.views.generic import (
     CreateView,
     View,
@@ -36,17 +37,23 @@ class ActivateAccountView(View):
             user.save()
             messages.success(
                 request,
-                "Аккаунт успешно активирован",
+                pgettext_lazy(
+                    "error message in views",
+                    "Account successfully activated",
+                ),
             )
         except SignatureExpired:
             messages.error(
                 request,
-                "Срок действия ссылки истёк :(",
+                pgettext_lazy(
+                    "error message in views",
+                    "The link has expired",
+                ),
             )
         except BadSignature:
             messages.error(
                 request,
-                "Сломанная ссылка!",
+                pgettext_lazy("error message in views", "Broken link!"),
             )
 
         return redirect("accounts:login")
@@ -65,17 +72,23 @@ class ReactivateAccountView(View):
             user.save()
             messages.success(
                 request,
-                "Аккаунт успешно активирован",
+                pgettext_lazy(
+                    "error message in views",
+                    "Account successfully activated",
+                ),
             )
         except SignatureExpired:
             messages.error(
                 request,
-                "Срок действия ссылки истёк :(",
+                pgettext_lazy(
+                    "error message in views",
+                    "The link has expired",
+                ),
             )
         except BadSignature:
             messages.error(
                 request,
-                "Сломанная ссылка!",
+                pgettext_lazy("error message in views", "Broken link!"),
             )
 
         return redirect("accounts:login")

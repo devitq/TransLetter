@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     # Project's apps
     "landing.apps.LandingConfig",
     "accounts.apps.AccountsConfig",
+    "projects.apps.ProjectsConfig",
 ]
 
 MIDDLEWARE = [
@@ -162,6 +163,8 @@ LOGIN_URL = "/auth/login"
 LOGIN_REDIRECT_URL = "/"
 
 LOGOUT_REDIRECT_URL = "/auth/login"
+
+TRANSLATION_FILES_FORMATS = ("po", "json")
 
 USE_REAL_EMAIL = os.getenv("USE_REAL_EMAIL", "true").lower() in (
     "true",
