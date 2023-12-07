@@ -1,0 +1,495 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-12-07 22:38+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+#: .\accounts\apps.py:10
+msgctxt "app name"
+msgid "Accounts"
+msgstr ""
+
+#: .\accounts\forms.py:79 .\accounts\forms.py:100
+msgctxt "error message in forms"
+msgid "A user with this email address already exists"
+msgstr ""
+
+#: .\accounts\models.py:51 .\projects\models.py:20
+msgctxt "avatar field name"
+msgid "avatar"
+msgstr ""
+
+#: .\accounts\models.py:57
+msgctxt "attemps count field name"
+msgid "attemps count"
+msgstr ""
+
+#: .\accounts\models.py:63
+msgctxt "is translator count field name"
+msgid "is translator"
+msgstr ""
+
+#: .\accounts\models.py:67
+msgctxt "native lang field name"
+msgid "native lang"
+msgstr ""
+
+#: .\accounts\models.py:74
+msgctxt "languages field name"
+msgid "languages"
+msgstr ""
+
+#: .\accounts\models.py:79
+msgctxt "balance field name"
+msgid "balance"
+msgstr ""
+
+#: .\accounts\models.py:86
+msgctxt "website count field name"
+msgid "website"
+msgstr ""
+
+#: .\accounts\models.py:91
+msgctxt "github count field name"
+msgid "github"
+msgstr ""
+
+#: .\accounts\models.py:97
+msgctxt "verbose name for accounts"
+msgid "account"
+msgstr ""
+
+#: .\accounts\models.py:100
+msgctxt "verbose name plural for accounts"
+msgid "accounts"
+msgstr ""
+
+#: .\accounts\views.py:35 .\accounts\views.py:70
+msgctxt "error message in views"
+msgid "Account successfully activated"
+msgstr ""
+
+#: .\accounts\views.py:43 .\accounts\views.py:78
+msgctxt "error message in views"
+msgid "The link has expired"
+msgstr ""
+
+#: .\accounts\views.py:49 .\accounts\views.py:84
+msgctxt "error message in views"
+msgid "Broken link!"
+msgstr ""
+
+#: .\dashboard\apps.py:10
+msgctxt "app name"
+msgid "Dashboard"
+msgstr ""
+
+#: .\landing\views.py:16
+msgid "feature_1_title"
+msgstr ""
+
+#: .\landing\views.py:16
+msgid "feature_1_content"
+msgstr ""
+
+#: .\landing\views.py:17
+msgid "feature_2_title"
+msgstr ""
+
+#: .\landing\views.py:17
+msgid "feature_2_content"
+msgstr ""
+
+#: .\landing\views.py:18
+msgid "feature_3_title"
+msgstr ""
+
+#: .\landing\views.py:18
+msgid "feature_3_content"
+msgstr ""
+
+#: .\landing\views.py:19
+msgid "feature_4_title"
+msgstr ""
+
+#: .\landing\views.py:19
+msgid "feature_4_content"
+msgstr ""
+
+#: .\landing\views.py:20
+msgid "feature_5_title"
+msgstr ""
+
+#: .\landing\views.py:20
+msgid "feature_5_content"
+msgstr ""
+
+#: .\landing\views.py:21
+msgid "feature_6_title"
+msgstr ""
+
+#: .\landing\views.py:21
+msgid "feature_6_content"
+msgstr ""
+
+#: .\projects\apps.py:10
+msgctxt "app name"
+msgid "Projects"
+msgstr ""
+
+#: .\projects\models.py:26
+msgctxt "name field name"
+msgid "name"
+msgstr ""
+
+#: .\projects\models.py:30
+msgctxt "description field name"
+msgid "description"
+msgstr ""
+
+#: .\projects\models.py:35
+msgctxt "slug field name"
+msgid "slug"
+msgstr ""
+
+#: .\projects\models.py:41
+msgctxt "created at field name"
+msgid "created at"
+msgstr ""
+
+#: .\projects\models.py:46
+msgctxt "last activity field name"
+msgid "last activity"
+msgstr ""
+
+#: .\projects\models.py:51
+msgctxt "public field name"
+msgid "public"
+msgstr ""
+
+#: .\projects\models.py:64
+msgctxt "verbose name for project"
+msgid "project"
+msgstr ""
+
+#: .\projects\models.py:67
+msgctxt "verbose name plural for projects"
+msgid "projects"
+msgstr ""
+
+#: .\projects\models.py:73
+msgctxt "role name"
+msgid "Owner"
+msgstr ""
+
+#: .\projects\models.py:74
+msgctxt "role name"
+msgid "Administrator"
+msgstr ""
+
+#: .\projects\models.py:75
+msgctxt "role name"
+msgid "Static translator"
+msgstr ""
+
+#: .\projects\models.py:76
+msgctxt "role name"
+msgid "Hired translator"
+msgstr ""
+
+#: .\projects\models.py:139
+msgctxt "comment field name"
+msgid "comment"
+msgstr ""
+
+#: .\resume\apps.py:10
+msgctxt "app name"
+msgid "Resume"
+msgstr ""
+
+#: .\templates\accounts\login.html:6 .\templates\accounts\signup.html:13
+#: .\templates\includes\header.html:18
+msgid "Login"
+msgstr ""
+
+#: .\templates\accounts\login.html:10 .\templates\accounts\signup.html:10
+msgid "Send"
+msgstr ""
+
+#: .\templates\accounts\login.html:13
+msgid "Don't have an account yet?"
+msgstr ""
+
+#: .\templates\accounts\login.html:13 .\templates\includes\header.html:19
+#: .\templates\landing\index.html:30
+msgid "Signup"
+msgstr ""
+
+#: .\templates\accounts\login.html:14
+msgid "Forgot password?"
+msgstr ""
+
+#: .\templates\accounts\logout.html:6
+msgid "Successful logout"
+msgstr ""
+
+#: .\templates\accounts\logout.html:7
+msgid "You have successfully logged out of your account"
+msgstr ""
+
+#: .\templates\accounts\password_change.html:10
+#: .\templates\includes\header-dashboard.html:53
+msgid "Change password"
+msgstr ""
+
+#: .\templates\accounts\password_change_done.html:6
+msgid "Password successfully changed"
+msgstr ""
+
+#: .\templates\accounts\password_change_done.html:7
+msgid "Your password has been successfully changed"
+msgstr ""
+
+#: .\templates\accounts\password_reset.html:6
+#: .\templates\accounts\password_reset.html:10
+msgid "Reset password"
+msgstr ""
+
+#: .\templates\accounts\password_reset_complete.html:6
+msgid "Password successfully reset"
+msgstr ""
+
+#: .\templates\accounts\password_reset_complete.html:7
+msgid "Your password has been successfully reset"
+msgstr ""
+
+#: .\templates\accounts\password_reset_confirm.html:6
+#: .\templates\accounts\password_reset_confirm.html:10
+msgid "Confirm password reset"
+msgstr ""
+
+#: .\templates\accounts\password_reset_done.html:6
+msgid "Password reset email has been sent"
+msgstr ""
+
+#: .\templates\accounts\password_reset_done.html:7
+msgid ""
+"We have sent an email with instructions on how to reset your password to the "
+"email address you specified"
+msgstr ""
+
+#: .\templates\accounts\signup.html:6
+msgid "Registration"
+msgstr ""
+
+#: .\templates\accounts\signup.html:13
+msgid "Already have an account?"
+msgstr ""
+
+#: .\templates\dashboard\account-edit.html:35
+#: .\templates\includes\header-dashboard.html:12
+msgid "No image"
+msgstr ""
+
+#: .\templates\dashboard\account-edit.html:58
+msgid "Hire"
+msgstr ""
+
+#: .\templates\dashboard\account-edit.html:91
+msgid "Save"
+msgstr ""
+
+#: .\templates\dashboard\index.html:6
+#, python-format
+msgid ""
+"\n"
+"        Welcome, %(name)s\n"
+"        "
+msgstr ""
+
+#: .\templates\dashboard\projects.html:9
+#: .\templates\includes\header-dashboard.html:34
+msgid "Projects"
+msgstr ""
+
+#: .\templates\dashboard\projects.html:14
+msgid "No projects"
+msgstr ""
+
+#: .\templates\errors\404.html:8
+msgid "404 Not found"
+msgstr ""
+
+#: .\templates\errors\404.html:276
+msgid "Page not found!"
+msgstr ""
+
+#: .\templates\errors\404.html:277
+msgid ""
+"The page with this url does not exist or it has been moved to a new address. "
+"Do you think this is a mistake? Contact us via the chat in the lower right "
+"corner."
+msgstr ""
+
+#: .\templates\errors\404.html:280
+msgid "HOME"
+msgstr ""
+
+#: .\templates\includes\footer.html:18
+msgid "all rights reserved"
+msgstr ""
+
+#: .\templates\includes\header-dashboard.html:30
+msgid "Home"
+msgstr ""
+
+#: .\templates\includes\header-dashboard.html:38
+msgid "Translation requests"
+msgstr ""
+
+#: .\templates\includes\header-dashboard.html:42
+msgid "Request translator"
+msgstr ""
+
+#: .\templates\includes\header-dashboard.html:49
+msgid "Account"
+msgstr ""
+
+#: .\templates\includes\header-dashboard.html:57
+msgid "Signout"
+msgstr ""
+
+#: .\templates\includes\header.html:16 .\templates\landing\about.html:6
+#: .\templates\landing\index.html:31
+msgid "About"
+msgstr ""
+
+#: .\templates\includes\header.html:21
+msgid "Dashboard"
+msgstr ""
+
+#: .\templates\includes\header.html:22
+msgid "Logout"
+msgstr ""
+
+#: .\templates\includes\header.html:25
+msgid "Admin"
+msgstr ""
+
+#: .\templates\includes\project_card.html:9
+msgid "no_image"
+msgstr ""
+
+#: .\templates\includes\project_card.html:18
+msgid "category"
+msgstr ""
+
+#: .\templates\includes\project_card.html:23
+msgid "tags"
+msgstr ""
+
+#: .\templates\includes\project_card.html:28
+msgid "empty_plural"
+msgstr ""
+
+#: .\templates\includes\project_card.html:34
+msgid "Edit"
+msgstr ""
+
+#: .\templates\landing\about.html:7
+msgid ""
+"\n"
+"        <p>About text that will be added soon</p>\n"
+"    "
+msgstr ""
+
+#: .\templates\landing\index.html:28
+msgid "Best service to translate your services"
+msgstr ""
+
+#: .\templates\landing\index.html:78
+msgid "Tiers"
+msgstr ""
+
+#: .\templates\landing\index.html:79
+msgid ""
+"We have generous free tier, lets you to try our features, also if you want "
+"more, you can buy subscription."
+msgstr ""
+
+#: .\templates\landing\index.html:88 .\templates\landing\index.html:115
+msgid "subscription_features_title"
+msgstr ""
+
+#: .\templates\landing\index.html:91 .\templates\landing\index.html:118
+msgid "subscription_feature_1"
+msgstr ""
+
+#: .\templates\landing\index.html:94 .\templates\landing\index.html:121
+msgid "subscription_feature_2"
+msgstr ""
+
+#: .\templates\landing\index.html:97 .\templates\landing\index.html:124
+msgid "subscription_feature_3"
+msgstr ""
+
+#: .\templates\landing\index.html:100 .\templates\landing\index.html:127
+msgid "subscription_feature_4"
+msgstr ""
+
+#: .\templates\landing\index.html:105 .\templates\landing\index.html:132
+msgid "subscription_order_button_text"
+msgstr ""
+
+#: .\templates\landing\index.html:144
+msgid "An entrepreneurial company?"
+msgstr ""
+
+#: .\templates\landing\index.html:146
+msgid "Contact sales"
+msgstr ""
+
+#: .\translationrequest\apps.py:11
+msgctxt "app name"
+msgid "TranslationRequest"
+msgstr ""
+
+#: .\transletter\settings.py:137
+msgid "English"
+msgstr ""
+
+#: .\transletter\settings.py:138
+msgid "Russian"
+msgstr ""
+
+#: .\transletter\validators.py:14
+#, python-format
+msgid ""
+"Ensure this file size is not greater than %(max_size)s. Your file size is "
+"%(size)s."
+msgstr ""
+
+#: .\transletter\validators.py:18
+#, python-format
+msgid ""
+"Ensure this file size is not less than %(min_size)s. Your file size is "
+"%(size)s."
+msgstr ""
+
+#: .\transletter\validators.py:21
+#, python-format
+msgid "Files of type %(content_type)s are not supported."
+msgstr ""
