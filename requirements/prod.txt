@@ -1,9 +1,13 @@
 Django~=4.2
-django-betterforms==2.0.0
 django-cleanup==8.0.0
+sorl.thumbnail
 gunicorn
 python-dotenv
+django-money==3.4.1
 Pillow==10.1.0
 psycopg2-binary
+polib==1.2.0
 python-magic-bin; sys_platform == "win32"
+django-plans
 python-magic; sys_platform == "linux"
+redis==5.0.1

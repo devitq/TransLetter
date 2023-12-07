@@ -1,3 +1,5 @@
+import uuid
+
 from django.conf import settings
 from django.core.validators import FileExtensionValidator
 from django.db import models
@@ -35,6 +37,20 @@ class Project(models.Model):
         unique=True,
         help_text="a-z, 0-9, _, -",
     )
+    created_at = models.DateTimeField(
+        pgettext_lazy("created at field name", "created at"),
+        auto_now_add=True,
+        blank=True,
+    )
+    last_activity = models.DateTimeField(
+        pgettext_lazy("last activity field name", "last activity"),
+        blank=True,
+        null=True,
+    )
+    public = models.BooleanField(
+        pgettext_lazy("public field name", "public"),
+        default=False,
+    )
     members = models.ManyToManyField(
         User,
         through="ProjectMembership",
@@ -56,8 +72,7 @@ class ProjectMembership(models.Model):
     ROLES = (
         ("owner", pgettext_lazy("role name", "Owner")),
         ("admin", pgettext_lazy("role name", "Administrator")),
-        ("proofreader", pgettext_lazy("role name", "Proofreader")),
-        ("editor", pgettext_lazy("role name", "Editor")),
+        ("static_translator", pgettext_lazy("role name", "Static translator")),
         ("hired_translator", pgettext_lazy("role name", "Hired translator")),
     )
 
@@ -81,14 +96,15 @@ class ProjectLanguage(models.Model):
         ]
 
 
-class ProjectLanguageFile(models.Model):
+class TranslationFile(models.Model):
     def get_path_for_file(self, filename):
         return (
-            f"projects/{self.project_language_id.project_id}"
-            f"/{self.project_language_id.lang_code}/{filename}"
+            f"projects/{self.project_language.project_id}"
+            f"/{self.project_language.lang_code}/"
+            f"{str(uuid.uuid4())}/{filename}"
         )
 
-    project_language_id = models.ForeignKey(
+    project_language = models.ForeignKey(
         ProjectLanguage,
         on_delete=models.CASCADE,
     )
@@ -96,8 +112,31 @@ class ProjectLanguageFile(models.Model):
         upload_to=get_path_for_file,
         validators=[
             FileExtensionValidator(
-                allowed_extensions=settings.TRANSLATION_FILES_FORMATS,
+                allowed_extensions=settings.TRANSLATION_FILE_FORMATS,
             ),
             validate_translation_file,
         ],
     )
+
+
+class TranslationRow(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True, blank=True)
+    updated_at = models.DateTimeField(auto_now=True, blank=True)
+    row_id = models.TextField(unique=True)
+    row_str = models.TextField()
+    translation_file = models.ForeignKey(
+        TranslationFile,
+        on_delete=models.CASCADE,
+    )
+
+
+class TranslationComment(models.Model):
+    translation_row = models.ForeignKey(
+        TranslationRow,
+        on_delete=models.CASCADE,
+    )
+    comment = models.TextField(
+        pgettext_lazy("comment field name", "comment"),
+    )
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)

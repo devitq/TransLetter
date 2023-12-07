@@ -18,7 +18,7 @@
             <li class="nav-item"><a href="{% url 'accounts:login' %}" class="nav-link{% if view_name == 'accounts:login' %} active{% endif %}">{% translate "Login" %}</a></li>
             <li class="nav-item"><a href="{% url 'accounts:signup' %}" class="nav-link{% if view_name == 'accounts:signup' %} active{% endif %}">{% translate "Signup" %}</a></li>
           {% else %}
-            <li class="nav-item"><a href="#" class="nav-link{% if view_name == 'accounts:logout' %} active{% endif %}">{% translate "Dashboard" %}</a>
+            <li class="nav-item"><a href="{% url 'dashboard:index' %}" class="nav-link{% if view_name == 'dashboard:index' %} active{% endif %}">{% translate "Dashboard" %}</a>
             <li class="nav-item"><a href="{% url 'accounts:logout' %}" class="nav-link{% if view_name == 'accounts:logout' %} active{% endif %}">{% translate "Logout" %}</a></li>
           {% endif %}
           {% if request.user.is_superuser %}

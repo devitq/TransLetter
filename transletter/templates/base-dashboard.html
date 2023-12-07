@@ -12,32 +12,24 @@
         <link rel="icon" href="{% static 'img/favicon-32x32.ico' %}">
         <link rel="icon" href="{% static 'img/favicon-16x16.ico' %}">
         <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-        <link rel="stylesheet" href="{% static 'landing/css/style.css' %}">
         <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+        <link rel="stylesheet" href="{% static 'css/dashboard-header.css' %}">
         <link rel="stylesheet" href="{% static 'css/font_links.css' %}">
         <link rel="stylesheet" href="{% static 'fontawesome/css/fontawesome.min.css' %}">
         <link rel="stylesheet" href="{% static 'fontawesome/css/solid.min.css' %}">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
         <script src="{% static 'js/toast.js' %}"></script>
         <script src="{% static 'js/scrollToTop.js' %}"></script>
+        <script src="{% static 'js/dashboardNavbar.js' %}"></script>
         <title>TransLetter</title>
     </head>
-    <body>
-        <main>
+    <body id="body-pd" class="is-boxed has-animations">
+        {% include "includes/header-dashboard.html" %}
+        <main id="main-pd">
             {% block main %}{% endblock main %}
         </main>
         {% include "includes/toasts.html" %}
-        <script>
-            (function(d, w, c) {
-                w.BrevoConversationsID = '656388d31f392432c170b647';
-                w[c] = w[c] || function() {
-                    (w[c].q = w[c].q || []).push(arguments);
-                };
-                var s = d.createElement('script');
-                s.async = true;
-                s.src = 'https://conversations-widget.brevo.com/brevo-conversations.js';
-                if (d.head) d.head.appendChild(s);
-            })(document, window, 'BrevoConversations');
-        </script>
-        <a href="#" class="top" id="ScrollToTop"></a>       
+        <a href="#" class="top" id="ScrollToTop"></a>  
+        <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>     
     </body>
 </html>
