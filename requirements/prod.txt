@@ -11,3 +11,4 @@ python-magic-bin; sys_platform == "win32"
 django-plans
 python-magic; sys_platform == "linux"
 redis==5.0.1
+requests
