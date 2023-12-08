@@ -2,6 +2,7 @@ import os
 from pathlib import Path
 
 from django.utils.translation import gettext_lazy as _
+from django.urls import reverse_lazy
 from dotenv import load_dotenv
 
 load_dotenv(override=False)
@@ -21,7 +22,10 @@ MAX_AUTH_ATTEMPTS = int(os.getenv("DJNAGO_MAX_AUTH_ATTEMPTS", 3))
 MEDIA_URL = "/media/"
 
 if DEBUG:
-    DEFAULT_USER_IS_ACTIVE = True
+    DEFAULT_USER_IS_ACTIVE = os.getenv(
+        "DEFAULT_USER_IS_ACTIVE",
+        "true",
+    ).lower() in ("true", "1", "yes", "y")
 else:
     DEFAULT_USER_IS_ACTIVE = os.getenv(
         "DEFAULT_USER_IS_ACTIVE",
@@ -162,11 +166,11 @@ DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 
 AUTHENTICATION_BACKENDS = ("accounts.backends.AuthenticationBackend",)
 
-LOGIN_URL = "/auth/login/"
+LOGIN_URL = reverse_lazy("accounts:login")
 
-LOGIN_REDIRECT_URL = "/dashboard/"
+LOGIN_REDIRECT_URL = reverse_lazy("dashboard:index")
 
-LOGOUT_REDIRECT_URL = "/auth/login/"
+LOGOUT_REDIRECT_URL = reverse_lazy("accounts:login")
 
 THUMBNAIL_PRESERVE_FORMAT = True
 
@@ -181,7 +185,7 @@ TRANSLATION_FILE_FORMATS = ("po", "json")
 
 EMAIL = os.getenv("EMAIL", "example@mail.com")
 
-USE_REAL_EMAIL = os.getenv("USE_REAL_EMAIL", "true").lower() in (
+USE_REAL_EMAIL = os.getenv("USE_REAL_EMAIL", "false").lower() in (
     "true",
     "1",
     "yes",

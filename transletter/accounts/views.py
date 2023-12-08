@@ -92,6 +92,11 @@ class UserSignupView(CreateView):
     form_class = UserSignupForm
     success_url = reverse_lazy("accounts:login")
 
+    def get(self, request, *args, **kwargs):
+        if self.request.user.is_authenticated:
+            return redirect(settings.LOGIN_REDIRECT_URL)
+        return super().get(request, *args, **kwargs)
+
     def form_valid(self, form):
         if not self.request.user.is_authenticated:
             user = form.save(commit=False)
@@ -121,8 +126,3 @@ class UserSignupView(CreateView):
 
             return super().form_valid(form)
         return super().form_invalid(form)
-
-    def get_success_url(self):
-        if self.request.user.is_authenticated:
-            return reverse_lazy("landing:index")
-        return None
