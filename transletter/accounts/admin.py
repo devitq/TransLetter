@@ -8,7 +8,7 @@ from accounts.models import Account
 __all__ = ()
 
 
-class AccountInline(admin.TabularInline):
+class AccountInline(admin.StackedInline):
     model = Account
     can_delete = False
     readonly_fields = (Account.attempts_count.field.name,)
