@@ -5,6 +5,7 @@ from django.db import models
 from django.utils.translation import pgettext_lazy as pgettext_lazy
 from djmoney.models.fields import MoneyField
 
+from resume.models import Resume
 from transletter.utils import get_available_langs
 
 __all__ = ("User",)
@@ -62,6 +63,14 @@ class Account(models.Model):
     is_translator = models.BooleanField(
         pgettext_lazy("is translator count field name", "is translator"),
         default=False,
+    )
+    resume = models.OneToOneField(
+        Resume,
+        on_delete=models.CASCADE,
+        related_name="account",
+        verbose_name=pgettext_lazy("resume field name", "resume"),
+        null=True,
+        blank=True,
     )
     native_lang = models.CharField(
         pgettext_lazy("native lang field name", "native lang"),

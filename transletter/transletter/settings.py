@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     "accounts.apps.AccountsConfig",
     "projects.apps.ProjectsConfig",
     "resume.apps.ResumeConfig",
+    "translationrequest.apps.TranslationrequestConfig",
 ]
 
 MIDDLEWARE = [
