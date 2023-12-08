@@ -29,9 +29,9 @@ class UserAccountChangeForm(forms.ModelForm, BaseFormMixin):
     class Meta:
         model = Account
         fields = (
-            Account.native_lang.field.name,
             Account.website.field.name,
             Account.github.field.name,
+            Account.native_lang.field.name,
         )
 
     languages = forms.MultipleChoiceField(
