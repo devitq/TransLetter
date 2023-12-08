@@ -12,8 +12,8 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ("auth", "0012_alter_user_first_name_max_length"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+        ("auth", "0012_alter_user_first_name_max_length"),
     ]
 
     operations = [
@@ -742,6 +742,7 @@ class Migration(migrations.Migration):
                         blank=True, null=True, verbose_name="github"
                     ),
                 ),
+                ("is_translator", models.BooleanField(default=False)),
                 (
                     "user",
                     models.OneToOneField(

@@ -181,6 +181,8 @@ TRANSLATION_FILE_FORMATS = ("po", "json")
 
 EMAIL = os.getenv("EMAIL", "example@mail.com")
 
+TRANSLATION_FILES_FORMATS = ("po", "json")
+
 USE_REAL_EMAIL = os.getenv("USE_REAL_EMAIL", "true").lower() in (
     "true",
     "1",
