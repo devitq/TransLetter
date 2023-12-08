@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "landing.apps.LandingConfig",
     "accounts.apps.AccountsConfig",
     "projects.apps.ProjectsConfig",
+    "resume.apps.ResumeConfig",
 ]
 
 MIDDLEWARE = [
