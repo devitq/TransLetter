@@ -3,8 +3,11 @@ import sys
 import django.contrib.auth.models
 from django.db import models
 from django.utils.translation import pgettext_lazy as pgettext_lazy
+from djmoney.models.fields import MoneyField
 
-__all__ = ()
+from transletter.utils import get_available_langs
+
+__all__ = ("User",)
 
 
 class UserManager(django.contrib.auth.models.UserManager):
@@ -37,6 +40,8 @@ class Account(models.Model):
     def get_path_for_file(self, filename):
         return f"avatars/{self.user_id}/{filename}"
 
+    LANGUAGES = get_available_langs()
+
     user = models.OneToOneField(
         django.contrib.auth.models.User,
         related_name="account",
@@ -55,7 +60,37 @@ class Account(models.Model):
         blank=True,
     )
     is_translator = models.BooleanField(
+        pgettext_lazy("is translator count field name", "is translator"),
         default=False,
+    )
+    native_lang = models.CharField(
+        pgettext_lazy("native lang field name", "native lang"),
+        max_length=10,
+        choices=LANGUAGES,
+        null=True,
+        blank=True,
+    )
+    languages = models.JSONField(
+        pgettext_lazy("languages field name", "languages"),
+        default=list,
+        blank=True,
+    )
+    balance = MoneyField(
+        pgettext_lazy("balance field name", "balance"),
+        max_digits=19,
+        decimal_places=4,
+        default_currency="USD",
+        default=0,
+    )
+    website = models.URLField(
+        pgettext_lazy("website count field name", "website"),
+        null=True,
+        blank=True,
+    )
+    github = models.SlugField(
+        pgettext_lazy("github count field name", "github"),
+        null=True,
+        blank=True,
     )
 
     class Meta:

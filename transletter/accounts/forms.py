@@ -4,7 +4,7 @@ from django.utils.translation import pgettext_lazy
 
 from accounts.models import Account, User
 from transletter.mixins import BaseFormMixin
-
+from transletter.utils import get_available_langs
 
 __all__ = ()
 
@@ -12,17 +12,39 @@ __all__ = ()
 class UserChangeForm(auth.forms.UserChangeForm, BaseFormMixin):
     def __init__(self, *args, **kwargs):
         super(UserChangeForm, self).__init__(*args, **kwargs)
+        del self.fields["password"]
         self.set_field_attributes()
 
     class Meta(auth.forms.UserChangeForm.Meta):
         model = User
         fields = ("username", "email", "first_name", "last_name")
+        eclude = ("password",)
 
 
 class UserAccountChangeForm(forms.ModelForm, BaseFormMixin):
     def __init__(self, *args, **kwargs):
         super(UserAccountChangeForm, self).__init__(*args, **kwargs)
         self.set_field_attributes()
+
+    class Meta:
+        model = Account
+        fields = (
+            Account.native_lang.field.name,
+            Account.website.field.name,
+            Account.github.field.name,
+        )
+
+    languages = forms.MultipleChoiceField(
+        choices=get_available_langs(),
+        required=False,
+    )
+
+
+class AccountAvatarChangeForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(AccountAvatarChangeForm, self).__init__(*args, **kwargs)
+        for field in self.visible_fields():
+            field.field.widget.attrs["class"] = "file-upload"
 
     class Meta:
         model = Account

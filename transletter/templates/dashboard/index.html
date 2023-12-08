@@ -1,0 +1,13 @@
+{% extends "base-dashboard.html" %}
+{% block main %}
+{% load i18n %}
+
+<div class="container mt-3 height-100">
+    <h2>{% blocktranslate with name=request.user.first_name|default:request.user.username %}
+        Welcome, {{ name }}
+        {% endblocktranslate %}
+        {% if request.user.first_name != "" %} {{ request.user.last_name }}{% endif %}
+    </h2>
+</div>
+
+{% endblock %}

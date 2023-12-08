@@ -1,13 +1,15 @@
 from django.contrib import admin
+from django.core.exceptions import ValidationError
 
 from projects import models
+from projects.utils import parse_file_and_create_translations
 
 
 __all__ = ()
 
 
-class ProjectLanguageFileInline(admin.TabularInline):
-    model = models.ProjectLanguageFile
+class ProjectTranslationFileInline(admin.TabularInline):
+    model = models.TranslationFile
     extra = 1
 
 
@@ -22,7 +24,34 @@ class ProjectLanguageInline(admin.StackedInline):
 
 
 class ProjectLanguageAdmin(admin.ModelAdmin):
-    inlines = (ProjectLanguageFileInline,)
+    inlines = (ProjectTranslationFileInline,)
+
+
+class TranslationFileAdmin(admin.ModelAdmin):
+    actions = ("create_translation_rows_from_file",)
+
+    def create_translation_rows_from_file(self, request, queryset):
+        for language_file in queryset:
+            try:
+                parse_file_and_create_translations(
+                    language_file,
+                    str(language_file.file),
+                )
+                self.message_user(
+                    request,
+                    f"TranslationRows created for {language_file.file}",
+                    level="SUCCESS",
+                )
+            except ValidationError as e:
+                self.message_user(
+                    request,
+                    f"Error: {str(e)}",
+                    level="ERROR",
+                )
+
+    create_translation_rows_from_file.short_description = (
+        "Create TranslationRows from file"
+    )
 
 
 class ProjectAdmin(admin.ModelAdmin):
@@ -47,4 +76,7 @@ class ProjectAdmin(admin.ModelAdmin):
 
 admin.site.register(models.Project, ProjectAdmin)
 admin.site.register(models.ProjectMembership)
+admin.site.register(models.TranslationRow)
+admin.site.register(models.TranslationComment)
+admin.site.register(models.TranslationFile, TranslationFileAdmin)
 admin.site.register(models.ProjectLanguage, ProjectLanguageAdmin)

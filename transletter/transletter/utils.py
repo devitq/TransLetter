@@ -1,7 +1,7 @@
 import json
 from pathlib import Path
 
-__all__ = ()
+__all__ = ("get_available_langs",)
 
 
 def get_available_langs():

@@ -30,7 +30,11 @@ else:
 
 INSTALLED_APPS = [
     # Other
+    "sorl.thumbnail",
     "django_cleanup.apps.CleanupConfig",
+    "djmoney",
+    "plans",
+    "ordered_model",
     # Django apps
     "django.contrib.admin",
     "django.contrib.auth",
@@ -154,17 +158,28 @@ STATIC_ROOT = BASE_DIR / "static"
 
 MEDIA_ROOT = BASE_DIR / "media"
 
-DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 
 AUTHENTICATION_BACKENDS = ("accounts.backends.AuthenticationBackend",)
 
-LOGIN_URL = "/auth/login"
+LOGIN_URL = "/auth/login/"
 
-LOGIN_REDIRECT_URL = "/"
+LOGIN_REDIRECT_URL = "/dashboard/"
 
-LOGOUT_REDIRECT_URL = "/auth/login"
+LOGOUT_REDIRECT_URL = "/auth/login/"
 
-TRANSLATION_FILES_FORMATS = ("po", "json")
+THUMBNAIL_PRESERVE_FORMAT = True
+
+THUMBNAIL_REDIS_URL = os.getenv("REDIS_URL", None)
+
+if THUMBNAIL_REDIS_URL:
+    THUMBNAIL_KVSTORE = "sorl.thumbnail.kvstores.redis_kvstore.KVStore"
+
+THUMBNAIL_STORAGE = "django.core.files.storage.FileSystemStorage"
+
+TRANSLATION_FILE_FORMATS = ("po", "json")
+
+EMAIL = os.getenv("EMAIL", "example@mail.com")
 
 USE_REAL_EMAIL = os.getenv("USE_REAL_EMAIL", "true").lower() in (
     "true",
@@ -181,14 +196,14 @@ if USE_REAL_EMAIL:
     EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER", "")
 
     EMAIL_PORT = os.getenv("EMAIL_PORT", 25)
-
-    EMAIL = os.getenv("EMAIL", "")
 else:
     EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
 
     EMAIL_FILE_PATH = BASE_DIR / "send_mail"
 
-    EMAIL = "example@mail.com"
+PLANS_CURRENCY = "USD"
+
+DEFAULT_FROM_EMAIL = EMAIL
 
 DEPLOYING_ON_HTTPS = os.getenv("DEPLOYING_ON_HTTPS", "false").lower() in (
     "true",

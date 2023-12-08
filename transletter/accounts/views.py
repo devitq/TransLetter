@@ -1,10 +1,8 @@
-from betterforms.multiform import MultiModelForm
 from django.conf import settings
 from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.mail import send_mail
 from django.core.signing import BadSignature, SignatureExpired, TimestampSigner
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
 from django.utils import timezone
 from django.utils.translation import pgettext_lazy
@@ -13,13 +11,8 @@ from django.views.generic import (
     View,
 )
 
-from accounts.forms import (
-    UserAccountChangeForm,
-    UserChangeForm,
-    UserSignupForm,
-)
+from accounts.forms import UserSignupForm
 import accounts.models
-
 
 __all__ = ()
 
@@ -133,43 +126,3 @@ class UserSignupView(CreateView):
         if self.request.user.is_authenticated:
             return reverse_lazy("landing:index")
         return None
-
-
-class UserAccountMultiForm(MultiModelForm):
-    form_classes = {
-        "user_form": UserChangeForm,
-        "account_form": UserAccountChangeForm,
-    }
-
-
-class AccountEditView(LoginRequiredMixin, View):
-    template_name = "accounts/account.html"
-
-    def get(self, request, *args, **kwargs):
-        user_form = UserChangeForm(instance=request.user)
-        account_form = UserAccountChangeForm(instance=request.user.account)
-        return render(
-            request,
-            self.template_name,
-            {"user_form": user_form, "account_form": account_form},
-        )
-
-    def post(self, request, *args, **kwargs):
-        user_form = UserChangeForm(request.POST, instance=request.user)
-        account_form = UserAccountChangeForm(
-            request.POST,
-            request.FILES,
-            instance=request.user.account,
-        )
-
-        if user_form.is_valid() and account_form.is_valid():
-            user_form.save()
-            account_form.save()
-            messages.success(request, "Account updated successfully!")
-            return redirect("accounts:account")
-
-        return render(
-            request,
-            self.template_name,
-            {"user_form": user_form, "account_form": account_form},
-        )

@@ -12,8 +12,6 @@ class AccountInline(admin.TabularInline):
     model = Account
     can_delete = False
     readonly_fields = (Account.attempts_count.field.name,)
-    min_num = 1
-    max_num = 1
 
 
 class UserAdmin(BaseUserAdmin):

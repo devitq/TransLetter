@@ -7,7 +7,6 @@ from django.urls import reverse
 
 import accounts.models
 
-
 __all__ = ("AuthenticationBackend",)
 
 
