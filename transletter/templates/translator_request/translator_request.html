@@ -1,0 +1,45 @@
+{% extends "base-dashboard.html" %}
+{% block main %}
+{% load i18n %}
+
+<div class="container mt-3 height-100">
+  <div class="col">
+    <h2>{% translate "Translator Request" %}</h2>
+  </div>
+  <div class="col">
+    <div class="row">
+      <h3>{% translate "Author" %}</h3>
+    </div>
+    <div class="row">
+      <h4 class="font-medium">{% translate "Mail" %} - {{ translator_request.user.email }}</h4>
+    </div>
+    <div class="row">
+      <h4 class="font-medium">{% translate "Language" %} - {{ translator_request.user.account.native_lang }}</h4>
+    </div>
+    <div class="row">
+      {% comment %} Languages {% endcomment %}
+    </div>
+  </div>
+  <div class="col">
+    <div class="row">
+      <h3>{% translate "About" %}</h3>
+    </div>
+    <div class="row">
+      <p class="card-text">{{ translator_request.resume.about|safe }}</p>
+    </div>
+  </div>
+  <div class="col">
+    <div class="row">
+      <h3>{% translate "Status" %}</h3>
+    </div>
+    <div class="row">
+      <h4 class="font-medium">{{ translator_request.get_status_display }}</h4>
+    </div>
+  </div>
+  {% comment %} The profile should be completed {% endcomment %}
+    <a href="{% url 'translator_request:accept_request' translator_request.id %}" class="btn btn-primary col" type="submit">{% translate 'Accept' %}</a>
+    <a href="{% url 'translator_request:reject_request' translator_request.id %}" class="btn btn-danger col" type="submit">{% translate 'Reject' %}</a>
+
+</div>
+
+{% endblock main %}

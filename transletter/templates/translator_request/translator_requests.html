@@ -1,9 +1,6 @@
 {% extends "base-dashboard.html" %}
 {% block main %}
-{% load static i18n %}
-
-<script src="{% static 'js/anime.min.js' %}"></script>
-<script src="{% static 'js/scrollreveal.min.js' %}"></script>
+{% load i18n %}
 
 <div class="container mt-3 height-100">
     <h2>{% translate "Translator Requests" %}</h2>
@@ -22,7 +19,7 @@
                     </thead>
                     <tbody>
                       {% for translator_request in translator_requests.all %}
-                          {% include "includes/translator_request_card.html" with request=translator_request %}
+                          {% include "includes/translator_request_card.html" with translator_request=translator_request %}
                       {% empty %}
                           <p>{% translate "No translator requests" %}</p>
                       {% endfor %}
@@ -33,6 +30,5 @@
       </div>
     </div>
 </div>
-<script src="{% static 'js/animation_setup.min.js' %}"></script>
 
 {% endblock main %}

@@ -2,17 +2,17 @@
 
 <tr>
   <td>
-    <h5 class="font-medium mb-0">{{ request.user }}</h5>
-    <span class="text-muted">{{ request.user.email }}</span>
+    <h5 class="font-medium mb-0">{{ translator_request.user }}</h5>
+    <span class="text-muted">{{ translator_request.user.email }}</span>
   </td>
   <td>
-    <h5 class="font-medium mb-0">{{ request.user.account.get_native_lang_display }}</h5>
+    <h5 class="font-medium mb-0">{{ translator_request.user.account.get_native_lang_display }}</h5>
   </td>
   <td>
-    <h5 class="font-medium mb-0">{{ request.get_status_display }}</h5>
+    <h5 class="font-medium mb-0">{{ translator_request.get_status_display }}</h5>
   </td>
 
   <td>
-    <a href="#" type="button" class="btn btn-outline-info btn-circle btn-lg btn-circle"><i class="fa-sharp fa-solid fa-id-card"></i></a>
+    <a href="{% url 'translator_request:translator_request' translator_request.id %}" type="button" class="btn btn-outline-info btn-circle btn-lg btn-circle">Take for review <i class="fa-sharp fa-solid fa-id-card"></i></a>
   </td>
 </tr>

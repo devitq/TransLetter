@@ -3,7 +3,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect, render
 from django.urls import reverse, reverse_lazy
 from django.utils.translation import pgettext_lazy
-from django.views.generic import ListView, View
+from django.views.generic import DetailView, ListView, View
 
 from resume.models import ResumeFile
 from translator_request.forms import RequestTranslatorForm
@@ -19,7 +19,7 @@ class RequestTranslatorView(View):
     def dispatch(self, request, *args, **kwargs):
         if hasattr(request.user, "translator_request"):
             if request.user.translator_request.status in ["UR", "AC"]:
-                messages.success(
+                messages.error(
                     request,
                     pgettext_lazy(
                         "RequestTranslator under review error message",
@@ -100,3 +100,60 @@ class TranslatorRequestsView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         return TranslatorRequest.objects.for_staff()
+
+
+class TranslatorRequestView(LoginRequiredMixin, DetailView):
+    template_name = "translator_request/translator_request.html"
+    model = TranslatorRequest
+    context_object_name = "translator_request"
+
+    def get(self, request, *args, **kwargs):
+        item = self.get_object()
+        if item.status == "SE":
+            item.status = "UR"
+            item.save()
+        return render(
+            request,
+            template_name=self.template_name,
+            context={"translator_request": item},
+        )
+
+
+class AcceptRequestView(LoginRequiredMixin, DetailView):
+    model = TranslatorRequest
+    context_object_name = "translator_request"
+
+    def get(self, request, *args, **kwargs):
+        if not request.user.is_staff:
+            messages.error(
+                request,
+                pgettext_lazy(
+                    "User is not staff",
+                    "You do not have enough permissions",
+                ),
+            )
+            return redirect(reverse("translator_request:translator_requests"))
+        item = self.get_object()
+        item.status = "AC"
+        item.save()
+        return redirect(reverse("translator_request:translator_requests"))
+
+
+class RejectRequestView(LoginRequiredMixin, DetailView):
+    model = TranslatorRequest
+    context_object_name = "translator_request"
+
+    def get(self, request, *args, **kwargs):
+        if not request.user.is_staff:
+            messages.error(
+                request,
+                pgettext_lazy(
+                    "User is not staff",
+                    "You do not have enough permissions",
+                ),
+            )
+            return redirect(reverse("translator_request:translator_requests"))
+        item = self.get_object()
+        item.status = "RJ"
+        item.save()
+        return redirect(reverse("translator_request:translator_requests"))
