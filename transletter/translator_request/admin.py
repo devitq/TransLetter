@@ -35,7 +35,7 @@ class TranslatorRequestAdmin(admin.ModelAdmin):
     def title(self, obj):
         return obj
 
-    title.short_description = _("title_models")
+    title.short_description = _("Title")
 
 
 class TranslatorRequestStatusLogAdmin(admin.ModelAdmin):
@@ -55,7 +55,7 @@ class TranslatorRequestStatusLogAdmin(admin.ModelAdmin):
     def title(self, obj):
         return obj
 
-    title.short_description = _("title_models")
+    title.short_description = _("Title")
 
 
 admin.site.register(models.TranslatorRequest, TranslatorRequestAdmin)

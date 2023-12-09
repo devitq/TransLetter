@@ -33,10 +33,12 @@
                     <i class='bx bx-grid-alt nav_icon'></i>
                     <span class="nav_name">{% translate "Projects" %}</span>
                 </a>
-                <a href="#" class="nav_link">
+                {% if user.is_staff %}
+                <a href="{% url 'translator_request:translator_requests' %}" class="nav_link{% if view_name == 'translator_request:translator_requests' %} active{% endif %}">
                     <i class='bx bxs-chat nav_icon'></i>
-                    <span class="nav_name">{% translate "Translation requests" %}</span>
+                    <span class="nav_name">{% translate "Translator requests" %}</span>
                 </a>
+                {% endif %}
                 {% if not user.translator_request or user.translator_request.status in "SERJ" %}
                 <a href="{% url 'translator_request:request_translator' %}" class="nav_link{% if view_name == 'translator_request:request_translator' %} active{% endif %}">
                     <i class='bx bx-plus nav_icon'></i>

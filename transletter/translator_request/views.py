@@ -1,8 +1,9 @@
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect, render
 from django.urls import reverse, reverse_lazy
 from django.utils.translation import pgettext_lazy
-from django.views.generic import View
+from django.views.generic import ListView, View
 
 from resume.models import ResumeFile
 from translator_request.forms import RequestTranslatorForm
@@ -91,3 +92,11 @@ class RequestTranslatorView(View):
             template_name=self.template_name,
             context={"form": form},
         )
+
+
+class TranslatorRequestsView(LoginRequiredMixin, ListView):
+    template_name = "translator_request/translator_requests.html"
+    context_object_name = "translator_requests"
+
+    def get_queryset(self):
+        return TranslatorRequest.objects.for_staff()

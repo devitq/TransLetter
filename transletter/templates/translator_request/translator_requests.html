@@ -1,0 +1,38 @@
+{% extends "base-dashboard.html" %}
+{% block main %}
+{% load static i18n %}
+
+<script src="{% static 'js/anime.min.js' %}"></script>
+<script src="{% static 'js/scrollreveal.min.js' %}"></script>
+
+<div class="container mt-3 height-100">
+    <h2>{% translate "Translator Requests" %}</h2>
+    <div class="row">
+      <div class="col-md-12">
+          <div class="card">
+              <div class="table-responsive">
+                  <table class="table no-wrap user-table mb-0">
+                    <thead>
+                      <tr>
+                        <th scope="col" class="border-0 text-uppercase font-medium">{% translate "Author" %}</th>
+                        <th scope="col" class="border-0 text-uppercase font-medium">{% translate "Language" %}</th>
+                        <th scope="col" class="border-0 text-uppercase font-medium">{% translate "Status" %}</th>
+                        <th scope="col" class="border-0 text-uppercase font-medium">{% translate "Profile" %}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for translator_request in translator_requests.all %}
+                          {% include "includes/translator_request_card.html" with request=translator_request %}
+                      {% empty %}
+                          <p>{% translate "No translator requests" %}</p>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+              </div>
+          </div>
+      </div>
+    </div>
+</div>
+<script src="{% static 'js/animation_setup.min.js' %}"></script>
+
+{% endblock main %}

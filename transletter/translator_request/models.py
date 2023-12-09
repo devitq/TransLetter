@@ -18,7 +18,25 @@ STATUS_CHOICES = [
 ]
 
 
+class TranslatorRequestManager(models.Manager):
+    def get_queryset(self):
+        return (
+            super()
+            .get_queryset()
+            .prefetch_related("user")
+            .select_related("user__account")
+            .prefetch_related("resume")
+        )
+
+    def for_staff(self):
+        return self.get_queryset().filter(
+            status__in=["SE", "UR"],
+        )
+
+
 class TranslatorRequest(models.Model):
+    objects = TranslatorRequestManager()
+
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
