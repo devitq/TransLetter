@@ -30,8 +30,10 @@ class UserAccountChangeForm(forms.ModelForm, BaseFormMixin):
         model = Account
         fields = (
             Account.native_lang.field.name,
+            Account.languages.field.name,
             Account.website.field.name,
             Account.github.field.name,
+            Account.about.field.name,
         )
 
     languages = forms.MultipleChoiceField(

@@ -9,6 +9,10 @@ __all__ = ()
 
 
 class RequestAccountForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields[Account.native_lang.field.name].required = True
+
     class Meta:
         model = Account
         fields = (
@@ -18,7 +22,7 @@ class RequestAccountForm(forms.ModelForm):
 
     languages = forms.MultipleChoiceField(
         choices=get_available_langs(),
-        required=False,
+        required=True,
     )
 
 

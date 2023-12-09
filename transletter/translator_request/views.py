@@ -1,5 +1,4 @@
 from django.contrib import messages
-from django.http import Http404
 from django.shortcuts import redirect, render
 from django.urls import reverse, reverse_lazy
 from django.utils.translation import pgettext_lazy
@@ -18,7 +17,15 @@ class RequestTranslatorView(View):
 
     def dispatch(self, request, *args, **kwargs):
         if hasattr(request.user, "translator_request"):
-            raise Http404("TranslatorRequest already exists for this user")
+            if request.user.translator_request.status in ["UR", "AC"]:
+                messages.success(
+                    request,
+                    pgettext_lazy(
+                        "RequestTranslator under review error message",
+                        "The request is currently under review",
+                    ),
+                )
+                return redirect(reverse("dashboard:edit_account"))
         return super().dispatch(request, *args, **kwargs)
 
     def get(self, request):
@@ -28,7 +35,14 @@ class RequestTranslatorView(View):
                 "account_form": request.user.account,
                 "resume_form": request.user.account.resume or None,
             },
-            initial={"languages": initial_languages},
+            initial={
+                "account_form": {"languages": initial_languages},
+                "resume_form": {
+                    "about": request.user.account.resume.about
+                    if request.user.account.resume
+                    else request.user.account.about or None,
+                },
+            },
         )
         return render(
             request,
@@ -54,10 +68,15 @@ class RequestTranslatorView(View):
                 "native_lang"
             ]
             request.user.account.save()
-            TranslatorRequest.objects.create(
-                user=request.user,
-                resume=resume,
-            )
+            if hasattr(request.user, "translator_request"):
+                request.user.translator_request.resume = resume
+                request.user.translator_request.status = "SE"
+                request.user.translator_request.save()
+            else:
+                TranslatorRequest.objects.create(
+                    user=request.user,
+                    resume=resume,
+                )
             messages.success(
                 request,
                 pgettext_lazy(

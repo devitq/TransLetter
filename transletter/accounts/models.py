@@ -101,6 +101,11 @@ class Account(models.Model):
         null=True,
         blank=True,
     )
+    about = models.TextField(
+        pgettext_lazy("about field name", "about"),
+        null=True,
+        blank=True,
+    )
 
     class Meta:
         verbose_name = pgettext_lazy("verbose name for accounts", "account")
