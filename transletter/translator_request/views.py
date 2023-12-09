@@ -22,14 +22,14 @@ class RequestTranslatorView(View):
         return super().dispatch(request, *args, **kwargs)
 
     def get(self, request):
-        try:
-            form = RequestTranslatorForm(
-                instance={
-                    "resume_form": request.user.account.resume,
-                },
-            )
-        except Exception:
-            form = RequestTranslatorForm()
+        initial_languages = request.user.account.languages
+        form = RequestTranslatorForm(
+            instance={
+                "account_form": request.user.account,
+                "resume_form": request.user.account.resume or None,
+            },
+            initial={"languages": initial_languages},
+        )
         return render(
             request,
             template_name=self.template_name,
@@ -45,7 +45,14 @@ class RequestTranslatorView(View):
                 ResumeFile.objects.create(resume=resume, file=file)
             if request.user.account.resume:
                 request.user.account.resume.delete()
+            account_form = form["account_form"]
             request.user.account.resume = resume
+            request.user.account.languages = account_form.cleaned_data[
+                "languages"
+            ]
+            request.user.account.native_lang = account_form.cleaned_data[
+                "native_lang"
+            ]
             request.user.account.save()
             TranslatorRequest.objects.create(
                 user=request.user,
