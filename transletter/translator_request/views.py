@@ -6,14 +6,14 @@ from django.utils.translation import pgettext_lazy
 from django.views.generic import View
 
 from resume.models import ResumeFile
-from translationrequest.forms import RequestTranslatorForm
-from translationrequest.models import TranslatorRequest
+from translator_request.forms import RequestTranslatorForm
+from translator_request.models import TranslatorRequest
 
 __all__ = ()
 
 
 class RequestTranslatorView(View):
-    template_name = "translation_request/request_translator.html"
+    template_name = "translator_request/request_translator.html"
     success_url = reverse_lazy("dashboard:edit_account")
 
     def dispatch(self, request, *args, **kwargs):

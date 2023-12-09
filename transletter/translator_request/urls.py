@@ -1,13 +1,13 @@
 from django.urls import path
 
-import translationrequest.views
+import translator_request.views
 
-app_name = "translation_request"
+app_name = "translator_request"
 
 urlpatterns = [
     path(
         "request_translator/",
-        translationrequest.views.RequestTranslatorView.as_view(),
+        translator_request.views.RequestTranslatorView.as_view(),
         name="request_translator",
     ),
 ]

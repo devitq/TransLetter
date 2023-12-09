@@ -5,7 +5,7 @@ from django.utils.translation import pgettext_lazy
 __all__ = ()
 
 
-class TranslationrequestConfig(AppConfig):
+class TranslatorRequestConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
-    name = "translationrequest"
-    verbose_name = pgettext_lazy("app name", "TranslationRequest")
+    name = "translator_request"
+    verbose_name = pgettext_lazy("app name", "TranslatorRequest")

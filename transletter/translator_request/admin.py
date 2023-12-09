@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
 
-from translationrequest import models
+from translator_request import models
 
 __all__ = ()
 

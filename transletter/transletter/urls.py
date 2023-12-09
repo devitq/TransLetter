@@ -12,7 +12,7 @@ handler404 = views.Handler404View.as_view()
 urlpatterns = [
     path("", include("landing.urls")),
     path("dashboard/", include("dashboard.urls")),
-    path("translation_request/", include("translationrequest.urls")),
+    path("translator_request/", include("translator_request.urls")),
     path("auth/", include("accounts.urls")),
     path("auth/", include(django.contrib.auth.urls), name="auth_default"),
     path("admin/", admin.site.urls),

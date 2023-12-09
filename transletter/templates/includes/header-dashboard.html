@@ -38,7 +38,7 @@
                     <span class="nav_name">{% translate "Translation requests" %}</span>
                 </a>
                 {% if not user.translator_request %}
-                <a href="{% url 'translation_request:request_translator' %}" class="nav_link{% if view_name == 'translation_request:request_translator' %} active{% endif %}">
+                <a href="{% url 'translator_request:request_translator' %}" class="nav_link{% if view_name == 'translator_request:request_translator' %} active{% endif %}">
                     <i class='bx bx-plus nav_icon'></i>
                     <span class="nav_name">{% translate "Request translator" %}</span>
                 </a>
