@@ -1,5 +1,7 @@
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.mail import send_mail
 from django.shortcuts import redirect, render
 from django.urls import reverse, reverse_lazy
 from django.utils.translation import pgettext_lazy
@@ -7,9 +9,19 @@ from django.views.generic import DetailView, ListView, View
 
 from resume.models import ResumeFile
 from translator_request.forms import RequestTranslatorForm
-from translator_request.models import TranslatorRequest
+from translator_request.models import (
+    TranslatorRequest,
+    TranslatorRequestStatusLog,
+)
 
 __all__ = ()
+
+STATUS_CHOICES = {
+    "SE": "Sent",
+    "UR": "Under review",
+    "AC": "Accepted",
+    "RJ": "Rejected",
+}
 
 
 class RequestTranslatorView(View):
@@ -111,6 +123,23 @@ class TranslatorRequestView(LoginRequiredMixin, DetailView):
         item = self.get_object()
         if item.status == "SE":
             item.status = "UR"
+            TranslatorRequestStatusLog.objects.create(
+                user=request.user,
+                translator_request=item,
+                from_status="SE",
+                to="UR",
+            )
+            fr_status = STATUS_CHOICES["SE"]
+            to_status = STATUS_CHOICES["UR"]
+            text = f"""Status was change from '{fr_status}' to '{to_status}'
+Your request is currently under review"""
+            send_mail(
+                "Change Translator Request Status",
+                text,
+                settings.EMAIL,
+                [request.user.email],
+                fail_silently=False,
+            )
             item.save()
         return render(
             request,
@@ -134,6 +163,23 @@ class AcceptRequestView(LoginRequiredMixin, DetailView):
             )
             return redirect(reverse("translator_request:translator_requests"))
         item = self.get_object()
+        TranslatorRequestStatusLog.objects.create(
+            user=request.user,
+            translator_request=item,
+            from_status=item.status,
+            to="AC",
+        )
+        fr_status = STATUS_CHOICES[item.status]
+        to_status = STATUS_CHOICES["AC"]
+        text = f"""Status was change from '{fr_status}' to '{to_status}'
+Your request has been accepted"""
+        send_mail(
+            "Change Translator Request Status",
+            text,
+            settings.EMAIL,
+            [request.user.email],
+            fail_silently=False,
+        )
         item.status = "AC"
         item.save()
         return redirect(reverse("translator_request:translator_requests"))
@@ -154,6 +200,23 @@ class RejectRequestView(LoginRequiredMixin, DetailView):
             )
             return redirect(reverse("translator_request:translator_requests"))
         item = self.get_object()
+        TranslatorRequestStatusLog.objects.create(
+            user=request.user,
+            translator_request=item,
+            from_status=item.status,
+            to="RJ",
+        )
+        fr_status = STATUS_CHOICES[item.status]
+        to_status = STATUS_CHOICES["RJ"]
+        text = f"""Status was change from '{fr_status}' to '{to_status}'
+Your request was rejected"""
+        send_mail(
+            "Change Translator Request Status",
+            text,
+            settings.EMAIL,
+            [request.user.email],
+            fail_silently=False,
+        )
         item.status = "RJ"
         item.save()
         return redirect(reverse("translator_request:translator_requests"))
