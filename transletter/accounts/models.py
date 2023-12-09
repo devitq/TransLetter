@@ -66,7 +66,7 @@ class Account(models.Model):
     )
     resume = models.OneToOneField(
         Resume,
-        on_delete=models.CASCADE,
+        on_delete=models.SET_NULL,
         related_name="account",
         verbose_name=pgettext_lazy("resume field name", "resume"),
         null=True,

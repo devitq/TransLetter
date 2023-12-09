@@ -17,7 +17,7 @@ class Migration(migrations.Migration):
             field=models.OneToOneField(
                 blank=True,
                 null=True,
-                on_delete=django.db.models.deletion.CASCADE,
+                on_delete=django.db.models.deletion.SET_NULL,
                 related_name="account",
                 to="resume.resume",
                 verbose_name="resume",

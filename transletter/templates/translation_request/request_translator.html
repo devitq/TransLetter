@@ -1,0 +1,15 @@
+{% extends "base-dashboard.html" %}
+{% block main %}
+{% load i18n %}
+
+<div class="container">
+    <h1>{% translate "Request Translator" %}</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <h3>{% translate "Resume" %}</h3>
+        {% include "includes/form.html" %}
+        <input class="btn btn-primary" type="submit" value="{% translate 'Send' %}">
+    </form>
+</div>
+
+{% endblock %}
