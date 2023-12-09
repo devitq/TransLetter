@@ -51,6 +51,11 @@ class Project(models.Model):
         pgettext_lazy("public field name", "public"),
         default=False,
     )
+    source_language = models.ForeignKey(
+        "ProjectLanguage",
+        on_delete=models.CASCADE,
+        related_name="source_project",
+    )
     members = models.ManyToManyField(
         User,
         through="ProjectMembership",
