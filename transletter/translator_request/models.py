@@ -60,10 +60,7 @@ class TranslatorRequest(models.Model):
 
     def __str__(self) -> str:
         verbose = _(
-            (
-                f"{self.user.username}'s"
-                " translator request"
-            ),
+            (f"{self.user.username}'s" " translator request"),
         )
         return str(verbose)
 

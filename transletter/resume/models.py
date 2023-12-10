@@ -32,9 +32,7 @@ class Resume(models.Model):
 
     def __str__(self) -> str:
         verbose = _(
-            (
-                f"{self.user.username}"
-            ),
+            (f"{self.user.username}"),
         )
         return str(verbose)
 
@@ -66,10 +64,7 @@ class ResumeFile(models.Model):
 
     def __str__(self) -> str:
         verbose = _(
-            (
-                f"{self.resume.user.username}'s"
-                " resume file"
-            ),
+            (f"{self.resume.user.username}'s" " resume file"),
         )
         return str(verbose)
 

@@ -9,7 +9,7 @@ from transletter.utils import get_available_langs
 __all__ = ()
 
 
-class RequestAccountForm(forms.ModelForm,  BaseFormMixin):
+class RequestAccountForm(forms.ModelForm, BaseFormMixin):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.set_field_attributes()
