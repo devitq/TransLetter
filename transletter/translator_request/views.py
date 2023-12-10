@@ -102,7 +102,7 @@ class RequestTranslatorView(View):
                 messages.success(
                     request,
                     pgettext_lazy(
-                        "TranslatorRequest update success",
+                        "translator request update success",
                         "Your request to become a translator has been updated",
                     ),
                 )
@@ -114,7 +114,7 @@ class RequestTranslatorView(View):
                 messages.success(
                     request,
                     pgettext_lazy(
-                        "TranslatorRequest create success",
+                        "translator request create success",
                         "Your request to become a translator has been sent",
                     ),
                 )
@@ -124,7 +124,7 @@ class RequestTranslatorView(View):
         messages.error(
             request,
             pgettext_lazy(
-                "TranslatorRequest on review error",
+                "translator request on review error",
                 "Your request is currently under review.",
             ),
         )
