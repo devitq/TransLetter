@@ -63,7 +63,7 @@ class ProjectAdmin(admin.ModelAdmin):
             None,
             {
                 "classes": ("wide",),
-                "fields": ("name", "description", "slug"),
+                "fields": ("name", "description", "slug", "source_language"),
             },
         ),
     )
