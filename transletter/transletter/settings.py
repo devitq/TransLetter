@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     # Project's apps
     "landing.apps.LandingConfig",
     "accounts.apps.AccountsConfig",
+    "burse.apps.BurseConfig",
     "projects.apps.ProjectsConfig",
     "resume.apps.ResumeConfig",
     "translator_request.apps.TranslatorRequestConfig",
