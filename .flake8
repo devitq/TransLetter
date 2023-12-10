@@ -8,6 +8,7 @@ application-import-names =
     transletter,
     landing,
     accounts,
+    burse,
     projects,
     dashboard,
     resume,

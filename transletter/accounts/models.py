@@ -21,6 +21,9 @@ class UserManager(django.contrib.auth.models.UserManager):
     def active(self):
         return self.get_queryset().filter(is_active=True)
 
+    def translators(self):
+        return self.get_queryset().filter(account__is_translator=True)
+
     def normalize_email(self, email):
         if email:
             email = email.lower()

@@ -11,6 +11,7 @@ handler404 = views.Handler404View.as_view()
 handler403 = views.Handler403View.as_view()
 urlpatterns = [
     path("", include("landing.urls")),
+    path("burse/", include("burse.urls")),
     path("dashboard/", include("dashboard.urls")),
     path("translator/request/", include("translator_request.urls")),
     path("auth/", include("accounts.urls")),

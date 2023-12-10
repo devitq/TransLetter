@@ -1,0 +1,37 @@
+{% extends "base-dashboard.html" %}
+{% block main %}
+{% load i18n %}
+
+<div class="container mt-3 height-100">
+    <h2>{% translate "Translators" %}</h2>
+    <div class="row">
+      <div class="col-md-12">
+          <div class="card">
+              <div class="table-responsive">
+                  <table class="table no-wrap user-table mb-0">
+                    <thead>
+                      <tr>
+                        <th scope="col" class="border-0 text-uppercase font-medium">{% translate "Candidate Name" %}</th>
+                        <th scope="col" class="border-0 text-uppercase font-medium">{% translate "Native language" %}</th>
+                        <th scope="col" class="border-0 text-uppercase font-medium">{% translate "Languages" %}</th>
+                        <th scope="col" class="border-0 text-uppercase font-medium">{% translate "Profile" %}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                      {% for translator in translators.all %}
+                          {% include "includes/translator_card.html" with translator=translator %}
+                      {% empty %}
+                      <tr>
+                        <td><p class="text-muted">{% translate "No translators" %}</p></td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+              </div>
+          </div>
+      </div>
+    </div>
+</div>
+
+{% endblock main %}
