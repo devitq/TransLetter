@@ -33,6 +33,10 @@
                     <i class='bx bx-grid-alt nav_icon'></i>
                     <span class="nav_name">{% translate "Projects" %}</span>
                 </a>
+                <a href="#" class="nav_link">
+                    <i class='bx bxs-credit-card nav_icon'></i>
+                    <span class="nav_name">{% translate "Burse" %}</span>
+                </a>
                 {% if user.is_staff %}
                 <a href="{% url 'translator_request:translator_requests' %}" class="nav_link{% if view_name == 'translator_request:translator_requests' %} active{% endif %}">
                     <i class='bx bxs-chat nav_icon'></i>

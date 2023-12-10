@@ -20,6 +20,9 @@
       {% for lang in translator_request.user.account.languages %}
         <span class="text-muted">{{ lang|language_name }}</span>
         <br>
+      {% empty %}
+        <span class="text-muted">None</span>
+        <br>
       {% endfor %}
       <br>
     </div>

@@ -12,9 +12,9 @@ __all__ = ()
 class RequestAccountForm(forms.ModelForm, BaseFormMixin):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.set_field_attributes()
         self.fields[Account.native_lang.field.name].required = True
         self.fields[Account.languages.field.name].required = True
+        self.set_field_attributes()
 
     class Meta:
         model = Account
