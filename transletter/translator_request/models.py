@@ -25,7 +25,7 @@ class TranslatorRequestManager(models.Manager):
             .get_queryset()
             .prefetch_related("user")
             .select_related("user__account")
-            .prefetch_related("resume")
+            .select_related("resume")
         )
 
     def for_staff(self):
