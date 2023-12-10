@@ -40,9 +40,9 @@ class TranslatorRequestAdmin(admin.ModelAdmin):
                 from_status=original_status,
                 to=obj.status,
             )
-            fr_status = STATUS_CHOICES[original_status]
-            to_status = STATUS_CHOICES[obj.status]
-            text = f"Status was change from '{fr_status}' to '{to_status}'"
+            text = (
+                f"Status was change from '{original_status}' to '{obj.status}'"
+            )
             send_mail(
                 "Change Translator Request Status",
                 text,

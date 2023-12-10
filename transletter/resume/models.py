@@ -1,5 +1,5 @@
 from django.db import models
-from django.utils.translation import pgettext_lazy as pgettext_lazy
+from django.utils.translation import gettext_lazy as _, pgettext_lazy
 
 __all__ = ()
 
@@ -30,6 +30,14 @@ class Resume(models.Model):
         blank=True,
     )
 
+    def __str__(self) -> str:
+        verbose = _(
+            (
+                f"{self.user.username}"
+            ),
+        )
+        return str(verbose)
+
     class Meta:
         verbose_name = pgettext_lazy("verbose name for resume", "resume")
         verbose_name_plural = pgettext_lazy(
@@ -55,6 +63,15 @@ class ResumeFile(models.Model):
         blank=True,
         null=True,
     )
+
+    def __str__(self) -> str:
+        verbose = _(
+            (
+                f"{self.resume.user.username}'s"
+                " resume file"
+            ),
+        )
+        return str(verbose)
 
     class Meta:
         verbose_name = pgettext_lazy(

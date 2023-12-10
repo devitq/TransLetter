@@ -34,7 +34,7 @@ class RequestTranslatorView(View):
                 messages.error(
                     request,
                     pgettext_lazy(
-                        "RequestTranslator under review error message",
+                        "TranslatorRequest under review error message",
                         "The request is currently under review",
                     ),
                 )

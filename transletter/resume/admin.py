@@ -11,9 +11,6 @@ class FilesInline(admin.TabularInline):
 
 
 class ResumeAdmin(admin.ModelAdmin):
-    list_display = [
-        models.Resume.about.field.name,
-    ]
     inlines = [
         FilesInline,
     ]

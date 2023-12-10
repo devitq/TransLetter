@@ -2,7 +2,7 @@ from django.conf import settings
 from django.db import models
 from django.utils.translation import (
     gettext_lazy as _,
-    pgettext_lazy as pgettext_lazy,
+    pgettext_lazy,
 )
 
 from resume.models import Resume
@@ -58,6 +58,15 @@ class TranslatorRequest(models.Model):
         verbose_name=pgettext_lazy("status field name", "status"),
     )
 
+    def __str__(self) -> str:
+        verbose = _(
+            (
+                f"{self.user.username}'s"
+                " translator request"
+            ),
+        )
+        return str(verbose)
+
 
 class TranslatorRequestStatusLog(models.Model):
     translator_request = models.ForeignKey(
@@ -78,13 +87,25 @@ class TranslatorRequestStatusLog(models.Model):
     from_status = models.CharField(
         max_length=2,
         db_column="from",
-        verbose_name=pgettext_lazy("from field name", "from"),
+        choices=STATUS_CHOICES,
+        verbose_name=pgettext_lazy("from field name", "from status"),
     )
     to = models.CharField(
         max_length=2,
-        verbose_name=pgettext_lazy("to field name", "to"),
+        choices=STATUS_CHOICES,
+        verbose_name=pgettext_lazy("to field name", "to status"),
     )
     timestamp = models.DateTimeField(
         auto_now_add=True,
         verbose_name=pgettext_lazy("timestamp field name", "timestamp"),
     )
+
+    def __str__(self) -> str:
+        verbose = _(
+            (
+                "Update of status for "
+                f"{self.translator_request.user.username}'s"
+                " translator request"
+            ),
+        )
+        return str(verbose)

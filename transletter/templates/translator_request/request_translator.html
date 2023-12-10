@@ -2,14 +2,24 @@
 {% block main %}
 {% load i18n %}
 
-<div class="container">
+<div class="container mt-3 mb-3">
     <h1>{% translate "Request Translator" %}</h1>
+
+    <p class="text-muted">
+        {% blocktranslate %}
+        Proffecional translator? Here you can submit request to get translator role, some of the fields are
+        already filled for you from your account. In the "About" field you can write your education, projects you have worked on, etc.,
+        and you can also attach identity files and various diplomas. Here the about field is visible only to you and us, the public "About" field can be filled in the "Account" section.
+        Please do not spam and provide real information about yourself, if we think you are spamming your account will be irrevocably blocked.
+        {% endblocktranslate %}
+    </p>
+
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        <h3>{% translate "Resume" %}</h3>
         {% include "includes/form.html" %}
         <input class="btn btn-primary" type="submit" value="{% translate 'Send' %}">
     </form>
+
 </div>
 
 {% endblock %}

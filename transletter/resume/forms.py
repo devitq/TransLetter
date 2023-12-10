@@ -51,7 +51,7 @@ class FilesForm(forms.ModelForm, BaseFormMixin):
 class ResumeCreateForm(forms.ModelForm, BaseFormMixin):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields[Resume.about.field.name].required = True
+        self.set_field_attributes()
 
     class Meta:
         model = Resume

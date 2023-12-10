@@ -2,7 +2,7 @@ import sys
 
 import django.contrib.auth.models
 from django.db import models
-from django.utils.translation import pgettext_lazy as pgettext_lazy
+from django.utils.translation import pgettext_lazy
 from djmoney.models.fields import MoneyField
 
 from resume.models import Resume
@@ -106,6 +106,9 @@ class Account(models.Model):
         null=True,
         blank=True,
     )
+
+    def __str__(self) -> str:
+        return self.user.username
 
     class Meta:
         verbose_name = pgettext_lazy("verbose name for accounts", "account")
