@@ -7,7 +7,7 @@
     {% if request_status == "SE" %}
     <div class="alert alert-success" role="alert">
         {% blocktranslate %}
-        Your request was sent to our review team, please, if you have any mistakes, you can correct them now.
+        Your request has been sent to the reviewers, please if you have made mistakes please correct them now.
         {% endblocktranslate %}
     </div>
     {% elif request_status == "UR" %}
@@ -44,7 +44,7 @@
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {% include "includes/form.html" %}
-        {% if request_status in "SERJAC" %}
+        {% if request_status in "SERJACNN" %}
         <input class="btn btn-primary" type="submit" value="{% translate 'Send' %}">
         {% endif %}
     </form>

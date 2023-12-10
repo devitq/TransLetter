@@ -34,6 +34,10 @@
       <h5>{% translate "Status" %}</h5>
       <p class="text-muted">{{ translator_request.get_status_display }}</p>
     </div>
+    <div class="row">
+      <h5>{% translate "Attachments" %}</h5>
+      
+    </div>
   </div>
   <a href="{% url 'translator_request:accept_request' translator_request.id %}" class="btn btn-success col" type="submit">{% translate 'Accept' %}</a>
   <a href="{% url 'translator_request:reject_request' translator_request.id %}" class="btn btn-danger col" type="submit">{% translate 'Reject' %}</a>

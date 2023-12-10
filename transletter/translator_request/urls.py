@@ -6,7 +6,7 @@ app_name = "translator_request"
 
 urlpatterns = [
     path(
-        "new/",
+        "my/",
         translator_request.views.RequestTranslatorView.as_view(),
         name="request_translator",
     ),

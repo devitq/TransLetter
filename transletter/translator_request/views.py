@@ -34,7 +34,11 @@ class RequestTranslatorView(View):
 
     def get(self, request):
         initial_languages = request.user.account.languages
-        if request.user.translator_request.status in "SERJAC":
+        try:
+            request_status = request.user.translator_request.status
+        except Exception:
+            request_status = "NN"
+        if request_status in "SERJACNN":
             form = RequestTranslatorForm(
                 instance={
                     "account_form": request.user.account,
@@ -69,15 +73,19 @@ class RequestTranslatorView(View):
             template_name=self.template_name,
             context={
                 "form": form,
-                "request_status": request.user.translator_request.status,
+                "request_status": request_status,
             },
         )
 
     def post(self, request):
         form = RequestTranslatorForm(request.POST, request.FILES)
+        try:
+            request_status = request.user.translator_request.status
+        except Exception:
+            request_status = "NN"
         if (
             form.is_valid()
-            and request.user.translator_request.status in "SERJAC"
+            and request_status in "SERJACNN"
         ):
             resume = form["resume_form"].save()
             files = request.FILES.getlist("files_form-file")
@@ -96,7 +104,7 @@ class RequestTranslatorView(View):
             request.user.account.save()
             if hasattr(request.user, "translator_request"):
                 request.user.translator_request.resume = resume
-                if request.user.translator_request.status != "AC":
+                if request_status != "AC":
                     request.user.translator_request.status = "SE"
                 request.user.translator_request.save()
                 messages.success(
