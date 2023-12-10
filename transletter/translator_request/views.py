@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
 from django.core.mail import send_mail
 from django.shortcuts import redirect, render
 from django.urls import reverse, reverse_lazy
@@ -8,7 +9,10 @@ from django.utils.translation import pgettext_lazy
 from django.views.generic import DetailView, ListView, View
 
 from resume.models import ResumeFile
-from translator_request.forms import RequestTranslatorForm
+from translator_request.forms import (
+    RequestTranslatorForm,
+    RequestTranslatorFormDisabled,
+)
 from translator_request.models import (
     TranslatorRequest,
     TranslatorRequestStatusLog,
@@ -26,46 +30,55 @@ STATUS_CHOICES = {
 
 class RequestTranslatorView(View):
     template_name = "translator_request/request_translator.html"
-    success_url = reverse_lazy("dashboard:edit_account")
-
-    def dispatch(self, request, *args, **kwargs):
-        if hasattr(request.user, "translator_request"):
-            if request.user.translator_request.status in ["UR", "AC"]:
-                messages.error(
-                    request,
-                    pgettext_lazy(
-                        "TranslatorRequest under review error message",
-                        "The request is currently under review",
-                    ),
-                )
-                return redirect(reverse("dashboard:edit_account"))
-        return super().dispatch(request, *args, **kwargs)
+    success_url = reverse_lazy("translator_request:request_translator")
 
     def get(self, request):
         initial_languages = request.user.account.languages
-        form = RequestTranslatorForm(
-            instance={
-                "account_form": request.user.account,
-                "resume_form": request.user.account.resume or None,
-            },
-            initial={
-                "account_form": {"languages": initial_languages},
-                "resume_form": {
-                    "about": request.user.account.resume.about
-                    if request.user.account.resume
-                    else request.user.account.about or None,
+        if request.user.translator_request.status in "SERJAC":
+            form = RequestTranslatorForm(
+                instance={
+                    "account_form": request.user.account,
+                    "resume_form": request.user.account.resume or None,
                 },
-            },
-        )
+                initial={
+                    "account_form": {"languages": initial_languages},
+                    "resume_form": {
+                        "about": request.user.account.resume.about
+                        if request.user.account.resume
+                        else request.user.account.about or None,
+                    },
+                },
+            )
+        else:
+            form = RequestTranslatorFormDisabled(
+                instance={
+                    "account_form": request.user.account,
+                    "resume_form": request.user.account.resume or None,
+                },
+                initial={
+                    "account_form": {"languages": initial_languages},
+                    "resume_form": {
+                        "about": request.user.account.resume.about
+                        if request.user.account.resume
+                        else request.user.account.about or None,
+                    },
+                },
+            )
         return render(
             request,
             template_name=self.template_name,
-            context={"form": form},
+            context={
+                "form": form,
+                "request_status": request.user.translator_request.status,
+            },
         )
 
     def post(self, request):
         form = RequestTranslatorForm(request.POST, request.FILES)
-        if form.is_valid():
+        if (
+            form.is_valid()
+            and request.user.translator_request.status in "SERJAC"
+        ):
             resume = form["resume_form"].save()
             files = request.FILES.getlist("files_form-file")
             for file in files:
@@ -83,21 +96,38 @@ class RequestTranslatorView(View):
             request.user.account.save()
             if hasattr(request.user, "translator_request"):
                 request.user.translator_request.resume = resume
-                request.user.translator_request.status = "SE"
+                if request.user.translator_request.status != "AC":
+                    request.user.translator_request.status = "SE"
                 request.user.translator_request.save()
+                messages.success(
+                    request,
+                    pgettext_lazy(
+                        "TranslatorRequest update success",
+                        "Your request to become a translator has been updated",
+                    ),
+                )
             else:
                 TranslatorRequest.objects.create(
                     user=request.user,
                     resume=resume,
                 )
-            messages.success(
-                request,
-                pgettext_lazy(
-                    "RequestTranslator create success",
-                    "Your request to become a translator has been sent",
-                ),
-            )
-            return redirect(reverse("dashboard:edit_account"))
+                messages.success(
+                    request,
+                    pgettext_lazy(
+                        "TranslatorRequest create success",
+                        "Your request to become a translator has been sent",
+                    ),
+                )
+
+            return redirect(reverse("translator_request:request_translator"))
+
+        messages.error(
+            request,
+            pgettext_lazy(
+                "TranslatorRequest on review error",
+                "Your request is currently under review.",
+            ),
+        )
 
         return render(
             request,
@@ -121,6 +151,10 @@ class TranslatorRequestView(LoginRequiredMixin, DetailView):
 
     def get(self, request, *args, **kwargs):
         item = self.get_object()
+        if not request.user.has_perm(
+            "translator_request.view_translatorrequest",
+        ):
+            raise PermissionDenied()
         if item.status == "SE":
             item.status = "UR"
             TranslatorRequestStatusLog.objects.create(
@@ -153,15 +187,10 @@ class AcceptRequestView(LoginRequiredMixin, DetailView):
     context_object_name = "translator_request"
 
     def get(self, request, *args, **kwargs):
-        if not request.user.is_staff:
-            messages.error(
-                request,
-                pgettext_lazy(
-                    "User is not staff",
-                    "You do not have enough permissions",
-                ),
-            )
-            return redirect(reverse("translator_request:translator_requests"))
+        if not request.user.has_perm(
+            "translator_request.edit_translatorrequest",
+        ):
+            raise PermissionDenied()
         item = self.get_object()
         TranslatorRequestStatusLog.objects.create(
             user=request.user,
@@ -181,6 +210,8 @@ Your request has been accepted"""
             fail_silently=False,
         )
         item.status = "AC"
+        item.user.account.is_translator = True
+        item.user.account.save()
         item.save()
         return redirect(reverse("translator_request:translator_requests"))
 
@@ -190,15 +221,10 @@ class RejectRequestView(LoginRequiredMixin, DetailView):
     context_object_name = "translator_request"
 
     def get(self, request, *args, **kwargs):
-        if not request.user.is_staff:
-            messages.error(
-                request,
-                pgettext_lazy(
-                    "User is not staff",
-                    "You do not have enough permissions",
-                ),
-            )
-            return redirect(reverse("translator_request:translator_requests"))
+        if not request.user.has_perm(
+            "translator_request.edit_translatorrequest",
+        ):
+            raise PermissionDenied()
         item = self.get_object()
         TranslatorRequestStatusLog.objects.create(
             user=request.user,
@@ -218,5 +244,7 @@ Your request was rejected"""
             fail_silently=False,
         )
         item.status = "RJ"
+        item.user.account.is_translator = False
+        item.user.account.save()
         item.save()
         return redirect(reverse("translator_request:translator_requests"))

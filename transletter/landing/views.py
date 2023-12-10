@@ -35,3 +35,11 @@ class Handler404View(TemplateView):
     def get(self, request, *args, **kwargs):
         context = self.get_context_data(**kwargs)
         return self.render_to_response(context, status=HTTPStatus.NOT_FOUND)
+
+
+class Handler403View(TemplateView):
+    template_name = "errors/403.html"
+
+    def get(self, request, *args, **kwargs):
+        context = self.get_context_data(**kwargs)
+        return self.render_to_response(context, status=HTTPStatus.FORBIDDEN)

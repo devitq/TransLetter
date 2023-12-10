@@ -3,6 +3,33 @@
 {% load i18n %}
 
 <div class="container mt-3 mb-3">
+
+    {% if request_status == "SE" %}
+    <div class="alert alert-success" role="alert">
+        {% blocktranslate %}
+        Your request was sent to our review team, please, if you have any mistakes, you can correct them now.
+        {% endblocktranslate %}
+    </div>
+    {% elif request_status == "UR" %}
+    <div class="alert alert-info" role="alert">
+        {% blocktranslate %}
+        Your request is under review, you cannot edit it until our team has verified it, stay tuned!
+        {% endblocktranslate %}
+    </div>
+    {% elif request_status == "RJ" %}
+    <div class="alert alert-danger" role="alert">
+        {% blocktranslate %}
+        Your request has been rejected, our team has deemed you incompetent. Please try to update your bio or upgrade your qualification.
+        {% endblocktranslate %}
+    </div>
+    {% elif request_status == "AC" %}
+    <div class="alert alert-success" role="alert">
+        {% blocktranslate %}
+        Your request has been successfully accepted! Now companies can now hire you for their projects! We advise you to update the "About" section of your profile, you can also update your resume files via the same form and your translator status will not be removed.
+        {% endblocktranslate %}
+    </div>
+    {% endif %}
+
     <h1>{% translate "Request Translator" %}</h1>
 
     <p class="text-muted">
@@ -17,7 +44,9 @@
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {% include "includes/form.html" %}
+        {% if request_status in "SERJAC" %}
         <input class="btn btn-primary" type="submit" value="{% translate 'Send' %}">
+        {% endif %}
     </form>
 
 </div>

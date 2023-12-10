@@ -48,12 +48,33 @@ class FilesForm(forms.ModelForm, BaseFormMixin):
         ]
 
 
-class ResumeCreateForm(forms.ModelForm, BaseFormMixin):
+class FilesFormDisabled(FilesForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        for field in self.visible_fields():
+            field.disabled = True
+            field.field.widget.attrs["disabled"] = True
+            field.required = False
+
+
+class ResumeCreateForm(forms.ModelForm, BaseFormMixin):
+    def __init__(self, disable_fields=False, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if disable_fields:
+            for field in self.fields:
+                self[field].disabled = True
         self.fields[Resume.about.field.name].required = True
         self.set_field_attributes()
 
     class Meta:
         model = Resume
         fields = (Resume.about.field.name,)
+
+
+class ResumeCreateFormDisabled(ResumeCreateForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.visible_fields():
+            field.disabled = True
+            field.field.widget.attrs["disabled"] = True
+            field.required = False

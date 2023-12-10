@@ -5,7 +5,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>{% translate "404 Not found" %}</title>
+  <title>{% translate "403 Forbidden" %}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="{% static 'errors/css/normalize.css' %}">
   <link rel='stylesheet' href="{% static 'errors/css/grid.css' %}">
@@ -272,9 +272,9 @@
           </svg>
         </div>
         <div class="col-md-6 align-self-center">
-          <h1>404</h1>
-          <h2>{% translate "Page not found!" %}</h2>
-          <p>{% translate "The page with this url does not exist or it has been moved to a new address. Do you think this is a mistake? Contact us via the chat in the lower right corner." %}
+          <h1>403</h1>
+          <h2>{% translate "Forbidden!" %}</h2>
+          <p>{% translate "You don't have an access to this page! You think that it is a mistake? Contact support." %}
           </p>
           <a href="{% url 'landing:index' %}">
             <button class="btn green">{% translate "HOME" %}</button>

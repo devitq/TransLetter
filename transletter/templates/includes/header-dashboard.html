@@ -43,12 +43,10 @@
                     <span class="nav_name">{% translate "Translator requests" %}</span>
                 </a>
                 {% endif %}
-                {% if not user.translator_request or user.translator_request.status in "SERJ" %}
                 <a href="{% url 'translator_request:request_translator' %}" class="nav_link{% if view_name == 'translator_request:request_translator' %} active{% endif %}">
                     <i class='bx bx-plus nav_icon'></i>
                     <span class="nav_name">{% translate "Request translator" %}</span>
                 </a>
-                {% endif %}
             </div>
         </div>
         <div>
