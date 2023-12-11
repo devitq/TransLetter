@@ -45,7 +45,7 @@ class TranslatorRequest(models.Model):
     )
     resume = models.ForeignKey(
         Resume,
-        on_delete=models.SET_NULL,
+        on_delete=models.CASCADE,
         related_name="translator_request",
         verbose_name=pgettext_lazy("resume field name", "resume"),
         blank=True,
@@ -92,6 +92,11 @@ class TranslatorRequestStatusLog(models.Model):
         choices=STATUS_CHOICES,
         verbose_name=pgettext_lazy("to field name", "to status"),
     )
+    comment = models.TextField(
+        verbose_name=pgettext_lazy("comment field name", "comment"),
+        null=True,
+        blank=True,
+    )
     timestamp = models.DateTimeField(
         auto_now_add=True,
         verbose_name=pgettext_lazy("timestamp field name", "timestamp"),
@@ -100,7 +105,7 @@ class TranslatorRequestStatusLog(models.Model):
     def __str__(self) -> str:
         verbose = _(
             (
-                "Update of status for "
+                "Status update for "
                 f"{self.translator_request.user.username}'s"
                 " translator request"
             ),

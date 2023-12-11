@@ -3,6 +3,7 @@ from django import forms
 
 from accounts.models import Account
 from resume import forms as resume_forms
+from translator_request.models import TranslatorRequestStatusLog
 from transletter.mixins import BaseFormMixin
 from transletter.utils import get_available_langs
 
@@ -36,6 +37,12 @@ class RequestAccountFormDisabled(RequestAccountForm):
             field.disabled = True
             field.field.widget.attrs["disabled"] = True
             field.required = False
+
+
+class RejectRequestForm(forms.Form):
+    class Meta:
+        model = TranslatorRequestStatusLog
+        fields = ("comment",)
 
 
 class RequestTranslatorForm(MultiModelForm):

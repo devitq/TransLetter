@@ -10,6 +10,7 @@ from django.views.generic import DetailView, ListView, View
 
 from resume.models import ResumeFile
 from translator_request.forms import (
+    RejectRequestForm,
     RequestTranslatorForm,
     RequestTranslatorFormDisabled,
 )
@@ -28,7 +29,7 @@ STATUS_CHOICES = {
 }
 
 
-class RequestTranslatorView(View):
+class RequestTranslatorView(LoginRequiredMixin, View):
     template_name = "translator_request/request_translator.html"
     success_url = reverse_lazy("translator_request:request_translator")
 
@@ -83,10 +84,7 @@ class RequestTranslatorView(View):
             request_status = request.user.translator_request.status
         except Exception:
             request_status = "NN"
-        if (
-            form.is_valid()
-            and request_status in "SERJACNN"
-        ):
+        if form.is_valid() and request_status in "SERJACNN":
             resume = form["resume_form"].save()
             files = request.FILES.getlist("files_form-file")
             for file in files:
@@ -151,6 +149,13 @@ class TranslatorRequestsView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         return TranslatorRequest.objects.for_staff()
 
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.has_perm(
+            "translator_request.view_translatorrequest",
+        ):
+            raise PermissionDenied()
+        return super().dispatch(request, *args, **kwargs)
+
 
 class TranslatorRequestView(LoginRequiredMixin, DetailView):
     template_name = "translator_request/translator_request.html"
@@ -159,6 +164,7 @@ class TranslatorRequestView(LoginRequiredMixin, DetailView):
 
     def get(self, request, *args, **kwargs):
         item = self.get_object()
+        form = RejectRequestForm(request.POST)
         if not request.user.has_perm(
             "translator_request.view_translatorrequest",
         ):
@@ -186,7 +192,7 @@ Your request is currently under review"""
         return render(
             request,
             template_name=self.template_name,
-            context={"translator_request": item},
+            context={"translator_request": item, "form": form},
         )
 
 
@@ -234,6 +240,7 @@ class RejectRequestView(LoginRequiredMixin, DetailView):
         ):
             raise PermissionDenied()
         item = self.get_object()
+        blocked = request.GET.get("block", False)
         TranslatorRequestStatusLog.objects.create(
             user=request.user,
             translator_request=item,
@@ -253,6 +260,9 @@ Your request was rejected"""
         )
         item.status = "RJ"
         item.user.account.is_translator = False
+        if blocked:
+            item.user.account.blocked = True
+            item.user.account.blocked_reason = "Spam"
         item.user.account.save()
         item.save()
         return redirect(reverse("translator_request:translator_requests"))

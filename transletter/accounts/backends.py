@@ -1,8 +1,9 @@
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.backends import ModelBackend
-from django.core.mail import send_mail
+from django.core.mail import EmailMultiAlternatives
 from django.core.signing import TimestampSigner
+from django.template.loader import render_to_string
 from django.urls import reverse
 
 import accounts.models
@@ -53,16 +54,21 @@ class AuthenticationBackend(ModelBackend):
 
         signer = TimestampSigner()
         token = signer.sign(user.username)
-        url = request.build_absolute_uri(
+        link = request.build_absolute_uri(
             reverse(
-                "accounts:reactivate_account",
+                "accounts:activate_account",
                 kwargs={"token": token},
             ),
         )
-        send_mail(
-            "Reactivate Your Account",
-            url,
-            settings.EMAIL,
-            [user.email],
-            fail_silently=False,
+        email_body = render_to_string(
+            "accounts/email/reactivate_account.html",
+            {"username": user.username, "link": link},
         )
+        email = EmailMultiAlternatives(
+            subject="Account reactivation - TransLetter",
+            body=email_body,
+            from_email=settings.EMAIL,
+            to=[user.email],
+        )
+        email.attach_alternative(email_body, "text/html")
+        email.send(fail_silently=False)

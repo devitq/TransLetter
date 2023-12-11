@@ -64,6 +64,18 @@ class Account(models.Model):
         pgettext_lazy("is translator count field name", "is translator"),
         default=False,
     )
+    blocked = models.BooleanField(
+        verbose_name=pgettext_lazy("blocked field name", "blocked"),
+        default=False,
+    )
+    blocked_reason = models.TextField(
+        verbose_name=pgettext_lazy(
+            "blocked reason field name",
+            "blocked reason",
+        ),
+        null=True,
+        blank=True,
+    )
     resume = models.OneToOneField(
         Resume,
         on_delete=models.SET_NULL,
@@ -134,6 +146,12 @@ def normalize_user_email(sender, instance, **kwargs):
     instance.email = User.objects.normalize_email(instance.email)
 
 
+def delete_user_stuff(sender, instance, **kwargs):
+    if instance.account.resume and instance.account.resume.id is not None:
+        resume_instance = Resume.objects.get(id=instance.account.resume.id)
+        resume_instance.delete()
+
+
 models.signals.post_save.connect(create_account, sender=User)
 models.signals.post_save.connect(
     create_account,
@@ -142,6 +160,11 @@ models.signals.post_save.connect(
 models.signals.pre_save.connect(normalize_user_email, sender=User)
 models.signals.pre_save.connect(
     normalize_user_email,
+    sender=django.contrib.auth.models.User,
+)
+models.signals.pre_delete.connect(delete_user_stuff, sender=User)
+models.signals.pre_delete.connect(
+    delete_user_stuff,
     sender=django.contrib.auth.models.User,
 )
 

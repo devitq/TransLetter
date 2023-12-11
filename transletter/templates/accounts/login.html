@@ -11,7 +11,8 @@
     </form>
     <br>
     <p>{% translate "Don't have an account yet?" %} <a class="bold" href="{% url 'accounts:signup' %}">{% translate "Signup" %}</a></p>
-    <a class="bold" href="{% url 'accounts:password_reset' %}">{% translate "Forgot password?" %}</a>
+    <p><a class="bold" href="{% url 'accounts:request_activation' %}">{% translate "Request account activation" %}</a></p>
+    <p><a class="bold" href="{% url 'accounts:password_reset' %}">{% translate "Forgot password?" %}</a></p>
 </div>
 
 {% endblock %}

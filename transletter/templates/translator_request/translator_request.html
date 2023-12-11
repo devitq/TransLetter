@@ -41,6 +41,6 @@
   </div>
   <a href="{% url 'translator_request:accept_request' translator_request.id %}" class="btn btn-success col" type="submit">{% translate 'Accept' %}</a>
   <a href="{% url 'translator_request:reject_request' translator_request.id %}" class="btn btn-danger col" type="submit">{% translate 'Reject' %}</a>
-</div>
+  <a href="{% url 'translator_request:reject_request' translator_request.id %}?block=True" class="btn btn-danger col" type="submit">{% translate 'Reject & Block' %}</a>
 
 {% endblock main %}

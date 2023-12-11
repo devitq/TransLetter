@@ -18,10 +18,24 @@ INTERNAL_IPS = os.getenv("DJANGO_INTERNAL_IPS", "127.0.0.1").split(" ")
 
 MAX_AUTH_ATTEMPTS = int(os.getenv("DJNAGO_MAX_AUTH_ATTEMPTS", 3))
 
+RECAPTCHA_ENABLED = os.getenv("RECAPTCHA_ENABLED", "false").lower() in (
+    "true",
+    "1",
+    "yes",
+    "y",
+)
+
+RECAPTCHA_PUBLIC_KEY = os.getenv("RECAPTCHA_PUBLIC_KEY", "public_key")
+
+RECAPTCHA_PRIVATE_KEY = os.getenv("RECAPTCHA_PRIVATE_KEY", "private_key")
+
 MEDIA_URL = "/media/"
 
 if DEBUG:
-    DEFAULT_USER_IS_ACTIVE = True
+    DEFAULT_USER_IS_ACTIVE = os.getenv(
+        "DEFAULT_USER_IS_ACTIVE",
+        "true",
+    ).lower() in ("true", "1", "yes", "y")
 else:
     DEFAULT_USER_IS_ACTIVE = os.getenv(
         "DEFAULT_USER_IS_ACTIVE",
@@ -35,6 +49,7 @@ INSTALLED_APPS = [
     "djmoney",
     "plans",
     "ordered_model",
+    "django_recaptcha",
     # Django apps
     "django.contrib.admin",
     "django.contrib.auth",
@@ -198,6 +213,10 @@ if USE_REAL_EMAIL:
     EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER", "")
 
     EMAIL_PORT = os.getenv("EMAIL_PORT", 25)
+
+    EMAIL_USE_TLS = False
+
+    EMAIL_USE_SSL = True
 else:
     EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
 
