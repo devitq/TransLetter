@@ -29,7 +29,7 @@
                     <i class='bx bx-home nav_icon'></i>
                     <span class="nav_name">{% translate "Home" %}</span>
                 </a>
-                <a href="{% url 'dashboard:projects' %}" class="nav_link{% if view_name == 'dashboard:projects' %} active{% endif %}">
+                <a href="{% url 'projects:projects_list' %}" class="nav_link{% if view_name == 'projects:projects_list' %} active{% endif %}">
                     <i class='bx bx-grid-alt nav_icon'></i>
                     <span class="nav_name">{% translate "Projects" %}</span>
                 </a>

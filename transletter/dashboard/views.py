@@ -1,14 +1,13 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect, render
-from django.views.generic import ListView, TemplateView, View
+from django.views.generic import TemplateView, View
 
 from accounts.forms import (
     AccountAvatarChangeForm,
     UserAccountChangeForm,
     UserChangeForm,
 )
-import projects.models
 
 __all__ = ()
 
@@ -18,7 +17,7 @@ class IndexView(LoginRequiredMixin, TemplateView):
 
 
 class AccountEditView(LoginRequiredMixin, View):
-    template_name = "dashboard/account-edit.html"
+    template_name = "dashboard/edit_account.html"
 
     def get(self, request, *args, **kwargs):
         user_form = UserChangeForm(instance=request.user)
@@ -74,11 +73,3 @@ class AccountEditView(LoginRequiredMixin, View):
                 "avatar_form": avatar_form,
             },
         )
-
-
-class ProjectsView(LoginRequiredMixin, ListView):
-    template_name = "dashboard/projects.html"
-    context_object_name = "projects"
-
-    def get_queryset(self):
-        return projects.models.Project.objects.all()

@@ -6,9 +6,9 @@
 <script src="{% static 'js/scrollreveal.min.js' %}"></script>
 
 <div class="container mt-3 height-100">
-    <div class="album py-4 bg-body-tertiary">
+    <div class="album py-4">
         <div class="container">
-        <h1>{% translate "Projects" %}</h1>
+        <h1>{% translate "Projects" %} <a class="btn btn-primary text-end float-end" href="{% url 'projects:create_project' %}"><i class="fa-solid fa-plus"></i> {% translate "Create project" %}</a></h1>
         <div>
             {% for project in projects %}
                 {% ifchanged %}
