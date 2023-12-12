@@ -49,7 +49,7 @@ class ActivateAccountView(View):
         except BadSignature:
             messages.error(
                 request,
-                pgettext_lazy("error message in views", "Broken link!"),
+                pgettext_lazy("error message in views", "Invalid link!"),
             )
 
         return redirect("accounts:login")

@@ -1,5 +1,8 @@
+from pathlib import Path
+
 from django.db import models
 from django.utils.translation import gettext_lazy as _, pgettext_lazy
+
 
 __all__ = ()
 
@@ -70,6 +73,9 @@ class ResumeFile(models.Model):
             ),
         )
         return str(verbose)
+
+    def filename(self):
+        return Path(self.file.name).name
 
     class Meta:
         verbose_name = pgettext_lazy(

@@ -3,52 +3,115 @@
 {% load i18n %}
 
 <div class="container mt-3 mb-3">
+  {% if request_status == "SE" %}
+  <div class="alert alert-success" role="alert">
+    {% blocktranslate %} Your request has been sent to the reviewers, please if
+    you have made mistakes please correct them now. {% endblocktranslate %}
+  </div>
+  {% elif request_status == "UR" %}
+  <div class="alert alert-info" role="alert">
+    {% blocktranslate %} Your request is under review, you cannot edit it until
+    our team has verified it, stay tuned! {% endblocktranslate %}
+  </div>
+  {% elif request_status == "RJ" %}
+  <div class="alert alert-danger" role="alert">
+    {% blocktranslate %} Your request has been rejected, our team has deemed you
+    incompetent. Please try to update your bio or upgrade your qualification. {% endblocktranslate %}
+  </div>
+  {% elif request_status == "AC" %}
+  <div class="alert alert-success" role="alert">
+    {% blocktranslate %} Your request has been successfully accepted! Now
+    companies can now hire you for their projects! We advise you to update the
+    "About" section of your profile, you can also update your resume files via
+    the same form and your translator status will not be removed. {% endblocktranslate %}
+  </div>
+  {% endif %}
 
-    {% if request_status == "SE" %}
-    <div class="alert alert-success" role="alert">
-        {% blocktranslate %}
-        Your request has been sent to the reviewers, please if you have made mistakes please correct them now.
-        {% endblocktranslate %}
+  <h1>{% translate "Request Translator" %}</h1>
+
+  <p class="text-muted">
+    {% blocktranslate %} Proffecional translator? Here you can submit request to
+    get translator role, some of the fields are already filled for you from your
+    account. In the "About" field you can write your education, projects you
+    have worked on, etc., and you can also attach identity files and various
+    diplomas. Here the about field is visible only to you and us, the public
+    "About" field can be filled in the "Account" section. Please do not spam and
+    provide real information about yourself, if we think you are spamming your
+    account will be irrevocably blocked. {% endblocktranslate %}
+  </p>
+
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% include "includes/form.html" %}
+    <h5>{% translate "Files" %}</h5>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4">
+      {% for file in resume.files.all %}
+      <div class="col mb-5">
+        <div class="card item_card is-revealing zoomable-card">
+          <a
+            href="{% url 'translator_request:download_resume_file' pk=resume.id filename=file.filename %}"
+          >
+            <div
+              class="badge bg-warning text-black position-absolute delete_image"
+            >
+              <i class="fa-solid fa-download"></i>
+            </div>
+          </a>
+          <a href="{% url 'translator_request:delete_resume_file' pk=resume.pk filename=file.filename %}">
+            <div
+              class="badge bg-danger text-black position-absolute download_image"
+            >
+              <i class="fa-solid fa-trash"></i>
+            </div>
+          </a>
+          <svg
+            class="card-img-top card-img-bottom"
+            width="100%"
+            height="200px"
+            xmlns="http://www.w3.org/2000/svg"
+            role="img"
+            aria-label="Placeholder: Thumbnail"
+            preserveAspectRatio="xMidYMid slice"
+            focusable="false"
+          >
+            <title>{% translate "File thumbnail" %}</title>
+            <rect width="100%" height="100%" fill="#55595c"></rect>
+            <text
+              x="50%"
+              y="50%"
+              dominant-baseline="middle"
+              text-anchor="middle"
+              fill="#ffffff"
+              font-size="48"
+              class="fa"
+            >
+              <tspan class="fa-icon">&#xf15b;</tspan>
+            </text>
+          </svg>
+          <div class="card-body">
+            <a
+              href="{% url 'translator_request:download_resume_file' pk=resume.id filename=file.filename %}"
+              class="text-white"
+            >
+              <h6>{{ file.filename }}</h6>
+            </a>
+          </div>
+        </div>
+      </div>
+      {% empty %}
     </div>
-    {% elif request_status == "UR" %}
-    <div class="alert alert-info" role="alert">
-        {% blocktranslate %}
-        Your request is under review, you cannot edit it until our team has verified it, stay tuned!
-        {% endblocktranslate %}
+    <p class="margin-top-10px">{% translate "No files" %}</p>
+    <div>
+    {% endfor %}
     </div>
-    {% elif request_status == "RJ" %}
-    <div class="alert alert-danger" role="alert">
-        {% blocktranslate %}
-        Your request has been rejected, our team has deemed you incompetent. Please try to update your bio or upgrade your qualification.
-        {% endblocktranslate %}
-    </div>
-    {% elif request_status == "AC" %}
-    <div class="alert alert-success" role="alert">
-        {% blocktranslate %}
-        Your request has been successfully accepted! Now companies can now hire you for their projects! We advise you to update the "About" section of your profile, you can also update your resume files via the same form and your translator status will not be removed.
-        {% endblocktranslate %}
-    </div>
+    {% if request_status in "SERJACNN" %}
+    <input
+      class="btn btn-primary"
+      type="submit"
+      value="{% translate 'Send' %}"
+    />
     {% endif %}
-
-    <h1>{% translate "Request Translator" %}</h1>
-
-    <p class="text-muted">
-        {% blocktranslate %}
-        Proffecional translator? Here you can submit request to get translator role, some of the fields are
-        already filled for you from your account. In the "About" field you can write your education, projects you have worked on, etc.,
-        and you can also attach identity files and various diplomas. Here the about field is visible only to you and us, the public "About" field can be filled in the "Account" section.
-        Please do not spam and provide real information about yourself, if we think you are spamming your account will be irrevocably blocked.
-        {% endblocktranslate %}
-    </p>
-
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {% include "includes/form.html" %}
-        {% if request_status in "SERJACNN" %}
-        <input class="btn btn-primary" type="submit" value="{% translate 'Send' %}">
-        {% endif %}
-    </form>
-
+  </form>
 </div>
 
 {% endblock %}

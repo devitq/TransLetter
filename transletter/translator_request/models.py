@@ -5,7 +5,7 @@ from django.utils.translation import (
     pgettext_lazy,
 )
 
-from resume.models import Resume
+from resume.models import Resume, ResumeFile
 
 __all__ = ()
 
@@ -26,6 +26,12 @@ class TranslatorRequestManager(models.Manager):
             .prefetch_related("user")
             .select_related("user__account")
             .select_related("resume")
+            .prefetch_related(
+                models.Prefetch(
+                    Resume.files.field.name,
+                    ResumeFile.objects.only(ResumeFile.file.field.name),
+                ),
+            )
         )
 
     def for_staff(self):

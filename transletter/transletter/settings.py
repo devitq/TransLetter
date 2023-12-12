@@ -42,6 +42,8 @@ else:
         "false",
     ).lower() in ("true", "1", "yes", "y")
 
+STORAGE_NAME = os.getenv("STORAGE_NAME", "default").lower()
+
 INSTALLED_APPS = [
     # Other
     "sorl.thumbnail",

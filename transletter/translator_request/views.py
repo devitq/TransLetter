@@ -3,12 +3,13 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.core.mail import send_mail
-from django.shortcuts import redirect, render
+from django.http import FileResponse, HttpResponseNotFound
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse, reverse_lazy
 from django.utils.translation import pgettext_lazy
 from django.views.generic import DetailView, ListView, View
 
-from resume.models import ResumeFile
+from resume.models import Resume, ResumeFile
 from translator_request.forms import (
     RejectRequestForm,
     RequestTranslatorForm,
@@ -37,19 +38,21 @@ class RequestTranslatorView(LoginRequiredMixin, View):
         initial_languages = request.user.account.languages
         try:
             request_status = request.user.translator_request.status
+            resume = request.user.account.resume
         except Exception:
             request_status = "NN"
+            resume = None
         if request_status in "SERJACNN":
             form = RequestTranslatorForm(
                 instance={
                     "account_form": request.user.account,
-                    "resume_form": request.user.account.resume or None,
+                    "resume_form": resume,
                 },
                 initial={
                     "account_form": {"languages": initial_languages},
                     "resume_form": {
-                        "about": request.user.account.resume.about
-                        if request.user.account.resume
+                        "about": resume.about
+                        if resume
                         else request.user.account.about or None,
                     },
                 },
@@ -58,13 +61,13 @@ class RequestTranslatorView(LoginRequiredMixin, View):
             form = RequestTranslatorFormDisabled(
                 instance={
                     "account_form": request.user.account,
-                    "resume_form": request.user.account.resume or None,
+                    "resume_form": resume or None,
                 },
                 initial={
                     "account_form": {"languages": initial_languages},
                     "resume_form": {
-                        "about": request.user.account.resume.about
-                        if request.user.account.resume
+                        "about": resume.about
+                        if resume
                         else request.user.account.about or None,
                     },
                 },
@@ -75,22 +78,31 @@ class RequestTranslatorView(LoginRequiredMixin, View):
             context={
                 "form": form,
                 "request_status": request_status,
+                "resume": resume,
             },
         )
 
     def post(self, request):
         form = RequestTranslatorForm(request.POST, request.FILES)
+
         try:
             request_status = request.user.translator_request.status
         except Exception:
             request_status = "NN"
+
         if form.is_valid() and request_status in "SERJACNN":
-            resume = form["resume_form"].save()
+            resume = form["resume_form"]
             files = request.FILES.getlist("files_form-file")
-            for file in files:
-                ResumeFile.objects.create(resume=resume, file=file)
+
             if request.user.account.resume:
-                request.user.account.resume.delete()
+                request.user.account.resume.about = resume.cleaned_data[
+                    "about"
+                ]
+                request.user.account.resume.save()
+                resume = request.user.account.resume
+            else:
+                resume = resume.save()
+
             account_form = form["account_form"]
             request.user.account.resume = resume
             request.user.account.languages = account_form.cleaned_data[
@@ -100,6 +112,7 @@ class RequestTranslatorView(LoginRequiredMixin, View):
                 "native_lang"
             ]
             request.user.account.save()
+
             if hasattr(request.user, "translator_request"):
                 request.user.translator_request.resume = resume
                 if request_status != "AC":
@@ -123,6 +136,12 @@ class RequestTranslatorView(LoginRequiredMixin, View):
                         "translator request create success",
                         "Your request to become a translator has been sent",
                     ),
+                )
+
+            for file in files:
+                ResumeFile.objects.create(
+                    resume=request.user.account.resume,
+                    file=file,
                 )
 
             return redirect(reverse("translator_request:request_translator"))
@@ -163,12 +182,12 @@ class TranslatorRequestView(LoginRequiredMixin, DetailView):
     context_object_name = "translator_request"
 
     def get(self, request, *args, **kwargs):
-        item = self.get_object()
-        form = RejectRequestForm(request.POST)
         if not request.user.has_perm(
             "translator_request.view_translatorrequest",
         ):
             raise PermissionDenied()
+        item = self.get_object()
+        form = RejectRequestForm(request.POST)
         if item.status == "SE":
             item.status = "UR"
             TranslatorRequestStatusLog.objects.create(
@@ -266,3 +285,86 @@ Your request was rejected"""
         item.user.account.save()
         item.save()
         return redirect(reverse("translator_request:translator_requests"))
+
+
+class DownloadView(LoginRequiredMixin, View):
+    def dispatch(self, request, pk, filename, *args, **kwargs):
+        resume_author = get_object_or_404(
+            Resume.objects.all(),
+            pk=pk,
+        ).account.user
+        if (
+            not request.user.has_perm(
+                "translator_request.view_translatorrequest",
+            )
+            and request.user != resume_author
+        ):
+            raise PermissionDenied()
+        return super().dispatch(request, pk, filename, *args, **kwargs)
+
+    def get(self, request, pk, filename):
+        path = settings.MEDIA_ROOT / "resume_files" / str(pk) / str(filename)
+        if settings.STORAGE_NAME == "aws":
+            return self.serve_from_s3(path)
+        return self.serve_from_local(path)
+
+    def serve_from_s3(self, path):
+        import boto3
+
+        s3 = boto3.client(
+            "s3",
+            aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
+            aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
+            aws_session_token=settings.AWS_SESSION_TOKEN,
+            region_name=settings.AWS_S3_REGION_NAME,
+        )
+
+        try:
+            s3_response = s3.get_object(
+                Bucket=settings.AWS_STORAGE_BUCKET_NAME,
+                Key=settings.AWS_LOCATION + path,
+            )
+        except Exception as e:
+            return HttpResponseNotFound(f"File not found: {e}")
+
+        response = FileResponse(
+            s3_response["Body"],
+            content_type="application/octet-stream",
+        )
+        response[
+            "Content-Disposition"
+        ] = f'attachment; filename="{path.split("/")[-1]}"'
+        return response
+
+    def serve_from_local(self, path):
+        file_path = settings.MEDIA_ROOT / path
+        if file_path.exists():
+            return FileResponse(open(file_path, "rb"), as_attachment=True)
+        return HttpResponseNotFound()
+
+
+class DeleteView(LoginRequiredMixin, View):
+    def dispatch(self, request, pk, filename, *args, **kwargs):
+        resume_author = get_object_or_404(
+            Resume.objects.all(),
+            pk=pk,
+        ).account.user
+        if request.user != resume_author:
+            raise PermissionDenied()
+        return super().dispatch(request, pk, filename, *args, **kwargs)
+
+    def get(self, request, pk, filename):
+        file_path = f"resume_files/{pk}/{filename}"
+        file = get_object_or_404(
+            ResumeFile.objects.filter(resume_id=pk),
+            file=file_path,
+        )
+        file.delete()
+        messages.success(
+            request,
+            pgettext_lazy(
+                "success message in views",
+                "Your resume file was successfuly deleted",
+            ),
+        )
+        return redirect("translator_request:request_translator")
