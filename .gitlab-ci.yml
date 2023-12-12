@@ -13,7 +13,7 @@ flake8:
 
 black:
   stage: linting
-  image: python:3.11
+  image: registry.gitlab.com/pipeline-components/black:latest
   script:
     - black --diff --check .
 
