@@ -10,6 +10,7 @@ psycopg2-binary
 polib==1.2.0
 python-magic-bin; sys_platform == "win32"
 django-plans
+django-recaptcha
 python-magic; sys_platform == "linux"
 redis==5.0.1
 requests

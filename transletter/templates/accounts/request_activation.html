@@ -3,11 +3,11 @@
 {% load i18n %}
 
 <div class="container">
-    <h1>{% translate "Reset password" %}</h1>
+    <h1>{% translate "Request activation email" %}</h1>
     <form method="post">
         {% csrf_token %}
         {% include "includes/form.html" %}
-        <input class="btn btn-primary" type="submit" value="{% translate 'Reset password' %}">
+        <input class="btn btn-primary" type="submit" value="{% translate 'Send' %}">
     </form>
 </div>
 

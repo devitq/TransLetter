@@ -1,6 +1,9 @@
 from django import forms
+from django.conf import settings
 from django.contrib import auth
 from django.utils.translation import pgettext_lazy
+from django_recaptcha.fields import ReCaptchaField
+from django_recaptcha.widgets import ReCaptchaV2Checkbox
 
 from accounts.models import Account, User
 from transletter.mixins import BaseFormMixin
@@ -62,6 +65,37 @@ class UserSignupForm(auth.forms.UserCreationForm, BaseFormMixin):
         model = User
         fields = ("username", "email", "password1", "password2")
 
+    if settings.RECAPTCHA_ENABLED:
+        captcha = ReCaptchaField(
+            widget=ReCaptchaV2Checkbox(
+                attrs={
+                    "data-theme": "dark",
+                    "data-size": "compact",
+                },
+                api_params={"hl": "cl", "onload": "onLoadFunc"},
+            ),
+        )
+
+
+class RequestAccountActivationForm(
+    auth.forms.PasswordResetForm,
+    BaseFormMixin,
+):
+    def __init__(self, *args, **kwargs):
+        super(RequestAccountActivationForm, self).__init__(*args, **kwargs)
+        self.set_field_attributes()
+
+    if settings.RECAPTCHA_ENABLED:
+        captcha = ReCaptchaField(
+            widget=ReCaptchaV2Checkbox(
+                attrs={
+                    "data-theme": "dark",
+                    "data-size": "compact",
+                },
+                api_params={"hl": "cl", "onload": "onLoadFunc"},
+            ),
+        )
+
 
 class EditUserAdminForm(auth.admin.UserChangeForm):
     def clean_email(self):
@@ -110,6 +144,17 @@ class MyLoginForm(auth.forms.AuthenticationForm, BaseFormMixin):
         super(MyLoginForm, self).__init__(*args, **kwargs)
         self.set_field_attributes()
 
+    if settings.RECAPTCHA_ENABLED:
+        captcha = ReCaptchaField(
+            widget=ReCaptchaV2Checkbox(
+                attrs={
+                    "data-theme": "dark",
+                    "data-size": "compact",
+                },
+                api_params={"hl": "cl", "onload": "onLoadFunc"},
+            ),
+        )
+
 
 class MyPasswordChangeForm(auth.forms.PasswordChangeForm, BaseFormMixin):
     def __init__(self, *args, **kwargs):
@@ -121,6 +166,17 @@ class MyPasswordResetForm(auth.forms.PasswordResetForm, BaseFormMixin):
     def __init__(self, *args, **kwargs):
         super(MyPasswordResetForm, self).__init__(*args, **kwargs)
         self.set_field_attributes()
+
+    if settings.RECAPTCHA_ENABLED:
+        captcha = ReCaptchaField(
+            widget=ReCaptchaV2Checkbox(
+                attrs={
+                    "data-theme": "dark",
+                    "data-size": "compact",
+                },
+                api_params={"hl": "cl", "onload": "onLoadFunc"},
+            ),
+        )
 
 
 class MyPasswordConfirmForm(auth.forms.SetPasswordForm, BaseFormMixin):

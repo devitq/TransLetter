@@ -6,7 +6,7 @@ app_name = "translator_request"
 
 urlpatterns = [
     path(
-        "new/",
+        "my/",
         translator_request.views.RequestTranslatorView.as_view(),
         name="request_translator",
     ),
@@ -29,5 +29,15 @@ urlpatterns = [
         "<int:pk>/reject/",
         translator_request.views.RejectRequestView.as_view(),
         name="reject_request",
+    ),
+    path(
+        "<int:pk>/resume/file/<str:filename>/download/",
+        translator_request.views.DownloadView.as_view(),
+        name="download_resume_file",
+    ),
+    path(
+        "<int:pk>/resume/file/<str:filename>/delete/",
+        translator_request.views.DeleteView.as_view(),
+        name="delete_resume_file",
     ),
 ]

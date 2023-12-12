@@ -25,11 +25,10 @@
     </head>
     <body id="body-pd" class="is-boxed has-animations">
         {% include "includes/header-dashboard.html" %}
+        {% include "includes/toasts.html" %}
         <main id="main-pd">
             {% block main %}{% endblock main %}
         </main>
-        {% include "includes/toasts.html" %}
-        <a href="#" class="top" id="ScrollToTop"></a>  
         <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>     
     </body>
 </html>

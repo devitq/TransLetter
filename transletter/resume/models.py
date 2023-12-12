@@ -1,5 +1,8 @@
+from pathlib import Path
+
 from django.db import models
 from django.utils.translation import gettext_lazy as _, pgettext_lazy
+
 
 __all__ = ()
 
@@ -66,10 +69,13 @@ class ResumeFile(models.Model):
         verbose = _(
             (
                 f"{self.resume.account.user.username}'s"
-                " resume file №{self.id}"
+                f" resume file №{self.id}"
             ),
         )
         return str(verbose)
+
+    def filename(self):
+        return Path(self.file.name).name
 
     class Meta:
         verbose_name = pgettext_lazy(

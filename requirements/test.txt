@@ -1,4 +1,5 @@
 django-debug-toolbar
 freezegun
 parameterized
+beautifulsoup4
 -r prod.txt

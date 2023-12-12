@@ -73,8 +73,8 @@ urlpatterns = [
         name="activate_account",
     ),
     path(
-        "reactivate/<str:token>/",
-        accounts.views.ReactivateAccountView.as_view(),
-        name="reactivate_account",
+        "request_activation/",
+        accounts.views.AccountActivationRequestView.as_view(),
+        name="request_activation",
     ),
 ]
