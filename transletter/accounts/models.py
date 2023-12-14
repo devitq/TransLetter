@@ -88,7 +88,7 @@ class Account(models.Model):
         blank=True,
     )
     native_lang = models.CharField(
-        pgettext_lazy("native lang field name", "native lang"),
+        pgettext_lazy("native lang field name", "native language"),
         max_length=10,
         choices=LANGUAGES,
         null=True,

@@ -45,6 +45,7 @@ class RequestTranslatorView(LoginRequiredMixin, View):
         if request_status in "SERJACNN":
             form = RequestTranslatorForm(
                 instance={
+                    "user_form": request.user,
                     "account_form": request.user.account,
                     "resume_form": resume,
                 },
@@ -60,6 +61,7 @@ class RequestTranslatorView(LoginRequiredMixin, View):
         else:
             form = RequestTranslatorFormDisabled(
                 instance={
+                    "user_form": request.user,
                     "account_form": request.user.account,
                     "resume_form": resume or None,
                 },
@@ -161,12 +163,13 @@ class RequestTranslatorView(LoginRequiredMixin, View):
         )
 
 
-class TranslatorRequestsView(LoginRequiredMixin, ListView):
+class TranslatorRequestsView(ListView):
     template_name = "translator_request/translator_requests.html"
-    context_object_name = "translator_requests"
+    paginate_by = 10
+    model = TranslatorRequest
 
     def get_queryset(self):
-        return TranslatorRequest.objects.for_staff()
+        return TranslatorRequest.objects.for_staff().order_by("-id")
 
     def dispatch(self, request, *args, **kwargs):
         if not request.user.has_perm(
@@ -288,7 +291,7 @@ Your request was rejected"""
 
 
 class DownloadView(LoginRequiredMixin, View):
-    def dispatch(self, request, pk, filename, *args, **kwargs):
+    def dispatch(self, request, pk, file_id, *args, **kwargs):
         resume_author = get_object_or_404(
             Resume.objects.all(),
             pk=pk,
@@ -300,10 +303,12 @@ class DownloadView(LoginRequiredMixin, View):
             and request.user != resume_author
         ):
             raise PermissionDenied()
-        return super().dispatch(request, pk, filename, *args, **kwargs)
+        return super().dispatch(request, pk, file_id, *args, **kwargs)
 
-    def get(self, request, pk, filename):
-        path = settings.MEDIA_ROOT / "resume_files" / str(pk) / str(filename)
+    def get(self, request, pk, file_id):
+        file_object = get_object_or_404(ResumeFile, pk=file_id, resume_id=pk)
+        path = file_object.file.path
+
         if settings.STORAGE_NAME == "aws":
             return self.serve_from_s3(path)
         return self.serve_from_local(path)
@@ -344,27 +349,23 @@ class DownloadView(LoginRequiredMixin, View):
 
 
 class DeleteView(LoginRequiredMixin, View):
-    def dispatch(self, request, pk, filename, *args, **kwargs):
+    def dispatch(self, request, pk, file_id, *args, **kwargs):
         resume_author = get_object_or_404(
             Resume.objects.all(),
             pk=pk,
         ).account.user
         if request.user != resume_author:
             raise PermissionDenied()
-        return super().dispatch(request, pk, filename, *args, **kwargs)
+        return super().dispatch(request, pk, file_id, *args, **kwargs)
 
-    def get(self, request, pk, filename):
-        file_path = f"resume_files/{pk}/{filename}"
-        file = get_object_or_404(
-            ResumeFile.objects.filter(resume_id=pk),
-            file=file_path,
-        )
-        file.delete()
+    def get(self, request, pk, file_id):
+        file_object = get_object_or_404(ResumeFile, pk=file_id, resume_id=pk)
+        file_object.delete()
         messages.success(
             request,
             pgettext_lazy(
                 "success message in views",
-                "Your resume file was successfuly deleted",
+                "Your resume file was successfully deleted",
             ),
         )
         return redirect("translator_request:request_translator")

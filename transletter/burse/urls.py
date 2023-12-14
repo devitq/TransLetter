@@ -10,4 +10,9 @@ urlpatterns = [
         burse.views.TranslatorsView.as_view(),
         name="translators",
     ),
+    path(
+        "translator/<str:username>",
+        burse.views.TranslatorView.as_view(),
+        name="translator",
+    ),
 ]

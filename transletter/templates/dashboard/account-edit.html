@@ -50,12 +50,10 @@
                                         {% endwith %}
                                     </div>
                                 {% endthumbnail %}
-                                </form>
                                 <div class="mt-3">
                                     <h4>{{ request.user.first_name|default:request.user.username }}{% if request.user.first_name != "" %} {{ request.user.last_name }}{% endif %}</h4>
                                     {% if request.user.account.is_translator %}
                                     <p class="text-secondary mb-1">Proffecional translator</p>
-                                    <button class="btn btn-outline-primary">{% translate "Hire" %}</button>
                                     {% endif %}
                                 </div>
                             </div>

@@ -18,6 +18,25 @@ class UserChangeForm(auth.forms.UserChangeForm, BaseFormMixin):
         del self.fields["password"]
         self.set_field_attributes()
 
+    def clean_email(self):
+        email = self.cleaned_data["email"]
+        email = User.objects.normalize_email(
+            email,
+        )
+        user_exist = (
+            User.objects.filter(email=email)
+            .exclude(pk=self.instance.id)
+            .exists()
+        )
+        if user_exist:
+            raise forms.ValidationError(
+                pgettext_lazy(
+                    "error message in forms",
+                    "A user with this email address already exists",
+                ),
+            )
+        return self.cleaned_data["email"]
+
     class Meta(auth.forms.UserChangeForm.Meta):
         model = User
         fields = ("username", "email", "first_name", "last_name")

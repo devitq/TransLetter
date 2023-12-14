@@ -116,10 +116,10 @@ a {
 .header-pd {
   padding-left: calc(var(--nav-width) + 1rem);
 }
-.active {
+.l-navbar .active {
   color: var(--hover-color);
 }
-.active::before {
+.l-navbar .active::before {
   content: "";
   position: absolute;
   left: 0;

@@ -93,7 +93,7 @@ class UserSignupView(CreateView):
                     "success message in views",
                     (
                         "You have successfully registered! Check your "
-                        "email with for further instructions."
+                        "email for further instructions."
                     ),
                 ),
             )

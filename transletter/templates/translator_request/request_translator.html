@@ -44,12 +44,12 @@
     {% csrf_token %}
     {% include "includes/form.html" %}
     <h5>{% translate "Files" %}</h5>
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 mt-3">
       {% for file in resume.files.all %}
       <div class="col mb-5">
         <div class="card item_card is-revealing zoomable-card">
           <a
-            href="{% url 'translator_request:download_resume_file' pk=resume.id filename=file.filename %}"
+            href="{% url 'translator_request:download_resume_file' pk=resume.id file_id=file.id %}"
           >
             <div
               class="badge bg-warning text-black position-absolute delete_image"
@@ -57,7 +57,7 @@
               <i class="fa-solid fa-download"></i>
             </div>
           </a>
-          <a href="{% url 'translator_request:delete_resume_file' pk=resume.pk filename=file.filename %}">
+          <a href="{% url 'translator_request:delete_resume_file' pk=resume.pk file_id=file.id %}">
             <div
               class="badge bg-danger text-black position-absolute download_image"
             >
@@ -90,7 +90,7 @@
           </svg>
           <div class="card-body">
             <a
-              href="{% url 'translator_request:download_resume_file' pk=resume.id filename=file.filename %}"
+              href="{% url 'translator_request:download_resume_file' pk=resume.id file_id=file.id %}"
               class="text-white"
             >
               <h6>{{ file.filename }}</h6>
