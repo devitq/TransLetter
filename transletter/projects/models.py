@@ -127,12 +127,21 @@ class TranslationFile(models.Model):
 class TranslationRow(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, blank=True)
     updated_at = models.DateTimeField(auto_now=True, blank=True)
-    row_id = models.TextField(unique=True)
-    row_str = models.TextField()
+    msg_context = models.TextField(null=True, blank=True)
+    msg_id = models.TextField()
+    msg_str = models.TextField()
     translation_file = models.ForeignKey(
         TranslationFile,
         on_delete=models.CASCADE,
     )
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["msg_context", "msg_id"],
+                name="unique_row",
+            ),
+        ]
 
 
 class TranslationComment(models.Model):
