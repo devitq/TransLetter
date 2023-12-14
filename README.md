@@ -10,29 +10,15 @@ Run this git command
 > git clone git@gitlab.crja72.ru:django_2023/projects/team16.git
 ```
 
-## Creating translations
-
-### Creating .po file for ru
-
-```cmd
-> django-admin makemessages -l ru
-```
-
-### Compiling translations
-
-```cmd
-> django-admin compilemessages
-```
-
 ## ER Diagram
 
 ![ER diagram](ER.jpg)
 
-## Dev setup
+## Setup
 
-### Linux
+### Creating virtual enviroment
 
-#### Creating virtual enviroment
+#### Linux
 
 ```cmd
 > pip install virtualenv
@@ -40,24 +26,22 @@ Run this git command
 > source virtualenv_name/bin/activate
 ```
 
-#### Setup .env file
-
-```cmd
-> cp .env.template .env
-```
-
-And change .env for your needs
-
-### Windows
-
-#### Creating virtual enviroment
+#### Windows
 
 ```cmd
 > python -m venv venv
 > venv\bin\activate
 ```
 
-#### Setup .env file
+### Setup .env file
+
+#### Linux
+
+```cmd
+> cp .env.template .env
+```
+
+#### Windows
 
 ```cmd
 > copy .env.template .env
@@ -85,6 +69,20 @@ And change .env for your needs
 > pip install -r requirements/test.txt
 ```
 
+## Creating translations
+
+### Creating .po file for language
+
+```cmd
+> django-admin makemessages -l <lang_code>
+```
+
+### Compiling translations
+
+```cmd
+> django-admin compilemessages
+```
+
 ## Preparing database
 
 ### Applying migrations
@@ -108,7 +106,10 @@ And change .env for your needs
 #### Parametrs
 
 ```cmd
-
+--interactive - Add this to input superuser data in console instead of getting it from env
+--skip-applying-migrations - Add this to stop loading migrations
+--skip-loading-fixtures - Add this to stop loading fixtures
+--skip-creating-superuser - Add this to stop creating superuser
 ```
 
 ## Collecting static

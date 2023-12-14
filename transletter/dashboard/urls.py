@@ -11,14 +11,4 @@ urlpatterns = [
         dashboard.views.AccountEditView.as_view(),
         name="edit_account",
     ),
-    path(
-        "account/avatar/edit/",
-        dashboard.views.AccountEditView.as_view(),
-        name="edit_avatar",
-    ),
-    path(
-        "projects/",
-        dashboard.views.ProjectsView.as_view(),
-        name="projects",
-    ),
 ]

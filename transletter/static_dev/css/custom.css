@@ -184,7 +184,7 @@ w-100 {
   position: relative;
   height: 150px;
   width: 150px;
-  margin: 50px auto;
+  margin: 15px auto;
   border-radius: 50%;
   overflow: hidden;
   box-shadow: 1px 1px 15px -5px black;
@@ -234,4 +234,12 @@ w-100 {
 }
 .avatar-wrapper .upload-button:hover .fa-arrow-circle-up {
   opacity: 0.9;
+}
+.avatar-form {
+  visibility: hidden;
+  display: none;
+}
+.avatar-section > .invalid-feedback {
+  visibility: visible !important;
+  display: block !important;
 }

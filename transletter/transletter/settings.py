@@ -1,6 +1,7 @@
 import os
 from pathlib import Path
 
+from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from dotenv import load_dotenv
 
@@ -76,8 +77,9 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    # Other
     "django.middleware.locale.LocaleMiddleware",
+    # Projects's middleware
+    "accounts.middleware.Accounts",
 ]
 
 if DEBUG:
@@ -182,11 +184,11 @@ DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 
 AUTHENTICATION_BACKENDS = ("accounts.backends.AuthenticationBackend",)
 
-LOGIN_URL = "/auth/login/"
+LOGIN_URL = reverse_lazy("accounts:login")
 
-LOGIN_REDIRECT_URL = "/dashboard/"
+LOGIN_REDIRECT_URL = reverse_lazy("dashboard:index")
 
-LOGOUT_REDIRECT_URL = "/auth/login/"
+LOGOUT_REDIRECT_URL = reverse_lazy("accounts:login")
 
 THUMBNAIL_PRESERVE_FORMAT = True
 
@@ -201,7 +203,7 @@ TRANSLATION_FILE_FORMATS = ("po", "json")
 
 EMAIL = os.getenv("EMAIL", "example@mail.com")
 
-USE_REAL_EMAIL = os.getenv("USE_REAL_EMAIL", "true").lower() in (
+USE_REAL_EMAIL = os.getenv("USE_REAL_EMAIL", "false").lower() in (
     "true",
     "1",
     "yes",

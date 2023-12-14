@@ -15,6 +15,7 @@ urlpatterns = [
     path("burse/", include("burse.urls")),
     path("dashboard/", include("dashboard.urls")),
     path("translator/request/", include("translator_request.urls")),
+    path("projects/", include("projects.urls")),
     path("auth/", include("accounts.urls")),
     path("auth/", include(django.contrib.auth.urls), name="auth_default"),
     path("admin/", admin.site.urls),
