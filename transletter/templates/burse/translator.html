@@ -1,6 +1,6 @@
 {% extends "base-dashboard.html" %}
 {% block main %}
-{% load i18n thumbnail static field_verbose_name %}
+{% load i18n thumbnail static field_verbose_name language_filters  %}
 
 <div class="container mt-3 mb-3">
     <div class="main-body">
@@ -58,7 +58,7 @@
                                 {% if translator.first_name != "" %}
                                 {{ translator.first_name }}
                                 {% else %}
-                                {% translate "Not mentioned" %}
+                                N/A
                                 {% endif %}
                                 </div>
                             </div>
@@ -71,7 +71,7 @@
                                 {% if translator.last_name != "" %}
                                 {{ translator.last_name }}
                                 {% else %}
-                                {% translate "Not mentioned" %}
+                                N/A
                                 {% endif %}
                                 </div>
                             </div>
@@ -93,7 +93,7 @@
                                 {% if translator.native_lang is not None %}
                                 {{ translator.account.get_native_lang_display }}
                                 {% else %}
-                                {% translate "Not mentioned" %}
+                                N/A
                                 {% endif %}
                                 </div>
                             </div>
@@ -117,8 +117,27 @@
                     <div class="card-body">
                         <h5 class="card-title text-white">{% translate "About" %}</h5>
                         <p class="card-text text-muted">
-                            {{ translator.account.about }}
+                            {{ translator.account.about|default:"N/A" }}
                         </p>
+                        <div class="accordion" id="LanguagesAccordion">
+                            <div class="accordion-item">
+                              <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    {% translate "Languages" %}
+                                </button>
+                              </h2>
+                              <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#LanguagesAccordion">
+                                <div class="accordion-body">
+                                    {% for lang in translator.account.languages %}
+                                        <span class="text-muted">{{ lang|language_name }}</span>
+                                        <br />
+                                    {% empty %}
+                                        <span class="text-muted">N/A</span>
+                                    {% endfor %}
+                                </div>
+                              </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
