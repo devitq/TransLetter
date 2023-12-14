@@ -9,6 +9,10 @@
     >
       {% for translator in translators.all %}
         {% include "includes/translator_card.html" %}
+        {% empty %}
+        </div>
+        <p class="text-muted">{% translate "No translators" %}</p>
+        <div>
       {% endfor %}
     </div>
 </div>
