@@ -1,6 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import ListView, View
 from django.shortcuts import get_object_or_404, render
+from django.views.generic import ListView, View
 
 from accounts.models import User
 
