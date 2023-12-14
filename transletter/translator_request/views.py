@@ -94,6 +94,9 @@ class RequestTranslatorView(LoginRequiredMixin, View):
 
         if form.is_valid() and request_status in "SERJACNN":
             resume = form["resume_form"]
+            request.user.first_name = form["user_form"].cleaned_data["first_name"]
+            request.user.last_name = form["user_form"].cleaned_data["last_name"]
+            request.user.save()
             files = request.FILES.getlist("files_form-file")
 
             if request.user.account.resume:

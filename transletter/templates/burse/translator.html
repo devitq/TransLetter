@@ -117,7 +117,7 @@
                     <div class="card-body">
                         <h5 class="card-title text-white">{% translate "About" %}</h5>
                         <p class="card-text text-muted">
-                            {{ translator.account.about|default:"N/A" }}
+                            {{ translator.account.about|safe|linebreaks|default:"N/A" }}
                         </p>
                         <div class="accordion" id="LanguagesAccordion">
                             <div class="accordion-item">
