@@ -17,7 +17,7 @@ black:
   script:
     - black --diff --check .
 
-sort_check:
+requirements_check:
   stage: linting
   image: python:3.11
   script:
