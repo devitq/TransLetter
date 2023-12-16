@@ -104,6 +104,7 @@ class Account(models.Model):
         max_digits=19,
         decimal_places=4,
         default_currency="USD",
+        currency_choices=(("USD", "Dollar"),),
         default=0,
     )
     website = models.URLField(

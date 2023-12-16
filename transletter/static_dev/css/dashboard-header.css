@@ -17,11 +17,13 @@
 }
 body {
   position: relative;
-  margin: var(--header-height) 0 0 0;
   padding: 0 1rem;
   font-family: var(--body-font);
   font-size: var(--normal-font-size);
   transition: 0.5s;
+}
+#main-pd {
+  margin: var(--header-height) 0 0 0;
 }
 a {
   text-decoration: none;
@@ -136,8 +138,10 @@ a {
 }
 @media screen and (min-width: 768px) {
   body {
-    margin: calc(var(--header-height) + 1rem) 0 0 0;
     padding-left: calc(var(--nav-width) + 2rem);
+  }
+  #main-pd {
+    margin: calc(var(--header-height) + 1rem) 0 0 0;
   }
   .header {
     height: calc(var(--header-height) + 1rem);

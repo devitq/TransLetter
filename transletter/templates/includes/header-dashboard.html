@@ -33,7 +33,7 @@
                     <i class='bx bx-grid-alt nav_icon'></i>
                     <span class="nav_name">{% translate "Projects" %}</span>
                 </a>
-                <a href="#" class="nav_link{% if view_name == 'projects:projects_list' %} active{% endif %}">
+                <a href="{% url 'translation_request:translation_request_list' %}" class="nav_link{% if view_name == 'translation_request:translation_request_list' %} active{% endif %}">
                     <i class='bx bx-git-pull-request'></i>
                     <span class="nav_name">{% translate "Translation requests" %}</span>
                 </a>
@@ -54,7 +54,7 @@
             </div>
         </div>
         <div>
-            <a href="{% url 'dashboard:edit_account' %}" class="nav_link{% if view_name == 'dashboard:edit_account' %} active{% endif %}">
+            <a href="{% url 'accounts:edit_account' %}" class="nav_link{% if view_name == 'accounts:edit_account' %} active{% endif %}">
                 <i class='bx bxs-user nav_icon'></i>
                 <span class="nav_name">{% translate "Account" %}</span>
             </a>

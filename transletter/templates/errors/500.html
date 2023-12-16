@@ -5,7 +5,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>{% translate "403 Forbidden" %}</title>
+  <title>{% translate "500 Internal Server Error" %}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="{% static 'errors/css/normalize.css' %}">
   <link rel='stylesheet' href="{% static 'errors/css/grid.css' %}">
@@ -272,20 +272,9 @@
           </svg>
         </div>
         <div class="col-md-6 align-self-center">
-          <h1>403</h1>
-          <h2>{% translate "Forbidden!" %}</h2>
-          <p>
-            {% if request.user.account.blocked %}
-            {% translate "You have been blocked from our site! You think that it is a mistake? Contact support." %}
-            {% else %}
-            {% translate "You don't have an access to this page! You think that it is a mistake? Contact support." %}
-            {% endif %}
-          </p>
-          <p>
-            {% if request.user.account.blocked_reason != "" and request.user.account.blocked %}
-            {% translate "Comment from administraion:" %}
-            {{ request.user.account.blocked_reason }}
-            {% endif %}
+          <h1>500</h1>
+          <h2>{% translate "Internal Server Error!" %}</h2>
+          <p>{% translate "Something went wrong but we are aware of the problem and are working on a solution, check back later." %}
           </p>
           <a href="{% url 'landing:index' %}">
             <button class="btn green">{% translate "HOME" %}</button>

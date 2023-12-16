@@ -46,7 +46,7 @@
         {% for file in translator_request.resume.files.all %}
         <div class="col mb-5">
           <div class="card item_card is-revealing zoomable-card">
-            <a href="{% url 'translator_request:download_resume_file' pk=translator_request.resume.pk file_id=file.id %}">
+            <a href="{% url 'resume:download_file' pk=translator_request.resume.pk file_id=file.id %}">
               <div
                 class="badge bg-warning text-black position-absolute download_image"
               >
@@ -78,7 +78,7 @@
               </text>
             </svg>
             <div class="card-body">
-              <a href="{% url 'translator_request:download_resume_file' pk=translator_request.resume.pk file_id=file.id %}" class="text-white">
+              <a href="{% url 'resume:download_file' pk=translator_request.resume.pk file_id=file.id %}" class="text-white">
                 <h6>{{ file.filename }}</h6>
               </a>
           </div>
@@ -86,7 +86,8 @@
         </div>
         {% empty %}
       </div>
-      <p class="margin-top-10px">{% translate "No files" %}</p>
+      <p class="text-muted">{% translate "No files" %}</p>
+      <div>
       {% endfor %}
     </div>
   </div>
