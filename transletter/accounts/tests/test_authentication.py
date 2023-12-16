@@ -1,5 +1,6 @@
 from http import HTTPStatus
 import os
+from time import sleep
 
 from bs4 import BeautifulSoup
 from django.conf import settings
@@ -57,6 +58,7 @@ class AuthenticationTests(TestCase):
             )
         self.user.refresh_from_db()
         self.assertFalse(self.user.is_active)
+        sleep(0.5)
         soup = BeautifulSoup(mail.outbox[0].body, "html.parser")
         links = soup.find_all("a")
 

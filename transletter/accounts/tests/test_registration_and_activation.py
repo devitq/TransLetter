@@ -1,4 +1,5 @@
 from http import HTTPStatus
+from time import sleep
 
 from bs4 import BeautifulSoup
 from django.core import mail
@@ -41,6 +42,7 @@ class RegistrationActivationTests(TestCase):
         user = accounts.models.User.objects.get(username="testuser")
         user.refresh_from_db()
         self.assertFalse(user.is_active)
+        sleep(0.5)
         soup = BeautifulSoup(mail.outbox[0].body, "html.parser")
         links = soup.find_all("a")
 
