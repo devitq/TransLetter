@@ -67,6 +67,7 @@ INSTALLED_APPS = [
     "projects.apps.ProjectsConfig",
     "resume.apps.ResumeConfig",
     "translator_request.apps.TranslatorRequestConfig",
+    "notification.apps.NotificationConfig",
 ]
 
 MIDDLEWARE = [
