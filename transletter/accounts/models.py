@@ -1,14 +1,21 @@
+import asyncio
 import sys
 
+from asgiref.sync import async_to_sync
 import django.contrib.auth.models
 from django.db import models
 from django.utils.translation import pgettext_lazy
 from djmoney.models.fields import MoneyField
+import email_normalize
 
 from resume.models import Resume
 from transletter.utils import get_available_langs
 
 __all__ = ("User",)
+
+
+if sys.platform == "win32":
+    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
 
 class UserManager(django.contrib.auth.models.UserManager):
@@ -25,17 +32,42 @@ class UserManager(django.contrib.auth.models.UserManager):
         return self.get_queryset().filter(account__is_translator=True)
 
     def normalize_email(self, email):
+        domains_replacement = {
+            "yandex.ru": [
+                "ya.ru",
+                "yandex.by",
+                "yandex.com",
+                "yandex.kz",
+                "яндекс.рф",
+            ],
+            "protonmail.com": ["pm.me", "protonmail.ch"],
+            "gmail.com": ["googlemail.com"],
+        }
         if email:
+
+            async def normalize_inner(email: str):
+                normalizer = email_normalize.Normalizer()
+                return await normalizer.normalize(email)
+
             email = email.lower()
+            sync_normalize = async_to_sync(normalize_inner)
+            email = sync_normalize(email).normalized_address
+
             login, domain = email.split("@")
-            if "+" in login:
-                login = login.split("+")[0]
-            domain = domain.replace("ya.ru", "yandex.ru")
+
+            for key, replacements in domains_replacement.items():
+                if domain in replacements:
+                    domain = key
+                    break
             if domain == "yandex.ru":
                 login = login.replace(".", "-")
-            elif domain == "gmail.com":
-                login = login.replace(".", "")
+            elif domain == "protonmail.com":
+                login = (
+                    login.replace(".", "").replace("-", "").replace("_", "")
+                )
             email = f"{login}@{domain}"
+
+            return super().normalize_email(email)
 
         return super().normalize_email(email)
 
