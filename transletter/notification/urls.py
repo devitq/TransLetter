@@ -6,7 +6,7 @@ app_name = "notification"
 
 urlpatterns = [
     path(
-        "notifications/",
+        "all/",
         notification.views.NotificationsView.as_view(),
         name="notifications",
     ),
