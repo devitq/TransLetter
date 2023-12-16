@@ -65,6 +65,7 @@ INSTALLED_APPS = [
     "accounts.apps.AccountsConfig",
     "burse.apps.BurseConfig",
     "projects.apps.ProjectsConfig",
+    "rating.apps.RatingConfig",
     "resume.apps.ResumeConfig",
     "translator_request.apps.TranslatorRequestConfig",
     "translation_request.apps.TranslationRequestConfig",

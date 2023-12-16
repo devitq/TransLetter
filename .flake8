@@ -11,6 +11,7 @@ application-import-names =
     burse,
     projects,
     dashboard,
+    rating,
     resume,
     translator_request,
     translation_request,
