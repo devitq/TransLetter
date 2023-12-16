@@ -5,12 +5,13 @@ sorl.thumbnail
 gunicorn
 python-dotenv
 django-money==3.4.1
-Pillow==10.1.0
+email-normalize==2.0.0
 psycopg2-binary
+Pillow==10.1.0
 polib==1.2.0
-python-magic-bin; sys_platform == "win32"
 django-plans
 django-recaptcha
+python-magic-bin; sys_platform == "win32"
 python-magic; sys_platform == "linux"
 redis==5.0.1
 requests
