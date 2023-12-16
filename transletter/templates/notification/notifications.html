@@ -18,10 +18,10 @@
                     </thead>
                     <tbody>
                       {% for notification in notifications %}
-                          {% include "includes/notification_card.html" with notification=notification %}
+                          {% include "includes/notification_card.html" with translator_request=translator_request %}
                       {% empty %}
                       <tr>
-                        <td><p class="text-muted">{% translate "No notifications" %}</p></td>
+                        <td><p class="text-muted">{% translate "No translator requests" %}</p></td>
                       </tr>
                       {% endfor %}
                     </tbody>
