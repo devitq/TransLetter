@@ -2,7 +2,6 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.mail import EmailMultiAlternatives
-from django.core.mail import send_mail
 from django.core.signing import BadSignature, SignatureExpired, TimestampSigner
 from django.shortcuts import redirect, render
 from django.template.loader import render_to_string
@@ -23,6 +22,7 @@ from accounts.forms import (
     UserSignupForm,
 )
 import accounts.models
+from transletter.email import EmailThread
 
 __all__ = ()
 
@@ -97,7 +97,7 @@ class UserSignupView(CreateView):
                 to=[user.email],
             )
             email.attach_alternative(email_body, "text/html")
-            email.send(fail_silently=False)
+            EmailThread(email).start()
 
             messages.success(
                 self.request,
@@ -141,20 +141,22 @@ class AccountActivationRequestView(FormView):
         if not user.is_active:
             signer = TimestampSigner()
             token = signer.sign(user.username)
-            activation_url = self.request.build_absolute_uri(
+            link = self.request.build_absolute_uri(
                 reverse("accounts:activate_account", kwargs={"token": token}),
             )
 
-            send_mail(
-                "Account Activation Request",
-                (
-                    "Please click the following link to activate"
-                    f"your account: {activation_url}"
-                ),
-                settings.EMAIL,
-                [user_email],
-                fail_silently=False,
+            email_body = render_to_string(
+                "accounts/email/activate_account_request.html",
+                {"username": user.username, "link": link},
             )
+            email = EmailMultiAlternatives(
+                subject="Account activation - TransLetter",
+                body=email_body,
+                from_email=settings.EMAIL,
+                to=[user.email],
+            )
+            email.attach_alternative(email_body, "text/html")
+            EmailThread(email).start()
 
             messages.success(
                 self.request,
@@ -202,6 +204,7 @@ class AccountEditView(LoginRequiredMixin, View):
         )
 
     def post(self, request, *args, **kwargs):
+        old_email = request.user.email
         user_form = UserChangeForm(request.POST, instance=request.user)
         account_form = UserAccountChangeForm(
             request.POST,
@@ -225,6 +228,11 @@ class AccountEditView(LoginRequiredMixin, View):
                 "languages"
             ]
             request.user.account.save()
+
+            if old_email != request.user.email:
+                request.user.is_active = False
+                request.user.save()
+
             messages.success(request, "Account updated successfully!")
             return redirect("accounts:edit_account")
 

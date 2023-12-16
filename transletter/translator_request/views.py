@@ -2,8 +2,9 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
-from django.core.mail import send_mail
+from django.core.mail import EmailMultiAlternatives
 from django.shortcuts import redirect, render
+from django.template.loader import render_to_string
 from django.urls import reverse, reverse_lazy
 from django.utils.translation import pgettext_lazy
 from django.views.generic import DetailView, ListView, View
@@ -18,6 +19,7 @@ from translator_request.models import (
     TranslatorRequest,
     TranslatorRequestStatusLog,
 )
+from transletter.email import EmailThread
 
 __all__ = ()
 
@@ -205,17 +207,30 @@ class TranslatorRequestView(LoginRequiredMixin, DetailView):
                 from_status="SE",
                 to="UR",
             )
-            fr_status = STATUS_CHOICES["SE"]
-            to_status = STATUS_CHOICES["UR"]
-            text = f"""Status was change from '{fr_status}' to '{to_status}'
-Your request is currently under review"""
-            send_mail(
-                "Change Translator Request Status",
-                text,
-                settings.EMAIL,
-                [request.user.email],
-                fail_silently=False,
+            text = (
+                f"Hello, {item.user.username}, our team has taken your "
+                "request under review, expect further updates soon."
             )
+            link = request.build_absolute_uri(
+                reverse(
+                    "translator_request:request_translator",
+                ),
+            )
+            email_body = render_to_string(
+                "translator_request/email/status_change.html",
+                {
+                    "text": text,
+                    "link": link,
+                },
+            )
+            email = EmailMultiAlternatives(
+                subject="Translator Request Status Change - TransLetter",
+                body=email_body,
+                from_email=settings.EMAIL,
+                to=[item.user.email],
+            )
+            email.attach_alternative(email_body, "text/html")
+            EmailThread(email).start()
             item.save()
         return render(
             request,
@@ -240,19 +255,33 @@ class AcceptRequestView(LoginRequiredMixin, DetailView):
             from_status=item.status,
             to="AC",
         )
-        fr_status = STATUS_CHOICES[item.status]
-        to_status = STATUS_CHOICES["AC"]
-        text = f"""Status was change from '{fr_status}' to '{to_status}'
-Your request has been accepted"""
-        send_mail(
-            "Change Translator Request Status",
-            text,
-            settings.EMAIL,
-            [request.user.email],
-            fail_silently=False,
+        text = (
+            f"Hello, {item.user.username}, your translator "
+            "request has been successfully accepted! "
         )
+        link = request.build_absolute_uri(
+            reverse(
+                "translator_request:request_translator",
+            ),
+        )
+        email_body = render_to_string(
+            "translator_request/email/status_change.html",
+            {
+                "text": text,
+                "link": link,
+            },
+        )
+        email = EmailMultiAlternatives(
+            subject="Translator Request Status Change - TransLetter",
+            body=email_body,
+            from_email=settings.EMAIL,
+            to=[item.user.email],
+        )
+        email.attach_alternative(email_body, "text/html")
+        EmailThread(email).start()
         item.status = "AC"
         item.user.account.is_translator = True
+        item
         item.user.account.save()
         item.save()
         return redirect(reverse("translator_request:translator_requests"))
@@ -275,17 +304,30 @@ class RejectRequestView(LoginRequiredMixin, DetailView):
             from_status=item.status,
             to="RJ",
         )
-        fr_status = STATUS_CHOICES[item.status]
-        to_status = STATUS_CHOICES["RJ"]
-        text = f"""Status was change from '{fr_status}' to '{to_status}'
-Your request was rejected"""
-        send_mail(
-            "Change Translator Request Status",
-            text,
-            settings.EMAIL,
-            [request.user.email],
-            fail_silently=False,
+        text = (
+            f"Hello, {item.user.username}, your request has been "
+            "rejected, our team has deemed you incompetent."
         )
+        link = request.build_absolute_uri(
+            reverse(
+                "translator_request:request_translator",
+            ),
+        )
+        email_body = render_to_string(
+            "translator_request/email/status_change.html",
+            {
+                "text": text,
+                "link": link,
+            },
+        )
+        email = EmailMultiAlternatives(
+            subject="Translator Request Status Change - TransLetter",
+            body=email_body,
+            from_email=settings.EMAIL,
+            to=[item.user.email],
+        )
+        email.attach_alternative(email_body, "text/html")
+        EmailThread(email).start()
         item.status = "RJ"
         item.user.account.is_translator = False
         if blocked:
