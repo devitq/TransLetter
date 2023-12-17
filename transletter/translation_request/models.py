@@ -37,7 +37,7 @@ class TranslationRequestManager(models.Manager):
                     "messages",
                     queryset=TranslationRequestMessage.objects.select_related(
                         "author",
-                    ).order_by("timestamp"),
+                    ).select_related("author__account").order_by("timestamp"),
                 ),
             )
             .filter(pk=pk)
@@ -65,6 +65,7 @@ class TranslationRequest(models.Model):
             "created at",
         ),
         auto_now_add=True,
+        blank=True,
     )
     closed_at = models.DateTimeField(
         pgettext_lazy("translation request closed at field name", "closed at"),
@@ -114,6 +115,8 @@ class TranslationRequestMessage(models.Model):
     )
     timestamp = models.DateTimeField(
         pgettext_lazy("translation request timestamp field name", "timestamp"),
+        auto_now_add=True,
+        blank=True,
     )
 
     class Meta:

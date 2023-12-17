@@ -1,7 +1,10 @@
 from django import forms
 
 from projects.models import Project
-from translation_request.models import TranslationRequest
+from translation_request.models import (
+    TranslationRequest,
+    TranslationRequestMessage,
+)
 from transletter.mixins import BaseFormMixin
 
 __all__ = ()
@@ -23,3 +26,16 @@ class CreateTranslationRequestForm(forms.ModelForm, BaseFormMixin):
             "text",
             "price",
         )
+
+
+class MessageForm(forms.ModelForm, BaseFormMixin):
+    def __init__(self, *args, **kwargs):
+        super(MessageForm, self).__init__(*args, **kwargs)
+        self.set_field_attributes()
+
+    class Meta:
+        model = TranslationRequestMessage
+        fields = ("content",)
+        widgets = {
+            "content": forms.TextInput(attrs={"placeholder": "Your message"}),
+        }

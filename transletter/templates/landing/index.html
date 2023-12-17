@@ -1,155 +1,161 @@
 {% extends "base.html" %}
-{% block main %}
 {% load static i18n %}
-
-<script src="{% static 'js/anime.min.js' %}"></script>
-<script src="{% static 'js/scrollreveal.min.js' %}"></script>
-<div class="body-wrap">
-    <header class="site-header">
-        <div class="container">
-            <div class="site-header-inner">
-                <div class="brand header-brand">
-                    <h1 class="m-0">
-                        <a href="{% url 'landing:index' %}">
-                            <img class="header-logo-image" width="32px" height="32px" src="{% static 'img/transletter.png' %}" alt="Logo">
-                        </a>
-                    </h1>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <main>
-        <section class="hero">
+{% block main %}
+    <script src="{% static 'js/anime.min.js' %}"></script>
+    <script src="{% static 'js/scrollreveal.min.js' %}"></script>
+    <div class="body-wrap">
+        <header class="site-header">
             <div class="container">
-                <div class="hero-inner">
-                    <div class="hero-copy">
-                        <h1 class="hero-title mt-0">TransLetter</h1>
-                        <p class="hero-paragraph">{% translate "Best service to translate your services" %}</p>
-                        <div class="hero-cta">
-                            <a class="button button-primary" href="{% url 'accounts:signup' %}">{% translate "Signup" %}</a>
-                            <a class="button" href="{% url 'landing:about' %}">{% translate "About" %}</a>
-                        </div>
-                    </div>
-                    <div class="hero-figure anime-element">
-                        <svg width="528" height="396" viewBox="0 0 528 396">
-                        </svg>
-                        <div class="hero-figure-box hero-figure-box-01" data-rotation="45deg"></div>
-                        <div class="hero-figure-box hero-figure-box-02" data-rotation="-45deg"></div>
-                        <div class="hero-figure-box hero-figure-box-03" data-rotation="0deg"></div>
-                        <div class="hero-figure-box hero-figure-box-04" data-rotation="-135deg"></div>
-                        <div class="hero-figure-box hero-figure-box-05"></div>
-                        <div class="hero-figure-box hero-figure-box-06"></div>
-                        <div class="hero-figure-box hero-figure-box-07"></div>
-                        <div class="hero-figure-box hero-figure-box-08" data-rotation="-22deg"></div>
-                        <div class="hero-figure-box hero-figure-box-09" data-rotation="-52deg"></div>
-                        <div class="hero-figure-box hero-figure-box-10" data-rotation="-50deg"></div>
+                <div class="site-header-inner">
+                    <div class="brand header-brand">
+                        <h1 class="m-0">
+                            <a href="{% url 'landing:index' %}">
+                                <img class="header-logo-image"
+                                     width="32px"
+                                     height="32px"
+                                     src="{% static 'img/transletter.png' %}"
+                                     alt="Logo">
+                            </a>
+                        </h1>
                     </div>
                 </div>
             </div>
-        </section>
-
-        <section class="features section">
-            <div class="container">
-                <div class="features-inner section-inner has-bottom-divider">
-                    <div class="features-wrap">
-                        {% for feature in features %}
-                            <div class="feature text-center is-revealing">
-                                <div class="feature-inner">
-                                    <div class="feature-icon">
-                                        {% with counter_value=forloop.counter|stringformat:"s" %}
-                                            <img src="{% static 'landing/img/feature-icon-0'|add:counter_value|add:'.svg' %}" alt="Feature {{ forloop.counter }}">
-                                        {% endwith %}
-                                    </div>
-                                    <h4 class="feature-title mt-24">{{ feature.title }}</h4>
-                                    <p class="text-sm mb-0">{{ feature.content }}</p>
-                                </div>
-                            </div>
-                        {% endfor %}
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="pricing section">
-            <div class="container-sm">
-                <div class="pricing-inner section-inner">
-                    <div class="pricing-header text-center">
-                        <h2 class="section-title mt-0">{% translate "Tiers" %}</h2>
-                        <p class="section-paragraph mb-0">{% translate "We have generous free tier, lets you to try our features, also if you want more, you can buy subscription." %}</p>
-                    </div>
-                    <div class="pricing-tables-wrap">
-                        <div class="pricing-table">
-                            <div class="pricing-table-inner is-revealing">
-                                <div class="pricing-table-main">
-                                    <div class="pricing-table-header pb-24">
-                                        <div class="pricing-table-price"><span class="pricing-table-price-currency h2">$</span><span class="pricing-table-price-amount h1">0</span><span class="text-xs">/month</span></div>
-                                    </div>
-                                    <div class="pricing-table-features-title text-xs pt-24 pb-24">{% translate "subscription_features_title" %}</div>
-                                    <ul class="pricing-table-features list-reset text-xs">
-                                        <li>
-                                            <span>{% translate "subscription_feature_1" %}</span>
-                                        </li>
-                                        <li>
-                                            <span>{% translate "subscription_feature_2" %}</span>
-                                        </li>
-                                        <li>
-                                            <span>{% translate "subscription_feature_3" %}</span>
-                                        </li>
-                                        <li>
-                                            <span>{% translate "subscription_feature_4" %}</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="pricing-table-cta mb-8">
-                                    <a class="button button-primary button-shadow button-block" href="#">{% translate "subscription_order_button_text" %}</a>
-                                </div>
+        </header>
+        <main>
+            <section class="hero">
+                <div class="container">
+                    <div class="hero-inner">
+                        <div class="hero-copy">
+                            <h1 class="hero-title mt-0">TransLetter</h1>
+                            <p class="hero-paragraph">{% translate "Best service to translate your services" %}</p>
+                            <div class="hero-cta">
+                                <a class="button button-primary" href="{% url 'accounts:signup' %}">{% translate "Signup" %}</a>
+                                <a class="button" href="{% url 'landing:about' %}">{% translate "About" %}</a>
                             </div>
                         </div>
-                        <div class="pricing-table">
-                            <div class="pricing-table-inner is-revealing">
-                                <div class="pricing-table-main">
-                                    <div class="pricing-table-header pb-24">
-                                        <div class="pricing-table-price"><span class="pricing-table-price-currency h2">$</span><span class="pricing-table-price-amount h1">10</span><span class="text-xs">/month</span></div>
-                                    </div>
-                                    <div class="pricing-table-features-title text-xs pt-24 pb-24">{% translate "subscription_features_title" %}</div>
-                                    <ul class="pricing-table-features list-reset text-xs">
-                                        <li>
-                                            <span>{% translate "subscription_feature_1" %}</span>
-                                        </li>
-                                        <li>
-                                            <span>{% translate "subscription_feature_2" %}</span>
-                                        </li>
-                                        <li>
-                                            <span>{% translate "subscription_feature_3" %}</span>
-                                        </li>
-                                        <li>
-                                            <span>{% translate "subscription_feature_4" %}</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="pricing-table-cta mb-8">
-                                    <a class="button button-primary button-shadow button-block" href="#">{% translate "subscription_order_button_text" %}</a>
-                                </div>
-                            </div>
+                        <div class="hero-figure anime-element">
+                            <svg width="528" height="396" viewBox="0 0 528 396">
+                            </svg>
+                            <div class="hero-figure-box hero-figure-box-01" data-rotation="45deg"></div>
+                            <div class="hero-figure-box hero-figure-box-02" data-rotation="-45deg"></div>
+                            <div class="hero-figure-box hero-figure-box-03" data-rotation="0deg"></div>
+                            <div class="hero-figure-box hero-figure-box-04" data-rotation="-135deg"></div>
+                            <div class="hero-figure-box hero-figure-box-05"></div>
+                            <div class="hero-figure-box hero-figure-box-06"></div>
+                            <div class="hero-figure-box hero-figure-box-07"></div>
+                            <div class="hero-figure-box hero-figure-box-08" data-rotation="-22deg"></div>
+                            <div class="hero-figure-box hero-figure-box-09" data-rotation="-52deg"></div>
+                            <div class="hero-figure-box hero-figure-box-10" data-rotation="-50deg"></div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
-
-        <section class="cta section">
-            <div class="container">
-                <div class="cta-inner section-inner">
-                    <h3 class="section-title mt-0">{% translate "An entrepreneurial company?" %}</h3>
-                    <div class="cta-cta">
-                        <a class="button button-primary button-wide-mobile" href="mailto:trans.letter@ya.ru">{% translate "Contact sales" %}</a>
+            </section>
+            <section class="features section">
+                <div class="container">
+                    <div class="features-inner section-inner has-bottom-divider">
+                        <div class="features-wrap">
+                            {% for feature in features %}
+                                <div class="feature text-center is-revealing">
+                                    <div class="feature-inner">
+                                        <div class="feature-icon">
+                                            {% with counter_value=forloop.counter|stringformat:"s" %}
+                                                <img src="{% static 'landing/img/feature-icon-0'|add:counter_value|add:'.svg' %}"
+                                                     alt="Feature {{ forloop.counter }}">
+                                            {% endwith %}
+                                        </div>
+                                        <h4 class="feature-title mt-24">{{ feature.title }}</h4>
+                                        <p class="text-sm mb-0">{{ feature.content }}</p>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
-    </main>
-</div>
-<script src="{% static 'js/animation_setup.min.js' %}"></script>
-
+            </section>
+            <section class="pricing section">
+                <div class="container-sm">
+                    <div class="pricing-inner section-inner">
+                        <div class="pricing-header text-center">
+                            <h2 class="section-title mt-0">{% translate "Tiers" %}</h2>
+                            <p class="section-paragraph mb-0">
+                                {% translate "We have generous free tier, lets you to try our features, also if you want more, you can buy subscription." %}
+                            </p>
+                        </div>
+                        <div class="pricing-tables-wrap">
+                            <div class="pricing-table">
+                                <div class="pricing-table-inner is-revealing">
+                                    <div class="pricing-table-main">
+                                        <div class="pricing-table-header pb-24">
+                                            <div class="pricing-table-price">
+                                                <span class="pricing-table-price-currency h2">$</span><span class="pricing-table-price-amount h1">0</span><span class="text-xs">/month</span>
+                                            </div>
+                                        </div>
+                                        <div class="pricing-table-features-title text-xs pt-24 pb-24">{% translate "subscription_features_title" %}</div>
+                                        <ul class="pricing-table-features list-reset text-xs">
+                                            <li>
+                                                <span>{% translate "subscription_feature_1" %}</span>
+                                            </li>
+                                            <li>
+                                                <span>{% translate "subscription_feature_2" %}</span>
+                                            </li>
+                                            <li>
+                                                <span>{% translate "subscription_feature_3" %}</span>
+                                            </li>
+                                            <li>
+                                                <span>{% translate "subscription_feature_4" %}</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="pricing-table-cta mb-8">
+                                        <a class="button button-primary button-shadow button-block" href="#">{% translate "subscription_order_button_text" %}</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pricing-table">
+                                <div class="pricing-table-inner is-revealing">
+                                    <div class="pricing-table-main">
+                                        <div class="pricing-table-header pb-24">
+                                            <div class="pricing-table-price">
+                                                <span class="pricing-table-price-currency h2">$</span><span class="pricing-table-price-amount h1">10</span><span class="text-xs">/month</span>
+                                            </div>
+                                        </div>
+                                        <div class="pricing-table-features-title text-xs pt-24 pb-24">{% translate "subscription_features_title" %}</div>
+                                        <ul class="pricing-table-features list-reset text-xs">
+                                            <li>
+                                                <span>{% translate "subscription_feature_1" %}</span>
+                                            </li>
+                                            <li>
+                                                <span>{% translate "subscription_feature_2" %}</span>
+                                            </li>
+                                            <li>
+                                                <span>{% translate "subscription_feature_3" %}</span>
+                                            </li>
+                                            <li>
+                                                <span>{% translate "subscription_feature_4" %}</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="pricing-table-cta mb-8">
+                                        <a class="button button-primary button-shadow button-block" href="#">{% translate "subscription_order_button_text" %}</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="cta section">
+                <div class="container">
+                    <div class="cta-inner section-inner">
+                        <h3 class="section-title mt-0">{% translate "An entrepreneurial company?" %}</h3>
+                        <div class="cta-cta">
+                            <a class="button button-primary button-wide-mobile"
+                               href="mailto:trans.letter@ya.ru">{% translate "Contact sales" %}</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="{% static 'js/animation_setup.min.js' %}"></script>
 {% endblock main %}

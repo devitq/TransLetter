@@ -17,6 +17,13 @@ black:
   script:
     - black --diff --check .
 
+djlint:
+  stage: linting
+  image: python:3.11
+  script:
+    - pip install djlint
+    - djlint . --check
+
 requirements_check:
   stage: linting
   image: python:3.11

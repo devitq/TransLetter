@@ -44,7 +44,7 @@ class UserChangeForm(auth.forms.UserChangeForm, BaseFormMixin):
             "email": pgettext_lazy(
                 "Help text for email in user change form",
                 (
-                    "WARNING: If you change your email "
+                    "WARNING: If you change your email, "
                     "your account will be deactivated"
                 ),
             ),

@@ -84,12 +84,29 @@ class DeleteView(LoginRequiredMixin, View):
 
     def get(self, request, pk, file_id):
         file_object = get_object_or_404(ResumeFile, pk=file_id, resume_id=pk)
-        file_object.delete()
-        messages.success(
-            request,
-            pgettext_lazy(
-                "success message in views",
-                "Your resume file was successfully deleted",
-            ),
-        )
+        translator_request = file_object.resume.translator_request.first()
+        if translator_request is None:
+            status = "NN"
+        else:
+            status = translator_request.status
+        if status != "UR":
+            file_object.delete()
+            messages.success(
+                request,
+                pgettext_lazy(
+                    "success message in views",
+                    "Your resume file was successfully deleted",
+                ),
+            )
+        else:
+            messages.error(
+                request,
+                pgettext_lazy(
+                    "error message in views",
+                    (
+                        "Your translator request is currently "
+                        "under review, you can't delete files!"
+                    ),
+                ),
+            )
         return redirect("translator_request:request_translator")
