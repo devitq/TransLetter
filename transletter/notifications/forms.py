@@ -1,6 +1,6 @@
 from django import forms
 
-from notification.models import Notification
+from notifications.models import Notification
 
 __all__ = ()
 

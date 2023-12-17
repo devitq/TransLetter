@@ -4,7 +4,7 @@ from django.utils.translation import pgettext_lazy
 __all__ = ()
 
 
-class NotificationConfig(AppConfig):
+class NotificationsConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
-    name = "notification"
-    verbose_name = pgettext_lazy("app name", "Notification")
+    name = "notifications"
+    verbose_name = pgettext_lazy("app name", "Notifications")

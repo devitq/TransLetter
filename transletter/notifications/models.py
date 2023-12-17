@@ -14,6 +14,7 @@ class NotificationManager(models.Manager):
 
 class Notification(models.Model):
     objects = NotificationManager()
+
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,

@@ -5,7 +5,7 @@ from django.db import models
 from django.utils.translation import pgettext_lazy
 from djmoney.models.fields import MoneyField
 
-from notification.models import Notification
+from notifications.models import Notification
 from resume.models import Resume
 from transletter.utils import get_available_langs
 
