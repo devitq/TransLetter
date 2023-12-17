@@ -4,7 +4,7 @@ from django.shortcuts import get_object_or_404, render
 from django.views.generic import ListView, View
 
 from accounts.models import User
-from resume.models import ResumeFile
+from rating.models import Rating
 
 __all__ = ()
 
@@ -22,16 +22,12 @@ class TranslatorView(LoginRequiredMixin, View):
 
     def get(self, request, username, *args, **kwargs):
         translator = get_object_or_404(
-            User.objects.select_related("account")
-            .select_related("account__resume")
-            .prefetch_related(
+            User.objects.translator(username).prefetch_related(
                 models.Prefetch(
-                    "account__resume__files",
-                    queryset=ResumeFile.objects.all(),
+                    "ratings",
+                    queryset=Rating.objects.by_translator(username),
                 ),
             ),
-            username=username,
-            account__is_translator=True,
         )
         context = {"translator": translator}
         return render(request, self.template_name, context)

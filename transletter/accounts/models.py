@@ -8,7 +8,7 @@ from django.utils.translation import pgettext_lazy
 from djmoney.models.fields import MoneyField
 import email_normalize
 
-from resume.models import Resume
+from resume.models import Resume, ResumeFile
 from transletter.utils import get_available_langs
 
 __all__ = ("User",)
@@ -30,6 +30,23 @@ class UserManager(django.contrib.auth.models.UserManager):
 
     def translators(self):
         return self.get_queryset().filter(account__is_translator=True)
+
+    def translator(self, username):
+        return (
+            self.get_queryset()
+            .select_related("account")
+            .select_related("account__resume")
+            .prefetch_related(
+                models.Prefetch(
+                    "account__resume__files",
+                    queryset=ResumeFile.objects.all(),
+                ),
+            )
+            .filter(
+                username=username,
+                account__is_translator=True,
+            )
+        )
 
     def normalize_email(self, email):
         domains_replacement = {

@@ -90,10 +90,10 @@
                                 <h6 class="mb-0">{% get_verbose_field_name translator.account "native_lang" %}:</h6>
                                 </div>
                                 <div class="col-sm-6 text-secondary">
-                                {% if translator.native_lang is not None %}
-                                {{ translator.account.get_native_lang_display }}
+                                {% if translator.account.native_lang is not None %}
+                                    {{ translator.account.get_native_lang_display }}
                                 {% else %}
-                                N/A
+                                    N/A
                                 {% endif %}
                                 </div>
                             </div>
@@ -193,6 +193,21 @@
                 </div>
                 <p class="text-muted">{% translate "No files" %}</p>
                 <div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col">
+                <h5>{% translate "Ratings" %}</h5>
+                {% for rating in translator.ratings.all %}
+                    {% ifchanged %}
+                        <h5>{% translate "Project" %} - {{ rating.translation_request.project }}</h5>
+                    {% endifchanged %}
+                    {% include "includes/rating.html" %}
+                {% empty %}
+                    </div>
+                    <p class="text-muted">{% translate "No ratings" %}</p>
+                    <div>
                 {% endfor %}
             </div>
         </div>

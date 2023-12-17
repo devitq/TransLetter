@@ -11,6 +11,21 @@ __all__ = ()
 
 
 class RatingManager(models.Manager):
+    def by_translator(self, username):
+        return (
+            self.get_queryset()
+            .filter(
+                translator__username=username,
+            )
+            .select_related("user")
+            .select_related("user__account")
+            .select_related(
+                "translation_request",
+                "translation_request__project",
+            )
+            .order_by("translation_request__project", "-created_at")
+        )
+
     def by_translation_request(self, translation_request_id):
         return self.get_queryset().filter(
             translation_request__id=translation_request_id,
