@@ -196,17 +196,17 @@
                 {% endfor %}
             </div>
         </div>
-        <div class="row mt-0">
-            <div class="col">
-                <h5>{% translate "Ratings" %}</h5>
-                {% for rating in translator.ratings.all %}
-                    {% include "includes/rating.html" %}
-                {% empty %}
-                    </div>
-                    <p class="text-muted">{% translate "No ratings" %}</p>
-                    <div>
-                {% endfor %}
-            </div>
+    </div>
+    <div class="row mt-0 ps-0 pe-0">
+        <div class="col">
+            <h5>{% translate "Ratings" %}</h5>
+            {% for rating in translator.ratings.all %}
+                {% include "includes/rating.html" %}
+            {% empty %}
+                </div>
+                <p class="text-muted">{% translate "No ratings" %}</p>
+                <div>
+            {% endfor %}
         </div>
     </div>
 </div>

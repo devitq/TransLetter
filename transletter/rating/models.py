@@ -23,7 +23,7 @@ class RatingManager(models.Manager):
                 "translation_request",
                 "translation_request__project",
             )
-            .order_by("translation_request__project", "-created_at")
+            .order_by("-created_at")
         )
 
     def by_translation_request(self, translation_request_id):
