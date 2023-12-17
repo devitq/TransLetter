@@ -196,13 +196,10 @@
                 {% endfor %}
             </div>
         </div>
-        <div class="row mt-4">
+        <div class="row mt-0">
             <div class="col">
                 <h5>{% translate "Ratings" %}</h5>
                 {% for rating in translator.ratings.all %}
-                    {% ifchanged %}
-                        <h5>{% translate "Project" %} - {{ rating.translation_request.project }}</h5>
-                    {% endifchanged %}
                     {% include "includes/rating.html" %}
                 {% empty %}
                     </div>
