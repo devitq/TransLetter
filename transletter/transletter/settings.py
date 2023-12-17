@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     "resume.apps.ResumeConfig",
     "translator_request.apps.TranslatorRequestConfig",
     "translation_request.apps.TranslationRequestConfig",
-    "django_backblaze_b2",
 ]
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
