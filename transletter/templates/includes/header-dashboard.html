@@ -4,15 +4,22 @@
     <div class="header_toggle">
         <i class='bx bx-menu' id="header-toggle"></i>
     </div>
-    <div class="header_img">
-        {% thumbnail request.user.account.avatar "300x300" as avatar %}
-            <img src="{{ avatar.url }}" alt="Avatar">
-        {% empty %}
-            <svg alt="Avatar" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
-                <title>{% translate "No image" %}</title>
-                <rect width="100%" height="100%" fill="#55595c"></rect>
-            </svg>
-        {% endthumbnail %}
+    <div class="header_right">
+        <a href="{% url 'notifications:all' %}">
+            <div class="header_notification">
+                <i class='bx bxs-bell'></i>
+            </div>
+        </a>
+        <div class="header_img">
+            {% thumbnail request.user.account.avatar "300x300" as avatar %}
+                <img src="{{ avatar.url }}" alt="Avatar">
+            {% empty %}
+                <svg alt="Avatar" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
+                    <title>{% translate "No image" %}</title>
+                    <rect width="100%" height="100%" fill="#55595c"></rect>
+                </svg>
+            {% endthumbnail %}
+        </div>
     </div>
 </header>
 

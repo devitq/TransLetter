@@ -13,4 +13,5 @@ application-import-names =
     dashboard,
     resume,
     translator_request,
+    notifications,
 inline-quotes = "

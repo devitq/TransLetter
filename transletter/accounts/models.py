@@ -5,6 +5,7 @@ from django.db import models
 from django.utils.translation import pgettext_lazy
 from djmoney.models.fields import MoneyField
 
+from notifications.models import Notification
 from resume.models import Resume
 from transletter.utils import get_available_langs
 
@@ -136,6 +137,13 @@ class Account(models.Model):
 class User(django.contrib.auth.models.User):
     class Meta:
         proxy = True
+
+    def add_notification(self, title, content):
+        Notification.objects.create(
+            user=self,
+            title=title,
+            content=content,
+        )
 
     objects = UserManager()
 
