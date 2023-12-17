@@ -150,7 +150,13 @@ class UpdateTranslationRequestStatusView(LoginRequiredMixin, View):
             and translation_request.author != request.user
         ):
             raise PermissionDenied()
-        return super().dispatch(request, pk, translation_request, *args, **kwargs)
+        return super().dispatch(
+            request,
+            pk,
+            translation_request,
+            *args,
+            **kwargs,
+        )
 
     def get(
         self,

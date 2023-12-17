@@ -37,7 +37,9 @@ class TranslationRequestManager(models.Manager):
                     "messages",
                     queryset=TranslationRequestMessage.objects.select_related(
                         "author",
-                    ).select_related("author__account").order_by("timestamp"),
+                    )
+                    .select_related("author__account")
+                    .order_by("timestamp"),
                 ),
             )
             .filter(pk=pk)
