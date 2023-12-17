@@ -30,6 +30,10 @@ class Notification(models.Model):
         verbose_name=pgettext_lazy("content field name", "content"),
         null=True,
     )
+    read = models.BooleanField(
+        pgettext_lazy("is notification read field name", "read"),
+        default=False,
+    )
     created_at = models.DateTimeField(
         auto_now_add=True,
         verbose_name=pgettext_lazy("created_at field name", "created at"),
