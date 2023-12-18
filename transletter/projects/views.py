@@ -37,7 +37,7 @@ class CreateProjectView(LoginRequiredMixin, CreateView):
         if form.is_valid():
             project = form.save(commit=False)
             project.save()
-            return redirect("project_detail", pk=project.pk)
+            return redirect("projects:project_page", pk=project.pk)
         return render(request, self.template_name, {"form": form})
 
 
@@ -219,3 +219,17 @@ class ActivateProjectMemberView(LoginRequiredMixin, ListView):
                     "Existing member",
                 )
         return redirect("projects:project_members", pk)
+
+
+class ProjectPageView(LoginRequiredMixin, ListView):
+    template_name = "projects/project_page.html"
+
+    def get(self, request, pk):
+        project = projects.models.Project.objects.get(id=pk)
+        return render(
+            request,
+            self.template_name,
+            context={
+                "project_info": project,
+            },
+        )

@@ -16,6 +16,11 @@ urlpatterns = [
         name="create_project",
     ),
     path(
+        "<int:pk>/",
+        projects.views.ProjectPageView.as_view(),
+        name="project_page",
+    ),
+    path(
         "<int:pk>/members/",
         projects.views.ProjectMembersView.as_view(),
         name="project_members",
