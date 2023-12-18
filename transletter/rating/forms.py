@@ -15,3 +15,9 @@ class RatingAdminForm(forms.ModelForm):
             model.text.field.name,
             model.rating.field.name,
         )
+
+
+class RatingForm(forms.ModelForm):
+    class Meta:
+        model = Rating
+        fields = ["text", "rating"]
