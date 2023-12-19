@@ -15,7 +15,7 @@ __all__ = ()
 
 
 class RegistrationActivationTests(TestCase):
-    @override_settings(RECAPTCHA_ENABLED=False)
+    @override_settings(RECAPTCHA_ENABLED=False, USE_REAL_EMAIL=False)
     def setUp(self):
         self.signup_url = reverse("accounts:signup")
         self.activation_url = reverse(
@@ -24,7 +24,11 @@ class RegistrationActivationTests(TestCase):
         )
         self.time_now = timezone.now()
 
-    @override_settings(DEFAULT_USER_IS_ACTIVE=False, RECAPTCHA_ENABLED=False)
+    @override_settings(
+        DEFAULT_USER_IS_ACTIVE=False,
+        RECAPTCHA_ENABLED=False,
+        USE_REAL_EMAIL=False,
+    )
     def test_user_registration_and_late_activation(self):
         response = self.client.post(
             self.signup_url,
@@ -57,7 +61,11 @@ class RegistrationActivationTests(TestCase):
             user.refresh_from_db()
             self.assertFalse(user.is_active)
 
-    @override_settings(DEFAULT_USER_IS_ACTIVE=False, RECAPTCHA_ENABLED=False)
+    @override_settings(
+        DEFAULT_USER_IS_ACTIVE=False,
+        RECAPTCHA_ENABLED=False,
+        USE_REAL_EMAIL=False,
+    )
     def test_user_registration_and_on_time_activation(self):
         response = self.client.post(
             self.signup_url,

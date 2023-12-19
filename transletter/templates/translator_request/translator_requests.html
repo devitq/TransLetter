@@ -18,7 +18,7 @@
                             </thead>
                             <tbody>
                                 {% for translator_request in page_obj %}
-                                    {% include "includes/translator_request_card.html" with translator_request=translator_request %}
+                                    {% include "translator_request/includes/translator_request_card.html" with translator_request=translator_request %}
                                 {% empty %}
                                     <tr>
                                         <td>

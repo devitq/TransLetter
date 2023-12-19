@@ -5,7 +5,7 @@
         <h2>{% translate "Translation Requests" %}</h2>
         <div class="row mt-3">
             {% for translation_request in page_obj %}
-                {% include "includes/translation_request_card.html" %}
+                {% include "translation_request/includes/translation_request_card.html" %}
             {% empty %}
             </div>
             <p class="text-muted">{% translate "No translation requests" %}</p>

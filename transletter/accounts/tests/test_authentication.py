@@ -16,7 +16,7 @@ __all__ = ()
 
 
 class AuthenticationTests(TestCase):
-    @override_settings(RECAPTCHA_ENABLED=False)
+    @override_settings(RECAPTCHA_ENABLED=False, USE_REAL_EMAIL=False)
     def setUp(self):
         self.client = Client()
         self.username = "testuser"
@@ -33,7 +33,7 @@ class AuthenticationTests(TestCase):
             args=["token"],
         )
 
-    @override_settings(RECAPTCHA_ENABLED=False)
+    @override_settings(RECAPTCHA_ENABLED=False, USE_REAL_EMAIL=False)
     def test_login_by_username(self):
         response = self.client.post(
             reverse("login"),
@@ -41,7 +41,7 @@ class AuthenticationTests(TestCase):
         )
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
 
-    @override_settings(RECAPTCHA_ENABLED=False)
+    @override_settings(RECAPTCHA_ENABLED=False, USE_REAL_EMAIL=False)
     def test_login_by_email(self):
         response = self.client.post(
             reverse("login"),
@@ -49,7 +49,7 @@ class AuthenticationTests(TestCase):
         )
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
 
-    @override_settings(RECAPTCHA_ENABLED=False)
+    @override_settings(RECAPTCHA_ENABLED=False, USE_REAL_EMAIL=False)
     def test_account_deactivation_and_late_reactivation(self):
         for _ in range(settings.MAX_AUTH_ATTEMPTS):
             self.client.post(
@@ -73,7 +73,7 @@ class AuthenticationTests(TestCase):
             self.user.refresh_from_db()
             self.assertFalse(self.user.is_active)
 
-    @override_settings(RECAPTCHA_ENABLED=False)
+    @override_settings(RECAPTCHA_ENABLED=False, USE_REAL_EMAIL=False)
     def test_account_deactivation_and_on_time_reactivation(self):
         for _ in range(settings.MAX_AUTH_ATTEMPTS):
             self.client.post(

@@ -223,7 +223,7 @@
             <div class="col">
                 <h5>{% translate "Ratings" %}</h5>
                 {% for rating in ratings %}
-                    {% include "includes/rating.html" %}
+                    {% include "rating/includes/rating_card.html" %}
                 {% empty %}
                 </div>
                 <p class="text-muted mt-2">{% translate "No ratings" %}</p>
