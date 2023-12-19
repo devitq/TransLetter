@@ -11,14 +11,13 @@ __all__ = ()
 
 
 class StaticURLTests(TestCase):
-    fixtures = ["translator_request/fixtures/data.json"]
+    fixtures = ["translator_request/fixtures/initdata.json"]
 
     def setUp(self):
         self.admin = accounts.models.User.objects.get(username="admin")
         self.user = accounts.models.User.objects.get(username="testuser")
         permission = Permission.objects.get(codename="view_translatorrequest")
         self.user.user_permissions.add(permission)
-        self.client = Client()
         self.client.force_login(self.user)
         self.client_admin = Client()
         self.client_admin.force_login(self.admin)
