@@ -106,9 +106,7 @@ class RequestTranslatorView(LoginRequiredMixin, View):
             request.user.save()
 
             if hasattr(request.user, "resume"):
-                request.user.resume.about = resume.cleaned_data[
-                    "about"
-                ]
+                request.user.resume.about = resume.cleaned_data["about"]
                 request.user.resume.save()
                 resume = request.user.resume
             else:
