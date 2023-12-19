@@ -6,6 +6,7 @@ from translation_request.models import (
     TranslationRequestMessage,
 )
 from transletter.mixins import BaseFormMixin
+from transletter.utils import get_available_langs
 
 __all__ = ()
 
@@ -26,6 +27,11 @@ class CreateTranslationRequestForm(forms.ModelForm, BaseFormMixin):
             "text",
             "price",
         )
+
+    languages = forms.MultipleChoiceField(
+        choices=get_available_langs(),
+        required=True,
+    )
 
 
 class MessageForm(forms.ModelForm, BaseFormMixin):
