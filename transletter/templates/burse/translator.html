@@ -226,12 +226,9 @@
             {% for rating in ratings %}
                 {% include "includes/rating.html" %}
             {% empty %}
-                </div>
-                <p class="text-muted">{% translate "No ratings" %}</p>
-                <div>
-            {% endfor %}
-        </div>
+            </div>
+            <p class="text-muted">{% translate "No ratings" %}</p>
+            <div>{% endfor %}</div>
     </div>
 </div>
-
 {% endblock %}
