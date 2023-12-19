@@ -5,5 +5,6 @@ sort-requirements requirements/lints.txt
 cd transletter
 black .
 flake8 .
+djlint . --reformat --format-css --format-js
 python manage.py makemigrations --check --dry-run
 python manage.py test

@@ -20,4 +20,9 @@ urlpatterns = [
         translation_request.views.CreateTranslationRequest.as_view(),
         name="create_translation_request",
     ),
+    path(
+        "<int:pk>/update/status/",
+        translation_request.views.UpdateTranslationRequestStatusView.as_view(),
+        name="update_translation_request_status",
+    ),
 ]

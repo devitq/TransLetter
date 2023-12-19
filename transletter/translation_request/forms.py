@@ -1,8 +1,12 @@
 from django import forms
 
 from projects.models import Project
-from translation_request.models import TranslationRequest
+from translation_request.models import (
+    TranslationRequest,
+    TranslationRequestMessage,
+)
 from transletter.mixins import BaseFormMixin
+from transletter.utils import get_available_langs
 
 __all__ = ()
 
@@ -23,3 +27,21 @@ class CreateTranslationRequestForm(forms.ModelForm, BaseFormMixin):
             "text",
             "price",
         )
+
+    languages = forms.MultipleChoiceField(
+        choices=get_available_langs(),
+        required=True,
+    )
+
+
+class MessageForm(forms.ModelForm, BaseFormMixin):
+    def __init__(self, *args, **kwargs):
+        super(MessageForm, self).__init__(*args, **kwargs)
+        self.set_field_attributes()
+
+    class Meta:
+        model = TranslationRequestMessage
+        fields = ("content",)
+        widgets = {
+            "content": forms.TextInput(attrs={"placeholder": "Your message"}),
+        }

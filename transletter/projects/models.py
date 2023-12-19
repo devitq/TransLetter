@@ -62,7 +62,7 @@ class Project(models.Model):
         related_name="projects",
     )
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.name
 
     class Meta:

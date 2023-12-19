@@ -1,37 +1,37 @@
 {% extends "base-dashboard.html" %}
-{% block main %}
 {% load i18n %}
-
-<div class="container mt-3 mb-3">
-    <h2>{% translate "Translator Requests" %}</h2>
-    <div class="row">
-      <div class="col-md-12">
-          <div class="card">
-              <div class="table-responsive">
-                  <table class="table no-wrap user-table mb-0">
-                    <thead>
-                      <tr>
-                        <th scope="col" class="border-0 text-uppercase font-medium">{% translate "Author" %}</th>
-                        <th scope="col" class="border-0 text-uppercase font-medium">{% translate "Language" %}</th>
-                        <th scope="col" class="border-0 text-uppercase font-medium">{% translate "Status" %}</th>
-                        <th scope="col" class="border-0 text-uppercase font-medium">{% translate "Profile" %}</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {% for translator_request in page_obj %}
-                          {% include "includes/translator_request_card.html" with translator_request=translator_request %}
-                      {% empty %}
-                      <tr>
-                        <td><p class="text-muted">{% translate "No translator requests" %}</p></td>
-                      </tr>
-                      {% endfor %}
-                    </tbody>
-                  </table>
-              </div>
-          </div>
-      </div>
+{% block main %}
+    <div class="container mt-3 mb-3">
+        <h2>{% translate "Translator Requests" %}</h2>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="table-responsive">
+                        <table class="table no-wrap user-table mb-0">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="border-0 text-uppercase font-medium">{% translate "Author" %}</th>
+                                    <th scope="col" class="border-0 text-uppercase font-medium">{% translate "Language" %}</th>
+                                    <th scope="col" class="border-0 text-uppercase font-medium">{% translate "Status" %}</th>
+                                    <th scope="col" class="border-0 text-uppercase font-medium">{% translate "Profile" %}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for translator_request in page_obj %}
+                                    {% include "includes/translator_request_card.html" with translator_request=translator_request %}
+                                {% empty %}
+                                    <tr>
+                                        <td>
+                                            <p class="text-muted">{% translate "No translator requests" %}</p>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% include "includes/pagination.html" %}
     </div>
-    {% include "includes/pagination.html" %}
-</div>
-
 {% endblock main %}

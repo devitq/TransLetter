@@ -1,21 +1,15 @@
 {% extends "base-dashboard.html" %}
-{% block main %}
 {% load i18n %}
-
-<div class="container mt-3 mb-3">
-    <h2>{% translate "Translation Requests" %}</h2>
-    <div
-      class="row mt-3"
-    >
-      {% for translation_request in page_obj %}
-        {% include "includes/translation_request_card.html" %}
-        {% empty %}
-        </div>
-        <p class="text-muted">{% translate "No translation requests" %}</p>
-        <div>
-      {% endfor %}
+{% block main %}
+    <div class="container mt-3 mb-3">
+        <h2>{% translate "Translation Requests" %}</h2>
+        <div class="row mt-3">
+            {% for translation_request in page_obj %}
+                {% include "includes/translation_request_card.html" %}
+            {% empty %}
+            </div>
+            <p class="text-muted">{% translate "No translation requests" %}</p>
+            <div>{% endfor %}</div>
+        {% include "includes/pagination.html" %}
     </div>
-    {% include "includes/pagination.html" %}
-</div>
-
 {% endblock %}

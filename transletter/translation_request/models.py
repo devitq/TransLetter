@@ -1,5 +1,5 @@
 from django.db import models
-from django.utils.translation import pgettext_lazy
+from django.utils.translation import gettext_lazy as _, pgettext_lazy
 from djmoney.models.fields import MoneyField
 
 from accounts.models import User
@@ -37,7 +37,9 @@ class TranslationRequestManager(models.Manager):
                     "messages",
                     queryset=TranslationRequestMessage.objects.select_related(
                         "author",
-                    ).order_by("timestamp"),
+                    )
+                    .select_related("author__account")
+                    .order_by("timestamp"),
                 ),
             )
             .filter(pk=pk)
@@ -65,6 +67,7 @@ class TranslationRequest(models.Model):
             "created at",
         ),
         auto_now_add=True,
+        blank=True,
     )
     closed_at = models.DateTimeField(
         pgettext_lazy("translation request closed at field name", "closed at"),
@@ -86,6 +89,17 @@ class TranslationRequest(models.Model):
         default_currency="USD",
         currency_choices=(("USD", "Dollar"),),
     )
+    languages = models.JSONField(
+        pgettext_lazy("languages field name", "languages"),
+        default=list,
+        blank=True,
+    )
+
+    def __str__(self) -> str:
+        verbose = _(
+            f"Translation Request from {self.author}, ID:{self.pk}",
+        )
+        return str(verbose)
 
     class Meta:
         verbose_name = pgettext_lazy(
@@ -102,6 +116,8 @@ class TranslationRequestMessage(models.Model):
     author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
+        null=True,
+        blank=True,
     )
     translation_request = models.ForeignKey(
         TranslationRequest,
@@ -114,7 +130,15 @@ class TranslationRequestMessage(models.Model):
     )
     timestamp = models.DateTimeField(
         pgettext_lazy("translation request timestamp field name", "timestamp"),
+        auto_now_add=True,
+        blank=True,
     )
+
+    def __str__(self) -> str:
+        verbose = _(
+            f"Message №{self.pk}",
+        )
+        return str(verbose)
 
     class Meta:
         verbose_name = pgettext_lazy(

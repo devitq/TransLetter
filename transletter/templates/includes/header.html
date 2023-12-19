@@ -1,45 +1,75 @@
 {% load static i18n %}
-
 <header>
-  <nav class="navbar navbar-expand-xl bg-body-tertiary rounded d-flex flex-wrap saas_navbar" aria-label="TransLetternavbar">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="{% url 'landing:index' %}">
-        <img src="{% static 'img/transletter.png' %}" alt="Logo" width="30" height="30" class="d-inline-block align-text-top">
-          TransLetter
-      </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#TransLetter" aria-controls="TransLetter" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      {% with request.resolver_match.view_name as view_name %}
-      <div class="collapse navbar-collapse justify-content-end flex-nowrap" id="TransLetter">
-        <ul class="nav nav-pills nav-fill mt-xs-2 mt-md-2 mt-lg-2 mt-xl-0 mt-2">
-          <li class="nav-item"><a href="{% url 'landing:about' %}" class="nav-link{% if view_name == 'landing:about' %} active{% endif %}">{% translate "About" %}</a></li>
-          {% if request.user.is_anonymous %}
-            <li class="nav-item"><a href="{% url 'accounts:login' %}" class="nav-link{% if view_name == 'accounts:login' %} active{% endif %}">{% translate "Login" %}</a></li>
-            <li class="nav-item"><a href="{% url 'accounts:signup' %}" class="nav-link{% if view_name == 'accounts:signup' %} active{% endif %}">{% translate "Signup" %}</a></li>
-          {% else %}
-            <li class="nav-item"><a href="{% url 'dashboard:index' %}" class="nav-link{% if view_name == 'dashboard:index' %} active{% endif %}">{% translate "Dashboard" %}</a>
-            <li class="nav-item"><a href="{% url 'accounts:logout' %}" class="nav-link{% if view_name == 'accounts:logout' %} active{% endif %}">{% translate "Logout" %}</a></li>
-          {% endif %}
-          {% if request.user.is_superuser %}
-          <li class="nav-item"><a href="{% url 'admin:index' %}" class="nav-link">{% translate "Admin" %}</a></li>
-          {% endif %}
-        </ul>
-        <form class="d-flex" action="{% url 'set_language' %}" method="post">
-          {% csrf_token %}
-          <select onchange="this.form.submit()" class="form-select ms-lg-2 mt-xs-2 mt-md-2 mt-lg-2 mt-xl-0 mt-2" name="language">
-              {% get_current_language as LANGUAGE_CODE %}
-              {% get_available_languages as LANGUAGES %}
-              {% get_language_info_list for LANGUAGES as languages %}
-              {% for language in languages %}
-                  <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
-                      {{ language.name_local }} ({{ language.code }})
-                  </option>
-              {% endfor %}
-          </select>
-        </form>
-      </div>
-      {% endwith %}
-    </div>
-  </nav>
-</header>
+    <nav class="navbar navbar-expand-xl bg-body-tertiary rounded d-flex flex-wrap saas_navbar"
+         aria-label="TransLetternavbar">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'landing:index' %}">
+                <img src="{% static 'img/transletter.png' %}"
+                     alt="Logo"
+                     width="30"
+                     height="30"
+                     class="d-inline-block align-text-top">
+                TransLetter
+            </a>
+            <button class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#TransLetter"
+                    aria-controls="TransLetter"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            {% with request.resolver_match.view_name as view_name %}
+                <div class="collapse navbar-collapse justify-content-end flex-nowrap"
+                     id="TransLetter">
+                    <ul class="nav nav-pills nav-fill mt-xs-2 mt-md-2 mt-lg-2 mt-xl-0 mt-2">
+                        <li class="nav-item">
+                            <a href="{% url 'landing:about' %}"
+                               class="nav-link{% if view_name == 'landing:about' %} active{% endif %}">{% translate "About" %}</a>
+                        </li>
+                        {% if request.user.is_anonymous %}
+                            <li class="nav-item">
+                                <a href="{% url 'accounts:login' %}"
+                                   class="nav-link{% if view_name == 'accounts:login' %} active{% endif %}">{% translate "Login" %}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{% url 'accounts:signup' %}"
+                                   class="nav-link{% if view_name == 'accounts:signup' %} active{% endif %}">{% translate "Signup" %}</a>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a href="{% url 'dashboard:index' %}"
+                                   class="nav-link{% if view_name == 'dashboard:index' %} active{% endif %}">{% translate "Dashboard" %}</a>
+                                <li class="nav-item">
+                                    <a href="{% url 'accounts:logout' %}"
+                                       class="nav-link{% if view_name == 'accounts:logout' %} active{% endif %}">{% translate "Logout" %}</a>
+                                </li>
+                            {% endif %}
+                            {% if request.user.is_superuser %}
+                                <li class="nav-item">
+                                    <a href="{% url 'admin:index' %}" class="nav-link">{% translate "Admin" %}</a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                        <form class="d-flex" action="{% url 'set_language' %}" method="post">
+                            {% csrf_token %}
+                            <select onchange="this.form.submit()"
+                                    class="form-select ms-lg-2 mt-xs-2 mt-md-2 mt-lg-2 mt-xl-0 mt-2"
+                                    name="language">
+                                {% get_current_language as LANGUAGE_CODE %}
+                                {% get_available_languages as LANGUAGES %}
+                                {% get_language_info_list for LANGUAGES as languages %}
+                                {% for language in languages %}
+                                    <option value="{{ language.code }}"
+                                            {% if language.code == LANGUAGE_CODE %}selected{% endif %}>
+                                        {{ language.name_local }} ({{ language.code }})
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </form>
+                    </div>
+                {% endwith %}
+            </div>
+        </nav>
+    </header>

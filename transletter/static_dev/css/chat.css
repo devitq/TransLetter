@@ -36,8 +36,8 @@ main {
 }
 
 .chat-app .chat-history {
-    height: 65vh;
-    overflow-x: auto;
+  height: 65vh;
+  overflow-x: auto;
 }
 
 .chat .chat-history ul li:last-child {
@@ -52,6 +52,14 @@ main {
   border-radius: 40px;
   width: 40px;
   margin-left: 10px;
+  height: 40px;
+}
+
+.chat .chat-history .message-data svg {
+  border-radius: 40px;
+  width: 40px;
+  margin-left: 10px;
+  height: 40px;
 }
 
 .chat .chat-history .message-data-time {
@@ -83,8 +91,20 @@ main {
   margin-left: -1.5rem;
 }
 
+.chat .chat-history .system-message {
+  color: #ffffff;
+  padding: 18px 20px;
+  line-height: 26px;
+  font-size: 16px;
+  border-radius: 7px;
+  display: inline-block;
+  position: relative;
+  background: #494949;
+}
+
 .chat .chat-history .my-message {
   background: #494949;
+  overflow-wrap: anywhere;
 }
 
 .chat .chat-history .my-message:after {
@@ -103,7 +123,7 @@ main {
 
 .chat .chat-history .other-message {
   background: #777c7d;
-  text-align: right;
+  overflow-wrap: anywhere;
 }
 
 .chat .chat-history .other-message:after {
@@ -113,6 +133,8 @@ main {
 
 .chat .chat-message {
   padding: 20px;
+  width: 100%;
+  max-width: 400px;
 }
 
 .online,
