@@ -9,7 +9,10 @@ from django.views.generic import CreateView
 
 from rating.forms import RatingForm
 from rating.models import Rating
-from translation_request.models import TranslationRequest
+from translation_request.models import (
+    TranslationRequest,
+    TranslationRequestMessage,
+)
 
 __all__ = ()
 
@@ -49,6 +52,11 @@ class RatingCreateView(LoginRequiredMixin, CreateView):
             )
             return self.render_form(form)
         form.instance.translation_request = translation_request
+        TranslationRequestMessage.objects.create(
+            translation_request=translation_request,
+            author=None,
+            content=("The author of the request rated the translator."),
+        )
         messages.success(
             self.request,
             pgettext_lazy(

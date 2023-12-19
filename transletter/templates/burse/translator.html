@@ -89,7 +89,7 @@
                             <div class="col-md-12">
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <h6 class="mb-0">{% get_verbose_field_name translator "first_name" %}:</h6>
+                                        <h6 class="mb-0 mt-1">{% get_verbose_field_name translator "first_name" %}:</h6>
                                     </div>
                                     <div class="col-sm-6 text-secondary">
                                         {% if translator.first_name != "" %}
@@ -102,7 +102,7 @@
                                 <hr>
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <h6 class="mb-0">{% get_verbose_field_name translator "last_name" %}:</h6>
+                                        <h6 class="mb-0 mt-1">{% get_verbose_field_name translator "last_name" %}:</h6>
                                     </div>
                                     <div class="col-sm-6 text-secondary">
                                         {% if translator.last_name != "" %}
@@ -115,14 +115,14 @@
                                 <hr>
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <h6 class="mb-0">{% get_verbose_field_name translator "email" %}:</h6>
+                                        <h6 class="mb-0 mt-1">{% get_verbose_field_name translator "email" %}:</h6>
                                     </div>
                                     <div class="col-sm-6 text-secondary">{{ translator.email }}</div>
                                 </div>
                                 <hr>
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <h6 class="mb-0">{% get_verbose_field_name translator.account "native_lang" %}:</h6>
+                                        <h6 class="mb-0 mt-1">{% get_verbose_field_name translator.account "native_lang" %}:</h6>
                                     </div>
                                     <div class="col-sm-6 text-secondary">
                                         {% if translator.native_lang is not None %}
@@ -135,7 +135,7 @@
                                 <hr>
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <h6 class="mb-0">{% get_verbose_field_name translator "date_joined" %}:</h6>
+                                        <h6 class="mb-0 mt-1">{% get_verbose_field_name translator "date_joined" %}:</h6>
                                     </div>
                                     <div class="col-sm-6 text-secondary">{{ translator.date_joined }}</div>
                                 </div>
@@ -219,16 +219,15 @@
                 </div>
             </div>
         </div>
+        <div class="row mt-0 ps-0 pe-0">
+            <div class="col">
+                <h5>{% translate "Ratings" %}</h5>
+                {% for rating in ratings %}
+                    {% include "includes/rating.html" %}
+                {% empty %}
+                </div>
+                <p class="text-muted mt-2">{% translate "No ratings" %}</p>
+                <div>{% endfor %}</div>
+        </div>
     </div>
-    <div class="row mt-0 ps-0 pe-0">
-        <div class="col">
-            <h5>{% translate "Ratings" %}</h5>
-            {% for rating in ratings %}
-                {% include "includes/rating.html" %}
-            {% empty %}
-            </div>
-            <p class="text-muted">{% translate "No ratings" %}</p>
-            <div>{% endfor %}</div>
-    </div>
-</div>
 {% endblock %}

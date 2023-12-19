@@ -69,7 +69,7 @@ class ResumeFile(models.Model):
         verbose = _(
             (
                 f"{self.resume.account.user.username}'s"
-                f" resume file №{self.id}"
+                f" resume file, ID:{self.id}"
             ),
         )
         return str(verbose)

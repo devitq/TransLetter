@@ -188,6 +188,10 @@
                         {% elif translation_request.status == "CL" %}
                             <div class="chat-message clearfix">
                                 <p class="text-muted">{% translate "Request closed, you can't write messages anymore" %}</p>
+                                {% if request.user == translation_request.author and translation_request.rating == "" %}
+                                    <a class="btn btn-info"
+                                       href="{% url 'rating:create_rating' pk=translation_request.id %}">{% translate "Rate translator" %}</a>
+                                {% endif %}
                             </div>
                         {% else %}
                             <form method="post" action="">
