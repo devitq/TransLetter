@@ -1,0 +1,38 @@
+[
+    {
+        "model": "accounts.user",
+        "pk": 1,
+        "fields": {
+            "username": "admin",
+            "email": "admin@example.com",
+            "password": "111",
+            "is_superuser": true
+        }
+    },
+    {
+        "model": "accounts.user",
+        "pk": 2,
+        "fields": {
+            "username": "testuser",
+            "email": "testuser@example.com",
+            "password": "111"
+        }
+    },
+    {
+        "model": "accounts.account",
+        "pk": 1,
+        "fields": {
+            "user_id": 1,
+            "is_translator": true
+        }
+    },
+
+    {
+        "model": "translator_request.translatorrequest",
+        "pk": 1,
+        "fields": {
+            "user_id": 1,
+            "status": "AC"
+        }
+    }
+]
