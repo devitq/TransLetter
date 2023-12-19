@@ -8,7 +8,7 @@ from django.utils.translation import pgettext_lazy
 from djmoney.models.fields import MoneyField
 import email_normalize
 
-from resume.models import Resume, ResumeFile
+from resume.models import ResumeFile
 from transletter.utils import get_available_langs
 
 __all__ = ("User",)
@@ -35,10 +35,10 @@ class UserManager(django.contrib.auth.models.UserManager):
         return (
             self.get_queryset()
             .select_related("account")
-            .select_related("account__resume")
+            .select_related("resume")
             .prefetch_related(
                 models.Prefetch(
-                    "account__resume__files",
+                    "resume__files",
                     queryset=ResumeFile.objects.all(),
                 ),
             )
@@ -128,14 +128,6 @@ class Account(models.Model):
         null=True,
         blank=True,
     )
-    resume = models.OneToOneField(
-        Resume,
-        on_delete=models.SET_NULL,
-        related_name="account",
-        verbose_name=pgettext_lazy("resume field name", "resume"),
-        null=True,
-        blank=True,
-    )
     native_lang = models.CharField(
         pgettext_lazy("native lang field name", "native language"),
         max_length=10,
@@ -199,12 +191,6 @@ def normalize_user_email(sender, instance, **kwargs):
     instance.email = User.objects.normalize_email(instance.email)
 
 
-def delete_user_stuff(sender, instance, **kwargs):
-    if instance.account.resume and instance.account.resume.id is not None:
-        resume_instance = Resume.objects.get(id=instance.account.resume.id)
-        resume_instance.delete()
-
-
 models.signals.post_save.connect(create_account, sender=User)
 models.signals.post_save.connect(
     create_account,
@@ -213,11 +199,6 @@ models.signals.post_save.connect(
 models.signals.pre_save.connect(normalize_user_email, sender=User)
 models.signals.pre_save.connect(
     normalize_user_email,
-    sender=django.contrib.auth.models.User,
-)
-models.signals.pre_delete.connect(delete_user_stuff, sender=User)
-models.signals.pre_delete.connect(
-    delete_user_stuff,
     sender=django.contrib.auth.models.User,
 )
 

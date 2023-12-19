@@ -17,7 +17,6 @@ class TranslatorRequestAdmin(admin.ModelAdmin):
     list_display = [
         "title",
         models.TranslatorRequest.user.field.name,
-        models.TranslatorRequest.resume.field.name,
         models.TranslatorRequest.status.field.name,
     ]
 

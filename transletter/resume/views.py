@@ -18,7 +18,7 @@ class DownloadView(LoginRequiredMixin, View):
         resume_author = get_object_or_404(
             Resume.objects.all(),
             pk=pk,
-        ).account.user
+        ).user
         if (
             not request.user.has_perm(
                 "translator_request.view_translatorrequest",
@@ -77,14 +77,14 @@ class DeleteView(LoginRequiredMixin, View):
         resume_author = get_object_or_404(
             Resume.objects.all(),
             pk=pk,
-        ).account.user
+        ).user
         if request.user != resume_author:
             raise PermissionDenied()
         return super().dispatch(request, pk, file_id, *args, **kwargs)
 
     def get(self, request, pk, file_id):
         file_object = get_object_or_404(ResumeFile, pk=file_id, resume_id=pk)
-        translator_request = file_object.resume.translator_request.first()
+        translator_request = file_object.resume.user.translator_request
         if translator_request is None:
             status = "NN"
         else:

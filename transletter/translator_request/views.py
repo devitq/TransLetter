@@ -39,7 +39,7 @@ class RequestTranslatorView(LoginRequiredMixin, View):
         initial_languages = request.user.account.languages
         try:
             request_status = request.user.translator_request.status
-            resume = request.user.account.resume
+            resume = request.user.resume
         except Exception:
             request_status = "NN"
             resume = None
@@ -95,6 +95,8 @@ class RequestTranslatorView(LoginRequiredMixin, View):
 
         if form.is_valid() and request_status in "SERJACNN":
             resume = form["resume_form"]
+            files = request.FILES.getlist("files_form-file")
+
             request.user.first_name = form["user_form"].cleaned_data[
                 "first_name"
             ]
@@ -102,19 +104,20 @@ class RequestTranslatorView(LoginRequiredMixin, View):
                 "last_name"
             ]
             request.user.save()
-            files = request.FILES.getlist("files_form-file")
 
-            if request.user.account.resume:
-                request.user.account.resume.about = resume.cleaned_data[
+            if hasattr(request.user, "resume"):
+                request.user.resume.about = resume.cleaned_data[
                     "about"
                 ]
-                request.user.account.resume.save()
-                resume = request.user.account.resume
+                request.user.resume.save()
+                resume = request.user.resume
             else:
+                resume.instance.user = request.user
                 resume = resume.save()
 
             account_form = form["account_form"]
-            request.user.account.resume = resume
+            request.user.resume = resume
+            request.user.save()
             request.user.account.languages = account_form.cleaned_data[
                 "languages"
             ]
@@ -124,7 +127,6 @@ class RequestTranslatorView(LoginRequiredMixin, View):
             request.user.account.save()
 
             if hasattr(request.user, "translator_request"):
-                request.user.translator_request.resume = resume
                 if request_status != "AC":
                     request.user.translator_request.status = "SE"
                 request.user.translator_request.save()
@@ -138,7 +140,6 @@ class RequestTranslatorView(LoginRequiredMixin, View):
             else:
                 TranslatorRequest.objects.create(
                     user=request.user,
-                    resume=resume,
                 )
                 messages.success(
                     request,
@@ -150,7 +151,7 @@ class RequestTranslatorView(LoginRequiredMixin, View):
 
             for file in files:
                 ResumeFile.objects.create(
-                    resume=request.user.account.resume,
+                    resume=request.user.resume,
                     file=file,
                 )
 
