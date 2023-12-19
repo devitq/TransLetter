@@ -9,15 +9,15 @@
                         <div class="d-flex flex-row comment-row">
                             <div class="comment-text w-100">
                                 <div class="row">
-                                    <h5 class="col">{{ rating.user.username }}</h5>
+                                    <h5 class="col">{{ rating.translation_request.author.username }}</h5>
                                 </div>
                                 <div class="row">
                                     <div class="comment-footer col">
                                         <span class="date text-muted">{{ rating.created_at }} (UTC)</span>
                                     </div>
                                 </div>
-                                <p class="mt-2">{% translate "Rating" %}: {{ rating.rating }}</p>
-                                <p class="text-muted">{{ rating.text|safe|linebreaks }}</p>
+                                <p class="mt-3 mb-0 text-muted">{% translate "Rating" %}: {{ rating.get_rating_display }}</p>
+                                <p class="mt-1 text-muted">{{ rating.text|safe }}</p>
                             </div>
                         </div>
                     </div>

@@ -200,7 +200,7 @@
     <div class="row mt-0 ps-0 pe-0">
         <div class="col">
             <h5>{% translate "Ratings" %}</h5>
-            {% for rating in translator.ratings.all %}
+            {% for rating in ratings %}
                 {% include "includes/rating.html" %}
             {% empty %}
                 </div>

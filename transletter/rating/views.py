@@ -1,8 +1,9 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
 from django.http import Http404
-from django.shortcuts import get_object_or_404, redirect
-from django.urls import reverse, reverse_lazy
+from django.shortcuts import get_object_or_404, render
+from django.urls import reverse_lazy
 from django.utils.translation import pgettext_lazy
 from django.views.generic import CreateView
 
@@ -18,19 +19,19 @@ class RatingCreateView(LoginRequiredMixin, CreateView):
     form_class = RatingForm
     success_url = reverse_lazy("translation_request:translation_request_list")
 
-    def get_initial(self):
+    def dispatch(self, request, *args, **kwargs):
         translation_request = get_object_or_404(
             TranslationRequest.objects.select_related("translator"),
             pk=self.kwargs.get("pk"),
         )
+        if translation_request.status != "CL":
+            raise Http404()
         rating = Rating.objects.filter(translation_request=translation_request)
         if rating:
             raise Http404()
-        return {
-            "user": self.request.user,
-            "translator": translation_request.translator,
-            "translation_request": translation_request,
-        }
+        if request.user != translation_request.author:
+            raise PermissionDenied()
+        return super().dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
         translation_request = get_object_or_404(
@@ -46,12 +47,8 @@ class RatingCreateView(LoginRequiredMixin, CreateView):
                     "Rating already exists",
                 ),
             )
-            return redirect(
-                reverse(
-                    "translation_request:translation_request_detail",
-                    {"pk": self.kwargs.get("pk")},
-                ),
-            )
+            return self.render_form(form)
+        form.instance.translation_request = translation_request
         messages.success(
             self.request,
             pgettext_lazy(
@@ -59,7 +56,11 @@ class RatingCreateView(LoginRequiredMixin, CreateView):
                 "Rating successfully created",
             ),
         )
-        form.instance.user = self.request.user
-        form.instance.translator = translation_request.translator
-        form.instance.translation_request = translation_request
         return super().form_valid(form)
+
+    def render_form(self, form):
+        return render(
+            self.request,
+            template_name=self.template_name,
+            context={"form": form},
+        )

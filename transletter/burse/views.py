@@ -1,5 +1,4 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db import models
 from django.shortcuts import get_object_or_404, render
 from django.views.generic import ListView, View
 
@@ -22,12 +21,8 @@ class TranslatorView(LoginRequiredMixin, View):
 
     def get(self, request, username, *args, **kwargs):
         translator = get_object_or_404(
-            User.objects.translator(username).prefetch_related(
-                models.Prefetch(
-                    "ratings",
-                    queryset=Rating.objects.by_translator(username),
-                ),
-            ),
+            User.objects.translator(username),
         )
-        context = {"translator": translator}
+        ratings = Rating.objects.by_translator(username)
+        context = {"translator": translator, "ratings": ratings}
         return render(request, self.template_name, context)

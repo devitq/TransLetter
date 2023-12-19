@@ -12,8 +12,6 @@ class RatingAdmin(admin.ModelAdmin):
 
     list_display = [
         "title",
-        models.Rating.user.field.name,
-        models.Rating.translator.field.name,
         models.Rating.translation_request.field.name,
         models.Rating.rating.field.name,
         models.Rating.created_at.field.name,
