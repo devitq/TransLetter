@@ -19,6 +19,7 @@ urlpatterns = [
     path("translator_request/", include("translator_request.urls")),
     path("projects/", include("projects.urls")),
     path("translation_request/", include("translation_request.urls")),
+    path("rating/", include("rating.urls")),
     path("resume/", include("resume.urls")),
     path("auth/", include("accounts.urls")),
     path("auth/", include(django.contrib.auth.urls), name="auth_default"),
