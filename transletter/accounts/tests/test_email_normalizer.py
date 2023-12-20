@@ -9,6 +9,8 @@ __all__ = ()
 class EmailNormalizerTests(TestCase):
     @parameterized.parameterized.expand(
         (
+            ("u_s.e-rname@pm.me", "username@protonmail.com"),
+            ("user-name@protonmail.ch", "username@protonmail.com"),
             (
                 "itqHfsdFE..W.Fs.fdev+fsdf@ya.ru",
                 "itqhfsdfe--w-fs-fdev@yandex.ru",
@@ -19,8 +21,6 @@ class EmailNormalizerTests(TestCase):
             ),
             ("User.namE+tag@gmail.com", "username@gmail.com"),
             ("u.sern.ame+tag+tag+tag@googlemail.com", "username@gmail.com"),
-            ("u_s.e-rname@pm.me", "username@protonmail.com"),
-            ("user-name@protonmail.ch", "username@protonmail.com"),
             ("username-tag@yahoo.com", "username@yahoo.com"),
             ("user.name@яндекс.рф", "user-name@yandex.ru"),
             ("user-name@yandex.com", "user-name@yandex.ru"),
