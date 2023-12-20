@@ -1,4 +1,5 @@
 from django import forms
+from django.utils.translation import pgettext
 
 from projects import models
 from transletter.mixins import BaseFormMixin
@@ -24,14 +25,14 @@ class CreateProjectForm(forms.ModelForm, BaseFormMixin):
 
 class AddProjectMemberForm(forms.Form, BaseFormMixin):
     email_address = forms.EmailField(
-        help_text="Enter the user's email address",
+        help_text=pgettext("add member form", "Enter the user's email address"),
     )
     mail_header = forms.CharField(
-        help_text="Enter a title for the mail",
+        help_text=pgettext("add member form", "Enter a title for the mail"),
         max_length=50,
     )
     mail_text = forms.CharField(
-        help_text="Enter the text of the mail",
+        help_text=pgettext("add member form", "Enter the text of the mail"),
         widget=forms.Textarea(),
     )
 
@@ -52,7 +53,7 @@ CHOICES = (
     ("admin", "admin"),
     ("static translator", "static translator"),
 )
-blank_choice = (("", "--- Choose role ---"),)
+blank_choice = (("", pgettext("add member form", "--- Choose role ---")),)
 
 
 class UpdateProjectMemberForm(forms.Form, BaseFormMixin):

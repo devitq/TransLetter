@@ -4,6 +4,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.mail import send_mail
 from django.core.signing import BadSignature, TimestampSigner
 from django.shortcuts import redirect, render
+from django.urls import reverse
+from django.utils.translation import pgettext_lazy
 from django.views.generic import CreateView, ListView
 
 import accounts.models
@@ -50,6 +52,7 @@ class ProjectMembersView(LoginRequiredMixin, ListView):
         )
         active_user_role = projects.models.ProjectMembership.objects.filter(
             user_id=request.user.id,
+            project_id=pk,
         ).first()
         return render(
             request,
@@ -62,17 +65,30 @@ class ProjectMembersView(LoginRequiredMixin, ListView):
         )
 
 
-class AddProjectMemberView(LoginRequiredMixin, ListView):
+class AddProjectMemberView(LoginRequiredMixin, CreateView):
     template_name = "projects/add_project_member.html"
 
     def get(self, request, pk):
         user = projects.models.ProjectMembership.objects.filter(
             user_id=request.user.id,
+            project_id=pk,
         ).first()
+        if not user:
+            messages.error(
+                request,
+                pgettext_lazy(
+                    "error message in views",
+                    "You don't have permission to do this",
+                ),
+            )
+            return redirect("projects:project_members", pk)
         if user.role not in ["owner", "admin"]:
             messages.error(
                 request,
-                "You don't have permission to do this",
+                pgettext_lazy(
+                    "error message in views",
+                    "You don't have permission to do this",
+                ),
             )
             return redirect("projects:project_members", pk)
         form = AddProjectMemberForm()
@@ -90,12 +106,18 @@ class AddProjectMemberView(LoginRequiredMixin, ListView):
             except accounts.models.User.DoesNotExist:
                 messages.error(
                     request,
-                    "There is no user with this email address",
+                    pgettext_lazy(
+                        "error message in views",
+                        "There is no user with this email address",
+                    ),
                 )
             else:
-                link = (
-                    "http://127.0.0.1:8000/projects/1/"
-                    "members/add_member/activate/"
+                token = signer.sign(user.username)
+                link = self.request.build_absolute_uri(
+                    reverse(
+                        "projects:activate_project_member",
+                        kwargs={"pk": pk, "token": token},
+                    ),
                 )
                 msg = (
                     data["mail_header"]
@@ -103,7 +125,6 @@ class AddProjectMemberView(LoginRequiredMixin, ListView):
                     + data["mail_text"]
                     + "\n\n"
                     + link
-                    + signer.sign(user.username)
                 )
                 send_mail(
                     subject="Inviting to the project",
@@ -114,7 +135,10 @@ class AddProjectMemberView(LoginRequiredMixin, ListView):
                 )
                 messages.success(
                     request,
-                    "The invitation has been sent",
+                    pgettext_lazy(
+                        "success message in views",
+                        "The invitation has been sent",
+                    ),
                 )
         return redirect("projects:project_members", pk)
 
@@ -123,36 +147,62 @@ class DeleteProjectMemberView(LoginRequiredMixin, ListView):
     def get(self, request, pk, user_id):
         user = projects.models.ProjectMembership.objects.filter(
             user_id=request.user.id,
+            project_id=pk,
         ).first()
+        if not user:
+            messages.error(
+                request,
+                pgettext_lazy(
+                    "error message in views",
+                    "You don't have permission to do this",
+                ),
+            )
+            return redirect("projects:project_members", pk)
         if user.role not in ["owner", "admin"]:
             messages.error(
                 request,
-                "You don't have permission to do this",
+                pgettext_lazy(
+                    "error message in views",
+                    "You don't have permission to do this",
+                ),
             )
             return redirect("projects:project_members", pk)
         user_for_delete = projects.models.ProjectMembership.objects.get(
             user_id=user_id,
         ).role
         if user_for_delete not in ["hired_translator", "owner"]:
-            if not user_for_delete == "admin" and user.role == "admin":
+            if (
+                (not user_for_delete == "admin" and user.role == "admin")
+                or user_for_delete == "static_translator"
+                or (user_for_delete == "admin" and user.role == "owner")
+            ):
                 projects.models.ProjectMembership.objects.filter(
                     project_id=pk,
                     user_id=user_id,
                 ).delete()
-            else:
+            elif user_for_delete == "admin" and user.role == "admin":
                 messages.error(
                     request,
-                    "You don't have permission to do delete other admins",
+                    pgettext_lazy(
+                        "error message in views",
+                        "You don't have permission to do delete other admins",
+                    ),
                 )
         elif user_for_delete == "hired_translator":
             messages.error(
                 request,
-                "Deleting hired only via TransRequest",
+                pgettext_lazy(
+                    "error message in views",
+                    "Deleting hired only via TransRequest",
+                ),
             )
         elif user_for_delete == "owner":
             messages.error(
                 request,
-                "It is forbidden to delete the owner",
+                pgettext_lazy(
+                    "error message in views",
+                    "It is forbidden to delete the owner",
+                ),
             )
         return redirect("projects:project_members", pk)
 
@@ -163,11 +213,24 @@ class UpdateProjectMemberView(LoginRequiredMixin, ListView):
     def get(self, request, pk, user_id):
         user = projects.models.ProjectMembership.objects.filter(
             user_id=request.user.id,
+            project_id=pk,
         ).first()
+        if not user:
+            messages.error(
+                request,
+                pgettext_lazy(
+                    "error message in views",
+                    "You don't have permission to do this",
+                ),
+            )
+            return redirect("projects:project_members", pk)
         if user.role != "owner":
             messages.error(
                 request,
-                "You don't have permission to do this",
+                pgettext_lazy(
+                    "error message in views",
+                    "You don't have permission to do this",
+                ),
             )
             return redirect("projects:project_members", pk)
         form = UpdateProjectMemberForm()
@@ -196,7 +259,7 @@ class ActivateProjectMemberView(LoginRequiredMixin, ListView):
         except BadSignature:
             messages.error(
                 request,
-                "Not correct link",
+                pgettext_lazy("error message in views", "Invalid link!"),
             )
         else:
             user = accounts.models.User.objects.get(username=username)
@@ -214,12 +277,18 @@ class ActivateProjectMemberView(LoginRequiredMixin, ListView):
                 member.save()
                 messages.success(
                     request,
-                    "Account successfully activated",
+                    pgettext_lazy(
+                        "success message in views",
+                        "Account successfully activated",
+                    ),
                 )
             else:
-                messages.success(
+                messages.error(
                     request,
-                    "Existing member",
+                    pgettext_lazy(
+                        "error message in views",
+                        "Existing member",
+                    ),
                 )
         return redirect("projects:project_members", pk)
 

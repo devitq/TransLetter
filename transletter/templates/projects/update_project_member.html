@@ -2,7 +2,7 @@
 {% load i18n %}
 {% block main %}
     <div class="container mt-3 mb-3">
-        <h2>Assign role</h2>
+        <h2>{% translate "Assign role" %}</h2>
         <form method="post" action="">
             {% csrf_token %}
             {% include "includes/form.html" %}

@@ -35,6 +35,9 @@
         <br>
         <p>Source language: {{ project_info.source_lang }}</p>
         <br>
+        <a href="{% url "projects:project_members" pk=project_info.id %}">
+            <button class="btn-warning" style="width: 100%; min-height: 50px">{% translate "Members" %}</button>
+        </a>
     </div>
     <script src="{% static 'js/animation_setup.min.js' %}"></script>
 {% endblock main %}

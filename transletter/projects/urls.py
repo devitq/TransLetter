@@ -33,7 +33,7 @@ urlpatterns = [
     path(
         "<int:pk>/members/add_member/activate/<str:token>/",
         projects.views.ActivateProjectMemberView.as_view(),
-        name="add_project_member",
+        name="activate_project_member",
     ),
     path(
         "<int:pk>/members/delete_member/<int:user_id>/",
