@@ -124,9 +124,7 @@
                                     <div class="col-sm-6">
                                         <h6 class="mb-0 mt-1">{% get_verbose_field_name translator.account "native_lang" %}:</h6>
                                     </div>
-                                    <div class="col-sm-6 text-secondary">
-                                        {{ translator.account.get_native_lang_display|default:"N/A" }}
-                                    </div>
+                                    <div class="col-sm-6 text-secondary">{{ translator.account.get_native_lang_display|default:"N/A" }}</div>
                                 </div>
                                 <hr>
                                 <div class="row">
