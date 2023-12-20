@@ -5,7 +5,7 @@ from django.utils.translation import (
     pgettext_lazy,
 )
 
-from resume.models import Resume, ResumeFile
+from resume.models import ResumeFile
 
 __all__ = ()
 
@@ -25,10 +25,9 @@ class TranslatorRequestManager(models.Manager):
             .get_queryset()
             .prefetch_related("user")
             .select_related("user__account")
-            .select_related("resume")
             .prefetch_related(
                 models.Prefetch(
-                    Resume.files.field.name,
+                    "user__resume__files",
                     ResumeFile.objects.only(ResumeFile.file.field.name),
                 ),
             )
@@ -48,14 +47,6 @@ class TranslatorRequest(models.Model):
         on_delete=models.CASCADE,
         related_name="translator_request",
         verbose_name=pgettext_lazy("user field name", "user"),
-    )
-    resume = models.ForeignKey(
-        Resume,
-        on_delete=models.CASCADE,
-        related_name="translator_request",
-        verbose_name=pgettext_lazy("resume field name", "resume"),
-        blank=True,
-        null=True,
     )
     status = models.CharField(
         max_length=2,

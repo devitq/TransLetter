@@ -1,0 +1,63 @@
+{% load i18n thumbnail %}
+<a href="{% url 'translation_request:translation_request_detail' pk=translation_request.pk %}">
+    <div class="ratings_section">
+        <div class="d-flex justify-content-center mt-10">
+            <div class="row w-100">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="comment-widgets m-b-20">
+                            <div class="d-flex flex-row comment-row">
+                                <div class="p-2">
+                                    <span class="round">
+                                        {% thumbnail translation_request.author.account.avatar "50x50" as avatar %}
+                                            <img src="{{ avatar.url }}" alt="User Avatar" width="50px">
+                                        {% empty %}
+                                            <svg height="50px"
+                                                 width="50px"
+                                                 class="round"
+                                                 xmlns="http://www.w3.org/2000/svg"
+                                                 role="img"
+                                                 aria-label="Placeholder: Avatar"
+                                                 preserveAspectRatio="xMidYMid slice"
+                                                 focusable="false">
+                                                <title>{% translate "No image" %}</title>
+                                                <rect width="100%" height="100%" fill="#55595c"></rect>
+                                            </svg>
+                                        {% endthumbnail %}
+                                    </span>
+                                </div>
+                                <div class="comment-text w-100">
+                                    <div class="row">
+                                        <div class="col d-flex align-items-center">
+                                            <h5>{% translate "Translation Request from" %} {{ translation_request.author.username }}</h5>
+                                            {% if translation_request.status == "SE" %}
+                                                <span class="badge rounded-pill text-bg-info ms-2 mb-2">Sent</span>
+                                            {% elif translation_request.status == "RJ" %}
+                                                <span class="badge rounded-pill text-bg-danger ms-2 mb-2">Rejected</span>
+                                            {% elif translation_request.status == "AC" %}
+                                                <span class="badge rounded-pill text-bg-success ms-2 mb-2">Accepted</span>
+                                            {% elif translation_request.status == "IP" %}
+                                                <span class="badge rounded-pill text-bg-info ms-2 mb-2">In progress</span>
+                                            {% elif translation_request.status == "FN" %}
+                                                <span class="badge rounded-pill text-bg-success ms-2 mb-2">Finished</span>
+                                            {% elif translation_request.status == "CL" %}
+                                                <span class="badge rounded-pill text-bg-secondary ms-2 mb-2">Closed</span>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="comment-footer col">
+                                            <span class="date text-muted">{{ translation_request.created_at }} (UTC)</span>
+                                            <span class="action-icons"></span>
+                                        </div>
+                                    </div>
+                                    <p class="m-b-5 mt-10 text-muted">{{ translation_request.text|truncatechars_html:80|striptags|safe }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</a>

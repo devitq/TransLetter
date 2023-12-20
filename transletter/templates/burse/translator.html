@@ -1,148 +1,227 @@
 {% extends "base-dashboard.html" %}
+{% load i18n thumbnail static field_verbose_name language_filters %}
 {% block main %}
-{% load i18n thumbnail static field_verbose_name language_filters  %}
-
-<div class="container mt-3 mb-3">
-    <div class="main-body">
-        <div class="row">
-            <div class="col-lg-4">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex flex-column align-items-center text-center">
-                            {% thumbnail translator.account.avatar "300x300" as avatar %}
-                                <div class="avatar-wrapper">
-                                    <img class="profile-pic" src="{{ avatar.url }}" />
+    <div class="container mt-3 mb-3">
+        <div class="main-body">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex flex-column align-items-center text-center">
+                                {% thumbnail translator.account.avatar "300x300" as avatar %}
+                                    <div class="avatar-wrapper">
+                                        <img class="profile-pic" src="{{ avatar.url }}" />
+                                    </div>
+                                {% empty %}
+                                    <div class="avatar-wrapper">
+                                        <img alt="{% translate 'No image' %}"
+                                             class="profile-pic"
+                                             src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' role='img' aria-label='Placeholder: Thumbnail' preserveAspectRatio='xMidYMid slice' focusable='false'%3E%3Ctitle>{% translate 'No image' %}%3C/title%3E%3Crect width='100%' height='100%' fill='%2355595c'%3E%3C/rect%3E%3C/svg%3E">
+                                    </div>
+                                {% endthumbnail %}
+                                <div class="mt-3">
+                                    <h4>
+                                        {{ translator.first_name|default:translator.username }}
+                                        {% if translator.first_name != "" %}{{ translator.last_name }}{% endif %}
+                                    </h4>
+                                    {% if translator.account.is_translator %}
+                                        <p class="text-secondary mb-1">Proffecional translator</p>
+                                        {% if request.user != translator %}
+                                            <a href="{% url 'translation_request:create_translation_request' translator_id=translator.id %}"
+                                               class="btn btn-outline-primary">{% translate "Hire" %}</a>
+                                        {% endif %}
+                                    {% endif %}
                                 </div>
-                            {% empty %}
-                                <div class="avatar-wrapper">
-                                    <img alt="{% translate 'No image' %}" class="profile-pic" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' role='img' aria-label='Placeholder: Thumbnail' preserveAspectRatio='xMidYMid slice' focusable='false'%3E%3Ctitle>{% translate 'No image' %}%3C/title%3E%3Crect width='100%' height='100%' fill='%2355595c'%3E%3C/rect%3E%3C/svg%3E">
+                            </div>
+                            {% if translator.account.github is not None or translator.account.website is not None %}
+                                <hr>
+                                <ul class="list-group list-group-flush">
+                                    {% if translator.account.website is not None %}
+                                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                            <h6 class="mb-0">
+                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                     width="24"
+                                                     height="24"
+                                                     viewBox="0 0 24 24"
+                                                     fill="none"
+                                                     stroke="currentColor"
+                                                     stroke-width="2"
+                                                     stroke-linecap="round"
+                                                     stroke-linejoin="round"
+                                                     class="feather feather-globe me-2 icon-inline">
+                                                    <circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line>
+                                                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                                                </svg>
+                                                Website
+                                            </h6>
+                                            <a href="{{ translator.account.website }}"><span class="text-secondary">{{ translator.account.website }}</span></a>
+                                        </li>
+                                    {% endif %}
+                                    {% if translator.account.github is not None %}
+                                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                            <h6 class="mb-0">
+                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                     width="24"
+                                                     height="24"
+                                                     viewBox="0 0 24 24"
+                                                     fill="none"
+                                                     stroke="currentColor"
+                                                     stroke-width="2"
+                                                     stroke-linecap="round"
+                                                     stroke-linejoin="round"
+                                                     class="feather feather-github me-2 icon-inline">
+                                                    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22">
+                                                    </path>
+                                                </svg>
+                                                Github
+                                            </h6>
+                                            <a href="https://github.com/{{ translator.account.github }}"><span class="text-secondary">{{ translator.account.github }}</span></a>
+                                        </li>
+                                    {% endif %}
+                                </ul>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8 mt-3 mt-lg-0 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <h6 class="mb-0 mt-1">{% get_verbose_field_name translator "first_name" %}:</h6>
+                                    </div>
+                                    <div class="col-sm-6 text-secondary">
+                                        {% if translator.first_name != "" %}
+                                            {{ translator.first_name }}
+                                        {% else %}
+                                            N/A
+                                        {% endif %}
+                                    </div>
                                 </div>
-                            {% endthumbnail %}
-                            <div class="mt-3">
-                                <h4>{{ translator.first_name|default:translator.username }}{% if translator.first_name != "" %} {{ translator.last_name }}{% endif %}</h4>
-                                {% if translator.account.is_translator %}
-                                <p class="text-secondary mb-1">Proffecional translator</p>
-                                <button class="btn btn-outline-primary">{% translate "Hire" %}</button>
-                                {% endif %}
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <h6 class="mb-0 mt-1">{% get_verbose_field_name translator "last_name" %}:</h6>
+                                    </div>
+                                    <div class="col-sm-6 text-secondary">
+                                        {% if translator.last_name != "" %}
+                                            {{ translator.last_name }}
+                                        {% else %}
+                                            N/A
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <h6 class="mb-0 mt-1">{% get_verbose_field_name translator "email" %}:</h6>
+                                    </div>
+                                    <div class="col-sm-6 text-secondary">{{ translator.email }}</div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <h6 class="mb-0 mt-1">{% get_verbose_field_name translator.account "native_lang" %}:</h6>
+                                    </div>
+                                    <div class="col-sm-6 text-secondary">{{ translator.account.get_native_lang_display|default:"N/A" }}</div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <h6 class="mb-0 mt-1">{% get_verbose_field_name translator "date_joined" %}:</h6>
+                                    </div>
+                                    <div class="col-sm-6 text-secondary">{{ translator.date_joined }}</div>
+                                </div>
                             </div>
                         </div>
-                        {% if translator.account.github is not None or translator.account.website is not None %}
-                        <hr class="my-4">
-                        <ul class="list-group list-group-flush">
-                            {% if translator.account.website is not None %}
-                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-globe me-2 icon-inline"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>Website</h6>
-                                <a href="{{ translator.account.website }}"><span class="text-secondary">{{ translator.account.website }}</span></a>
-                            </li>
-                            {% endif %}
-                            {% if translator.account.github is not None %}
-                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github me-2 icon-inline"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>Github</h6>
-                                <a href="https://github.com/{{ translator.account.github }}"><span class="text-secondary">{{ translator.account.github }}</span></a>
-                            </li>
-                            {% endif %}
-                        </ul>
-                        {% endif %}
                     </div>
                 </div>
             </div>
-            <div class="col-lg-8 mt-3 mt-lg-0 mb-4">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="col-md-12">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                <h6 class="mb-0">{% get_verbose_field_name translator "first_name" %}:</h6>
-                                </div>
-                                <div class="col-sm-6 text-secondary">
-                                {% if translator.first_name != "" %}
-                                {{ translator.first_name }}
-                                {% else %}
-                                N/A
-                                {% endif %}
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-6">
-                                <h6 class="mb-0">{% get_verbose_field_name translator "last_name" %}:</h6>
-                                </div>
-                                <div class="col-sm-6 text-secondary">
-                                {% if translator.last_name != "" %}
-                                {{ translator.last_name }}
-                                {% else %}
-                                N/A
-                                {% endif %}
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-6">
-                                <h6 class="mb-0">{% get_verbose_field_name translator "email" %}:</h6>
-                                </div>
-                                <div class="col-sm-6 text-secondary">
-                                {{ translator.email }}
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-6">
-                                <h6 class="mb-0">{% get_verbose_field_name translator.account "native_lang" %}:</h6>
-                                </div>
-                                <div class="col-sm-6 text-secondary">
-                                {% if translator.native_lang is not None %}
-                                {{ translator.account.get_native_lang_display }}
-                                {% else %}
-                                N/A
-                                {% endif %}
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-6">
-                                <h6 class="mb-0">{% get_verbose_field_name translator "date_joined" %}:</h6>
-                                </div>
-                                <div class="col-sm-6 text-secondary">
-                                {{ translator.date_joined }}
+            <div class="row mt-4">
+                <div class="col">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title text-white">{% translate "About" %}</h5>
+                            <p class="card-text text-muted">{{ translator.account.about|safe|linebreaks|default:"N/A" }}</p>
+                            <div class="accordion" id="LanguagesAccordion">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed"
+                                                type="button"
+                                                data-bs-toggle="collapse"
+                                                data-bs-target="#collapseOne"
+                                                aria-expanded="true"
+                                                aria-controls="collapseOne">{% translate "Languages" %}</button>
+                                    </h2>
+                                    <div id="collapseOne"
+                                         class="accordion-collapse collapse"
+                                         data-bs-parent="#LanguagesAccordion">
+                                        <div class="accordion-body">
+                                            {% for lang in translator.account.languages %}
+                                                <span class="text-muted">{{ lang|language_name }}</span>
+                                                <br />
+                                            {% empty %}
+                                                <span class="text-muted">N/A</span>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col">
+                    <h5>{% translate "Files" %}</h5>
+                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 mt-3">
+                        {% for file in translator.resume.files.all %}
+                            <div class="col mb-5">
+                                <div class="card item_card is-revealing zoomable-card">
+                                    <a href="{% url 'resume:download_file' pk=translator.resume.pk file_id=file.id %}">
+                                        <div class="badge bg-warning text-black position-absolute download_image">
+                                            <i class="fa-solid fa-download"></i>
+                                        </div>
+                                    </a>
+                                    <svg class="card-img-top card-img-bottom"
+                                         width="100%"
+                                         height="200px"
+                                         xmlns="http://www.w3.org/2000/svg"
+                                         role="img"
+                                         aria-label="Placeholder: Thumbnail"
+                                         preserveAspectRatio="xMidYMid slice"
+                                         focusable="false">
+                                        <title>{% translate "File thumbnail" %}</title>
+                                        <rect width="100%" height="100%" fill="#55595c"></rect>
+                                        <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#ffffff" font-size="48" class="fa">
+                                        <tspan class="fa-icon">&#xf15b;</tspan>
+                                        </text>
+                                    </svg>
+                                    <div class="card-body">
+                                        <a href="{% url 'resume:download_file' pk=translator.resume.pk file_id=file.id %}"
+                                           class="text-white">
+                                            <h6>{{ file.filename }}</h6>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% empty %}
+                        </div>
+                        <p class="text-muted">{% translate "No files" %}</p>
+                        <div>{% endfor %}</div>
                 </div>
             </div>
         </div>
-        <div class="row mt-4">
+        <div class="row mt-0 ps-0 pe-0">
             <div class="col">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title text-white">{% translate "About" %}</h5>
-                        <p class="card-text text-muted">
-                            {{ translator.account.about|safe|linebreaks|default:"N/A" }}
-                        </p>
-                        <div class="accordion" id="LanguagesAccordion">
-                            <div class="accordion-item">
-                              <h2 class="accordion-header">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                    {% translate "Languages" %}
-                                </button>
-                              </h2>
-                              <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#LanguagesAccordion">
-                                <div class="accordion-body">
-                                    {% for lang in translator.account.languages %}
-                                        <span class="text-muted">{{ lang|language_name }}</span>
-                                        <br />
-                                    {% empty %}
-                                        <span class="text-muted">N/A</span>
-                                    {% endfor %}
-                                </div>
-                              </div>
-                            </div>
-                        </div>
-                    </div>
+                <h5>{% translate "Ratings" %}</h5>
+                {% for rating in ratings %}
+                    {% include "rating/includes/rating_card.html" %}
+                {% empty %}
                 </div>
-            </div>
+                <p class="text-muted mt-2">{% translate "No ratings" %}</p>
+                <div>{% endfor %}</div>
         </div>
     </div>
-</div>
-
 {% endblock %}

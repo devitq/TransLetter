@@ -1,0 +1,14 @@
+{% extends "base-dashboard.html" %}
+{% load i18n %}
+{% block main %}
+    <div class="container mt-3 mb-3">
+        <h2>{% translate "Create translation request" %}</h2>
+        <form method="post" action="">
+            {% csrf_token %}
+            {% include "includes/form.html" %}
+            <input class="btn btn-primary"
+                   type="submit"
+                   value="{% translate 'Create' %}">
+        </form>
+    </div>
+{% endblock %}

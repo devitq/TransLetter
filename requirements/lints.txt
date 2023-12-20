@@ -1,4 +1,5 @@
 black
+djlint
 flake8
 flake8-absolute-import
 flake8-bandit

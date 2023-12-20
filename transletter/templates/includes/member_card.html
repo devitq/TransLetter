@@ -1,33 +1,46 @@
 {% load static i18n thumbnail %}
-
 <div class="col mb-5">
-  <div class="card h-100 shadow-sm item_card is-revealing zoomable-card">
-      {% thumbnail member.user.account.avatar "300x300" as avatar %}
-        <img class="card-img-top card-img-bottom img-fluid" src="{{ avatar.url }}">
-      {% empty %}
-        <svg class="card-img-top card-img-bottom img-fluid" width="100%" height="300px" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
-          <title>{% translate "No image" %}</title>
-          <rect width="100%" height="100%" fill="#55595c"></rect>
-        </svg>
-      {% endthumbnail %}
+    <div class="card h-100 shadow-sm item_card is-revealing zoomable-card">
+        {% thumbnail member.user.account.avatar "300x300" as avatar %}
+            <img class="card-img-top card-img-bottom img-fluid" src="{{ avatar.url }}">
+        {% empty %}
+            <svg class="card-img-top card-img-bottom img-fluid"
+                 width="100%"
+                 height="300px"
+                 xmlns="http://www.w3.org/2000/svg"
+                 role="img"
+                 aria-label="Placeholder: Thumbnail"
+                 preserveAspectRatio="xMidYMid slice"
+                 focusable="false">
+                <title>{% translate "No image" %}</title>
+                <rect width="100%" height="100%" fill="#55595c"></rect>
+            </svg>
+        {% endthumbnail %}
     </a>
     <div class="card-body">
-        <h5 class="card-title text-white">{{ member.user.first_name|default:member.user.username }}{% if member.user.first_name != "" %} {{ member.user.last_name }}{% endif %}</h5>
+        <h5 class="card-title text-white">
+            {{ member.user.first_name|default:member.user.username }}
+            {% if member.user.first_name != "" %}{{ member.user.last_name }}{% endif %}
+        </h5>
         <p class="card-text text-muted">{{ member.account.about|truncatechars_html:80|striptags|safe }}</p>
         <p class="card-text text-muted">Role: {{ member.role }}</p>
         {% if active_user_role.role == "owner" or active_user_role.role == "admin" %}
-	        {% if member.role != "owner" and member.role != "hired_translator" %}
-		        {% if active_user_role.role == "admin" and member.role == "admin" %}
-			        {% else %}
-		        <a href="{% url 'projects:delete_project_member' pk=pk user_id=member.user_id %}"><button type="button" class="btn btn-danger">Delete</button></a>
-	          {% endif %}
-		        {% endif %}
-		        <br>
-	        {% if member.role != "owner" and member.role != "hired_translator" and active_user_role.role != "admin"%}
-	        <a href="{% url 'projects:update_project_member' pk=pk user_id=member.user_id %}"><button type="button" class="btn btn-warning">Update role</button></a>
-	        {% endif %}
-    {% endif %}
-      </a>
-    </div>
-  </div>
+            {% if member.role != "owner" and member.role != "hired_translator" %}
+                {% if active_user_role.role == "admin" and member.role == "admin" %}
+                {% else %}
+                    <a href="{% url 'projects:delete_project_member' pk=pk user_id=member.user_id %}">
+                        <button type="button" class="btn btn-danger">Delete</button>
+                    </a>
+                {% endif %}
+            {% endif %}
+            <br>
+            {% if member.role != "owner" and member.role != "hired_translator" and active_user_role.role != "admin" %}
+                <a href="{% url 'projects:update_project_member' pk=pk user_id=member.user_id %}">
+                    <button type="button" class="btn btn-warning">Update role</button>
+                </a>
+            {% endif %}
+        {% endif %}
+    </a>
+</div>
+</div>
 </div>

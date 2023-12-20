@@ -3,11 +3,7 @@
         <label for="{{ field.auto_id }}" class="form-label">{{ field.label }}</label>
         {{ field }}
         {% if field.errors %}
-            {% for error in field.errors %}
-                <div class="invalid-feedback">
-                    {{ error|safe }}
-                </div>
-            {% endfor %}
+            {% for error in field.errors %}<div class="invalid-feedback">{{ error|safe }}</div>{% endfor %}
         {% endif %}
         {% if field.help_text %}
             <div class="form-text text-muted">
@@ -18,8 +14,6 @@
 {% endfor %}
 {% if form.non_field_errors %}
     <div class="alert alert-danger">
-        {% for error in form.non_field_errors %}
-            {{ error|safe }}
-        {% endfor %}
+        {% for error in form.non_field_errors %}{{ error|safe }}{% endfor %}
     </div>
 {% endif %}

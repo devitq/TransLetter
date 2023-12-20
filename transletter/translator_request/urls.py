@@ -30,14 +30,4 @@ urlpatterns = [
         translator_request.views.RejectRequestView.as_view(),
         name="reject_request",
     ),
-    path(
-        "<int:pk>/resume/file/<int:file_id>/download/",
-        translator_request.views.DownloadView.as_view(),
-        name="download_resume_file",
-    ),
-    path(
-        "<int:pk>/resume/file/<int:file_id>/delete/",
-        translator_request.views.DeleteView.as_view(),
-        name="delete_resume_file",
-    ),
 ]

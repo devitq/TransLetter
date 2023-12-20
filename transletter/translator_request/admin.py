@@ -1,6 +1,4 @@
-from django.conf import settings
 from django.contrib import admin
-from django.core.mail import send_mail
 from django.utils.translation import gettext_lazy as _
 
 from translator_request import models
@@ -19,7 +17,6 @@ class TranslatorRequestAdmin(admin.ModelAdmin):
     list_display = [
         "title",
         models.TranslatorRequest.user.field.name,
-        models.TranslatorRequest.resume.field.name,
         models.TranslatorRequest.status.field.name,
     ]
 
@@ -39,16 +36,6 @@ class TranslatorRequestAdmin(admin.ModelAdmin):
                 translator_request=obj,
                 from_status=original_status,
                 to=obj.status,
-            )
-            text = (
-                f"Status was change from '{original_status}' to '{obj.status}'"
-            )
-            send_mail(
-                "Change Translator Request Status",
-                text,
-                settings.EMAIL,
-                [request.user.email],
-                fail_silently=False,
             )
 
     def title(self, obj):

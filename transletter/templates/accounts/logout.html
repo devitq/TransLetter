@@ -1,10 +1,8 @@
 {% extends "base.html" %}
-{% block main %}
 {% load i18n %}
-
-<div class="container">
-    <h2>{% translate "Successful logout" %}</h2>
-    <p>{% translate "You have successfully logged out of your account" %}</p>
-</div>
-
+{% block main %}
+    <div class="container">
+        <h2>{% translate "Successful logout" %}</h2>
+        <p>{% translate "You have successfully logged out of your account" %}</p>
+    </div>
 {% endblock %}

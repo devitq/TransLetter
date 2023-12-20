@@ -13,8 +13,9 @@ class StaticURLTests(TestCase):
             ("accounts:login",),
             ("accounts:signup",),
             ("accounts:password_reset"),
+            ("accounts:request_activation"),
         ],
     )
-    def test_login_url(self, url):
+    def test_urls(self, url):
         response = Client().get(reverse(url))
         self.assertEqual(response.status_code, HTTPStatus.OK)

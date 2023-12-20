@@ -7,6 +7,7 @@ from django.template.loader import render_to_string
 from django.urls import reverse
 
 import accounts.models
+from transletter.email import EmailThread
 
 __all__ = ("AuthenticationBackend",)
 
@@ -71,4 +72,4 @@ class AuthenticationBackend(ModelBackend):
             to=[user.email],
         )
         email.attach_alternative(email_body, "text/html")
-        email.send(fail_silently=False)
+        EmailThread(email).start()

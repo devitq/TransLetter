@@ -98,9 +98,12 @@ class AddProjectMemberView(LoginRequiredMixin, ListView):
                     "members/add_member/activate/"
                 )
                 msg = (
-                    f"{data['mail_header']}\n\n"
-                    f"{data['mail_text']}\n\n"
-                    f"{link}{signer.sign(user.username)}"
+                    data["mail_header"]
+                    + "\n\n"
+                    + data["mail_text"]
+                    + "\n\n"
+                    + link
+                    + signer.sign(user.username)
                 )
                 send_mail(
                     subject="Inviting to the project",

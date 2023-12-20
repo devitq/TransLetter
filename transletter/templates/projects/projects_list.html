@@ -1,30 +1,29 @@
 {% extends "base-dashboard.html" %}
-{% block main %}
 {% load static i18n %}
-
-<script src="{% static 'js/anime.min.js' %}"></script>
-<script src="{% static 'js/scrollreveal.min.js' %}"></script>
-
-<div class="container mt-3 height-100">
-    <div class="album py-4">
-        <div class="container">
-        <h1>{% translate "Projects" %} <a class="btn btn-primary text-end float-end" href="{% url 'projects:create_project' %}"><i class="fa-solid fa-plus"></i> {% translate "Create project" %}</a></h1>
-        <div>
-            {% for project in projects %}
-                {% ifchanged %}
+{% block main %}
+    <script src="{% static 'js/anime.min.js' %}"></script>
+    <script src="{% static 'js/scrollreveal.min.js' %}"></script>
+    <div class="container mt-3 height-100">
+        <div class="album py-4">
+            <div class="container">
+                <h1>
+                    {% translate "Projects" %} <a class="btn btn-primary text-end float-end"
+    href="{% url 'projects:create_project' %}"><i class="fa-solid fa-plus"></i> {% translate "Create project" %}</a>
+                </h1>
+                <div>
+                    {% for project in projects %}
+                        {% ifchanged %}
+                        </div>
+                        <h2>{{ project.author }}</h2>
+                        <div class="row g-3 g-lg-4 g-md-3 row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-xl-3">
+                        {% endifchanged %}
+                        {% include "includes/project_card.html" %}
+                    {% empty %}
+                        <p>{% translate "No projects" %}</p>
+                    {% endfor %}
                 </div>
-                <h2>{{ project.author }}</h2>
-                <div class="row g-3 g-lg-4 g-md-3 row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-xl-3">
-                {% endifchanged %}
-                    {% include "includes/project_card.html" %}
-                {% empty %}
-                    <p>{% translate "No projects" %}</p>
-            {% endfor %}
-        </div>
+            </div>
         </div>
     </div>
-</div>
-
-<script src="{% static 'js/animation_setup.min.js' %}"></script>
-
+    <script src="{% static 'js/animation_setup.min.js' %}"></script>
 {% endblock main %}
