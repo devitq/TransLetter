@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.core.exceptions import ValidationError
-from django.utils.translation import pgettext_lazy
+from django.utils.translation import pgettext_lazy as _
 
 from projects import models
 from projects.utils import parse_file_and_create_translations
@@ -40,18 +40,19 @@ class TranslationFileAdmin(admin.ModelAdmin):
                 )
                 self.message_user(
                     request,
-                    f"{pgettext_lazy('TranslationRows created for')} "
+                    f"{_('success in admin', 'TranslationRows created for')} "
                     f"{language_file.file}",
                     level="SUCCESS",
                 )
             except ValidationError as e:
                 self.message_user(
                     request,
-                    f"{pgettext_lazy('Error:')} {str(e)}",
+                    f"{_('error in admin', 'Error:')} {str(e)}",
                     level="ERROR",
                 )
 
-    create_translation_rows_from_file.short_description = pgettext_lazy(
+    create_translation_rows_from_file.short_description = _(
+        "short description in admin",
         "Create TranslationRows from file",
     )
 

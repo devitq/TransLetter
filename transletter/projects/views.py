@@ -24,7 +24,7 @@ class ProjectsListView(LoginRequiredMixin, ListView):
     context_object_name = "projects"
 
     def get_queryset(self):
-        return projects.models.Project.objects.all()
+        return projects.models.Project.objects.filter(public=1).all()
 
 
 class CreateProjectView(LoginRequiredMixin, CreateView):
@@ -47,6 +47,31 @@ class ProjectMembersView(LoginRequiredMixin, ListView):
     template_name = "projects/project_members.html"
 
     def get(self, request, pk):
+        is_public = (
+            projects.models.ProjectMembership.objects.filter(project_id=pk)
+            .values("user_id")
+            .all()
+        )
+        project_ids = [i["user_id"] for i in is_public]
+        request_id = request.user.id
+        if request_id not in project_ids:
+            messages.error(
+                request,
+                pgettext_lazy(
+                    "error message in views",
+                    "There is no such repository or it is private",
+                ),
+            )
+            return redirect("projects:projects_list")
+        if not bool(is_public):
+            messages.error(
+                request,
+                pgettext_lazy(
+                    "error message in views",
+                    "There is no such repository or it is private",
+                ),
+            )
+            return redirect("projects:projects_list")
         members = projects.models.ProjectMembership.objects.filter(
             project_id=pk,
         )
@@ -69,6 +94,22 @@ class AddProjectMemberView(LoginRequiredMixin, CreateView):
     template_name = "projects/add_project_member.html"
 
     def get(self, request, pk):
+        is_public = (
+            projects.models.ProjectMembership.objects.filter(project_id=pk)
+            .values("user_id")
+            .all()
+        )
+        project_ids = [i["user_id"] for i in is_public]
+        request_id = request.user.id
+        if request_id not in project_ids:
+            messages.error(
+                request,
+                pgettext_lazy(
+                    "error message in views",
+                    "There is no such repository or it is private",
+                ),
+            )
+            return redirect("projects:projects_list")
         user = projects.models.ProjectMembership.objects.filter(
             user_id=request.user.id,
             project_id=pk,
@@ -145,6 +186,22 @@ class AddProjectMemberView(LoginRequiredMixin, CreateView):
 
 class DeleteProjectMemberView(LoginRequiredMixin, ListView):
     def get(self, request, pk, user_id):
+        is_public = (
+            projects.models.ProjectMembership.objects.filter(project_id=pk)
+            .values("user_id")
+            .all()
+        )
+        project_ids = [i["user_id"] for i in is_public]
+        request_id = request.user.id
+        if request_id not in project_ids:
+            messages.error(
+                request,
+                pgettext_lazy(
+                    "error message in views",
+                    "There is no such repository or it is private",
+                ),
+            )
+            return redirect("projects:projects_list")
         user = projects.models.ProjectMembership.objects.filter(
             user_id=request.user.id,
             project_id=pk,
@@ -211,6 +268,22 @@ class UpdateProjectMemberView(LoginRequiredMixin, ListView):
     template_name = "projects/update_project_member.html"
 
     def get(self, request, pk, user_id):
+        is_public = (
+            projects.models.ProjectMembership.objects.filter(project_id=pk)
+            .values("user_id")
+            .all()
+        )
+        project_ids = [i["user_id"] for i in is_public]
+        request_id = request.user.id
+        if request_id not in project_ids:
+            messages.error(
+                request,
+                pgettext_lazy(
+                    "error message in views",
+                    "There is no such repository or it is private",
+                ),
+            )
+            return redirect("projects:projects_list")
         user = projects.models.ProjectMembership.objects.filter(
             user_id=request.user.id,
             project_id=pk,
@@ -297,11 +370,62 @@ class ProjectPageView(LoginRequiredMixin, ListView):
     template_name = "projects/project_page.html"
 
     def get(self, request, pk):
+        is_public = (
+            projects.models.ProjectMembership.objects.filter(project_id=pk)
+            .values("user_id")
+            .all()
+        )
+        project_ids = [i["user_id"] for i in is_public]
+        request_id = request.user.id
+        if request_id not in project_ids:
+            messages.error(
+                request,
+                pgettext_lazy(
+                    "error message in views",
+                    "There is no such repository or it is private",
+                ),
+            )
+            return redirect("projects:projects_list")
         project = projects.models.Project.objects.get(id=pk)
         return render(
             request,
             self.template_name,
             context={
                 "project_info": project,
+            },
+        )
+
+
+class ProjectFilesView(LoginRequiredMixin, ListView):
+    template_name = "projects/project_files.html"
+
+    def get(self, request, pk):
+        is_public = (
+            projects.models.ProjectMembership.objects.filter(
+                project_id=pk,
+            )
+            .values("user_id")
+            .all()
+        )
+        project_ids = [i["user_id"] for i in is_public]
+        request_id = request.user.id
+        if request_id not in project_ids:
+            messages.error(
+                request,
+                pgettext_lazy(
+                    "error message in views",
+                    "There is no such repository or it is private",
+                ),
+            )
+            return redirect("projects:projects_list")
+        project_files = projects.models.ProjectLanguage.objects.filter(
+            project_id=pk,
+        )
+        print(project_files)
+        return render(
+            request,
+            self.template_name,
+            context={
+                "project_info": project_files,
             },
         )

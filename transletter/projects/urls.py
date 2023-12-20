@@ -45,4 +45,9 @@ urlpatterns = [
         projects.views.UpdateProjectMemberView.as_view(),
         name="update_project_member",
     ),
+    path(
+        "<int:pk>/files/",
+        projects.views.ProjectFilesView.as_view(),
+        name="project_files",
+    ),
 ]
