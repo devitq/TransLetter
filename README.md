@@ -13,6 +13,7 @@ Run this git command
 ## ER Diagram
 
 ![ER diagram](ER.jpg)
+[Live preview](https://dbdiagram.io/d/TransLetter-6562fe253be1495787bde329)
 
 ## Setup
 
