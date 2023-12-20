@@ -25,19 +25,13 @@
                 var csrfToken = getCSRFToken();
                 var notificationIds = []
 
-                {
-                    %
-                    for notification in page_obj %
-                }
+                {% for notification in page_obj %}
                 notificationIds.push({
                     {
                         notification.id
                     }
                 });
-                {
-                    %
-                    endfor %
-                }
+                {% endfor %}
 
                 if (!csrfToken) {
                     console.error("CSRF token not found.");
