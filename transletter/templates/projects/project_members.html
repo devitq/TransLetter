@@ -1,0 +1,31 @@
+{% extends "base-dashboard.html" %}
+{% block main %}
+{% load static i18n %}
+
+<script src="{% static 'js/anime.min.js' %}"></script>
+<script src="{% static 'js/scrollreveal.min.js' %}"></script>
+
+<div class="container mt-3 height-100">
+    <div class="album py-4">
+        <div class="container">
+        {% if active_user_role.role == "owner" or active_user_role.role == "admin" %}
+        <h1>{% translate "Members" %} <a class="btn btn-primary text-end float-end" href="{% url 'projects:add_project_member' pk=pk %}"><i class="fa-solid fa-plus"></i> {% translate "Invite user" %}</a></h1>
+        {% endif %}
+	        <div>
+            {% for member in members %}
+                {% ifchanged %}
+                </div>
+                <div class="row g-3 g-lg-4 g-md-3 row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-xl-3">
+                {% endifchanged %}
+                    {% include "includes/member_card.html" %}
+                {% empty %}
+                    <p>{% translate "No users" %}</p>
+            {% endfor %}
+        </div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'js/animation_setup.min.js' %}"></script>
+
+{% endblock main %}

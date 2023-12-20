@@ -20,3 +20,48 @@ class CreateProjectForm(forms.ModelForm, BaseFormMixin):
             models.Project.slug.field.name,
             models.Project.source_lang.field.name,
         )
+
+
+class AddProjectMemberForm(forms.Form, BaseFormMixin):
+    email_address = forms.EmailField(
+        help_text="Enter the user's email address",
+    )
+    mail_header = forms.CharField(
+        help_text="Enter a title for the mail",
+        max_length=50,
+    )
+    mail_text = forms.CharField(
+        help_text="Enter the text of the mail",
+        widget=forms.Textarea(),
+    )
+
+    def __init__(self, *args, **kwargs):
+        super(AddProjectMemberForm, self).__init__(*args, **kwargs)
+        self.set_field_attributes()
+
+    class Meta:
+        model = models.Project
+        fields = (
+            "email_address",
+            "mail_header",
+            "mail_text",
+        )
+
+
+CHOICES = (
+    ("admin", "admin"),
+    ("static translator", "static translator"),
+)
+blank_choice = (("", "--- Choose role ---"),)
+
+
+class UpdateProjectMemberForm(forms.Form, BaseFormMixin):
+    role = forms.TypedChoiceField(choices=blank_choice + CHOICES)
+
+    def __init__(self, *args, **kwargs):
+        super(UpdateProjectMemberForm, self).__init__(*args, **kwargs)
+        self.set_field_attributes()
+
+    class Meta:
+        model = models.Project
+        fields = ("role",)
