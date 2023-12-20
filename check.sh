@@ -13,7 +13,7 @@ cd transletter
 
 black .
 flake8 .
-djlint . --reformat --format-css --format-js
+djlint . --reformat
 printf "${GREEN}Linters runned${NC}\n"
 
 python manage.py makemigrations --check
