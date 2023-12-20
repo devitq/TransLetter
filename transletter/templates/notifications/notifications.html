@@ -26,11 +26,7 @@
                 var notificationIds = []
 
                 {% for notification in page_obj %}
-                notificationIds.push({
-                    {
-                        notification.id
-                    }
-                });
+                notificationIds.push({{ notification.id }});
                 {% endfor %}
 
                 if (!csrfToken) {

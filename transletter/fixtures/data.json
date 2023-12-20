@@ -1150,5 +1150,759 @@
     "content_type": 32,
     "codename": "view_translationrequestmessage"
   }
+},
+{
+  "model": "auth.permission",
+  "pk": 129,
+  "fields": {
+    "name": "Can add translation request message",
+    "content_type": 33,
+    "codename": "add_translationrequestmessage"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 130,
+  "fields": {
+    "name": "Can change translation request message",
+    "content_type": 33,
+    "codename": "change_translationrequestmessage"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 131,
+  "fields": {
+    "name": "Can delete translation request message",
+    "content_type": 33,
+    "codename": "delete_translationrequestmessage"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 132,
+  "fields": {
+    "name": "Can view translation request message",
+    "content_type": 33,
+    "codename": "view_translationrequestmessage"
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$600000$Bu0DBQCoRBDYuZQbEdvjZF$XKkDOp7eyO6jnbzm/bY8KQTwElL2ZCgi/udfAaBPBuQ=",
+    "last_login": "2023-12-20T11:42:43.290Z",
+    "is_superuser": true,
+    "username": "admin",
+    "first_name": "",
+    "last_name": "",
+    "email": "admin@mail.com",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2023-12-20T11:42:03.328Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 2,
+  "fields": {
+    "password": "pbkdf2_sha256$600000$euRMrSnpPIhx5JtAM9Lfbu$0THEkjyhrE+U1MMKZpewUfX7uDiLyarW4L5rNGg485Q=",
+    "last_login": "2023-12-20T11:44:40.964Z",
+    "is_superuser": false,
+    "username": "translator",
+    "first_name": "Translator",
+    "last_name": "Translatorovich",
+    "email": "translator@mail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2023-12-20T11:43:53Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 3,
+  "fields": {
+    "password": "pbkdf2_sha256$600000$ytGyaGRk0tnONjC1C5OzOY$KU/ELQL7QkOqaaayADQYBc41vylAY07TiQ+EzO5cXFE=",
+    "last_login": "2023-12-20T11:59:37Z",
+    "is_superuser": false,
+    "username": "orderer",
+    "first_name": "",
+    "last_name": "",
+    "email": "orderer@mail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2023-12-20T11:58:41Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.account",
+  "pk": 1,
+  "fields": {
+    "user": 1,
+    "avatar": "",
+    "attempts_count": 0,
+    "is_translator": false,
+    "blocked": false,
+    "blocked_reason": null,
+    "native_lang": null,
+    "languages": [],
+    "balance_currency": "USD",
+    "balance": "0.0000",
+    "website": null,
+    "github": null,
+    "about": null
+  }
+},
+{
+  "model": "accounts.account",
+  "pk": 2,
+  "fields": {
+    "user": 2,
+    "avatar": "",
+    "attempts_count": 0,
+    "is_translator": true,
+    "blocked": false,
+    "blocked_reason": null,
+    "native_lang": "ru",
+    "languages": [
+      "ach",
+      "aa",
+      "af",
+      "ak",
+      "tw",
+      "sq",
+      "am",
+      "ar",
+      "ar-BH",
+      "ar-EG",
+      "ar-SA",
+      "ar-YE",
+      "an",
+      "hy-AM",
+      "frp",
+      "as",
+      "ast",
+      "tay",
+      "av",
+      "ae",
+      "ay",
+      "az",
+      "ban",
+      "bal",
+      "bm",
+      "ba",
+      "eu",
+      "be",
+      "bn",
+      "bn-IN",
+      "ber",
+      "bh",
+      "bfo",
+      "bi",
+      "bs",
+      "br-FR",
+      "bg",
+      "my",
+      "ca",
+      "ceb",
+      "ch",
+      "ce",
+      "chr",
+      "ny",
+      "zh-CN",
+      "zh-TW",
+      "zh-HK",
+      "zh-MO",
+      "zh-SG",
+      "cv",
+      "kw",
+      "co",
+      "cr",
+      "hr",
+      "cs",
+      "da",
+      "fa-AF",
+      "dv",
+      "nl",
+      "nl-BE",
+      "nl-SR",
+      "dz",
+      "en",
+      "en-UD",
+      "en-AR",
+      "en-AU",
+      "en-BZ",
+      "en-CA",
+      "en-CB",
+      "en-CN",
+      "en-DK",
+      "en-HK",
+      "en-IN",
+      "en-ID",
+      "en-IE",
+      "en-JM",
+      "en-JA",
+      "en-MY",
+      "en-NZ",
+      "en-NO",
+      "en-PH",
+      "en-PR",
+      "en-SG",
+      "en-ZA",
+      "en-SE",
+      "en-GB",
+      "en-US",
+      "en-ZW",
+      "eo",
+      "et",
+      "ee",
+      "fo",
+      "fj",
+      "fil",
+      "fi",
+      "vls-BE",
+      "fra-DE",
+      "fr",
+      "fr-BE",
+      "fr-CA",
+      "fr-LU",
+      "fr-QC",
+      "fr-CH",
+      "fy-NL",
+      "fur-IT",
+      "ff",
+      "gaa",
+      "gl",
+      "ka",
+      "de",
+      "de-AT",
+      "de-BE",
+      "de-LI",
+      "de-LU",
+      "de-CH",
+      "got",
+      "el",
+      "el-CY",
+      "kl",
+      "gn",
+      "gu-IN",
+      "ht",
+      "ha",
+      "haw",
+      "he",
+      "hz",
+      "hil",
+      "hi",
+      "ho",
+      "hmn",
+      "hu",
+      "is",
+      "ido",
+      "ig",
+      "ilo",
+      "id",
+      "iu",
+      "ga-IE",
+      "it",
+      "it-CH",
+      "ja",
+      "jv",
+      "quc",
+      "kab",
+      "kn",
+      "pam",
+      "ks",
+      "ks-PK",
+      "csb",
+      "kk",
+      "km",
+      "rw",
+      "tlh-AA",
+      "kv",
+      "kg",
+      "kok",
+      "ko",
+      "ku",
+      "kmr",
+      "kj",
+      "ky",
+      "lol",
+      "lo",
+      "la-LA",
+      "lv",
+      "lij",
+      "li",
+      "ln",
+      "lt",
+      "jbo",
+      "nds",
+      "dsb-DE",
+      "lg",
+      "luy",
+      "lb",
+      "mk",
+      "mai",
+      "mg",
+      "ms",
+      "ms-BN",
+      "ml-IN",
+      "mt",
+      "gv",
+      "mi",
+      "arn",
+      "mr",
+      "mh",
+      "moh",
+      "mn",
+      "sr-Cyrl-ME",
+      "me",
+      "mos",
+      "na",
+      "ng",
+      "ne-NP",
+      "ne-IN",
+      "pcm",
+      "se",
+      "nso",
+      "no",
+      "nb",
+      "nn-NO",
+      "oc",
+      "or",
+      "oj",
+      "om",
+      "os",
+      "pi",
+      "pap",
+      "ps",
+      "fa",
+      "en-PT",
+      "pl",
+      "pt-PT",
+      "pt-BR",
+      "pa-IN",
+      "pa-PK",
+      "qu",
+      "qya-AA",
+      "ro",
+      "rm-CH",
+      "rn",
+      "ru",
+      "ru-BY",
+      "ru-MD",
+      "ry-UA",
+      "ru-UA",
+      "sah",
+      "sg",
+      "sa",
+      "sat",
+      "sc",
+      "sco",
+      "gd",
+      "sr",
+      "sr-CS",
+      "sh",
+      "crs",
+      "sn",
+      "ii",
+      "sd",
+      "si-LK",
+      "sk",
+      "sl",
+      "so",
+      "son",
+      "ckb",
+      "nr",
+      "sma",
+      "st",
+      "es-ES",
+      "es-EM",
+      "es-AR",
+      "es-BO",
+      "es-CL",
+      "es-CO",
+      "es-CR",
+      "es-DO",
+      "es-EC",
+      "es-SV",
+      "es-GT",
+      "es-HN",
+      "es-419",
+      "es-MX",
+      "es-NI",
+      "es-PA",
+      "es-PY",
+      "es-PE",
+      "es-PR",
+      "es-US",
+      "es-UY",
+      "es-VE",
+      "su",
+      "sw",
+      "sw-KE",
+      "sw-TZ",
+      "ss",
+      "sv-SE",
+      "sv-FI",
+      "syc",
+      "tl",
+      "ty",
+      "tg",
+      "tzl",
+      "ta",
+      "tt-RU",
+      "te",
+      "kdh",
+      "th",
+      "bo-BT",
+      "ti",
+      "ts",
+      "tn",
+      "tr",
+      "tr-CY",
+      "tk",
+      "uk",
+      "hsb-DE",
+      "ur-IN",
+      "ur-PK",
+      "ug",
+      "uz",
+      "val-ES",
+      "ve",
+      "vec",
+      "vi",
+      "wa",
+      "cy",
+      "wo",
+      "xh",
+      "yi",
+      "yo",
+      "zea",
+      "zu"
+    ],
+    "balance_currency": "USD",
+    "balance": "10.0000",
+    "website": "https://translator.com",
+    "github": "translator",
+    "about": "Hi, this is my public about section"
+  }
+},
+{
+  "model": "accounts.account",
+  "pk": 3,
+  "fields": {
+    "user": 3,
+    "avatar": "",
+    "attempts_count": 0,
+    "is_translator": false,
+    "blocked": false,
+    "blocked_reason": "",
+    "native_lang": null,
+    "languages": [],
+    "balance_currency": "USD",
+    "balance": "90.0000",
+    "website": null,
+    "github": null,
+    "about": ""
+  }
+},
+{
+  "model": "projects.project",
+  "pk": 1,
+  "fields": {
+    "avatar": "",
+    "name": "Test proj",
+    "description": "Test project",
+    "slug": "test-proj",
+    "created_at": "2023-12-20T12:00:44.758Z",
+    "last_activity": null,
+    "public": false,
+    "source_lang": "ru"
+  }
+},
+{
+  "model": "projects.projectmembership",
+  "pk": 1,
+  "fields": {
+    "user": 3,
+    "project": 1,
+    "role": "owner"
+  }
+},
+{
+  "model": "projects.projectlanguage",
+  "pk": 1,
+  "fields": {
+    "project": 1,
+    "lang_code": "ru"
+  }
+},
+{
+  "model": "projects.projectlanguage",
+  "pk": 2,
+  "fields": {
+    "project": 1,
+    "lang_code": "en"
+  }
+},
+{
+  "model": "notifications.notification",
+  "pk": 1,
+  "fields": {
+    "user": 2,
+    "title": "Test notification for translator",
+    "content": "Hi this is test notification for you",
+    "read": true,
+    "created_at": "2023-12-20T11:47:13.450Z"
+  }
+},
+{
+  "model": "translation_request.translationrequest",
+  "pk": 1,
+  "fields": {
+    "author": 3,
+    "translator": 2,
+    "project": 1,
+    "created_at": "2023-12-20T12:03:35.123Z",
+    "closed_at": null,
+    "text": "Demo translation request",
+    "status": "CL",
+    "price_currency": "USD",
+    "price": "10.0000",
+    "languages": [
+      "en"
+    ]
+  }
+},
+{
+  "model": "translation_request.translationrequestmessage",
+  "pk": 1,
+  "fields": {
+    "author": null,
+    "translation_request": 1,
+    "content": "The translator has accepted request",
+    "timestamp": "2023-12-20T12:04:37.408Z"
+  }
+},
+{
+  "model": "translation_request.translationrequestmessage",
+  "pk": 2,
+  "fields": {
+    "author": 2,
+    "translation_request": 1,
+    "content": "Hi, can you tell me more details about your project?",
+    "timestamp": "2023-12-20T12:05:04.505Z"
+  }
+},
+{
+  "model": "translation_request.translationrequestmessage",
+  "pk": 3,
+  "fields": {
+    "author": 3,
+    "translation_request": 1,
+    "content": "Sure",
+    "timestamp": "2023-12-20T12:05:24.012Z"
+  }
+},
+{
+  "model": "translation_request.translationrequestmessage",
+  "pk": 4,
+  "fields": {
+    "author": 3,
+    "translation_request": 1,
+    "content": "*details*",
+    "timestamp": "2023-12-20T12:05:47.312Z"
+  }
+},
+{
+  "model": "translation_request.translationrequestmessage",
+  "pk": 5,
+  "fields": {
+    "author": 2,
+    "translation_request": 1,
+    "content": "Ok, deal",
+    "timestamp": "2023-12-20T12:06:01.609Z"
+  }
+},
+{
+  "model": "translation_request.translationrequestmessage",
+  "pk": 6,
+  "fields": {
+    "author": null,
+    "translation_request": 1,
+    "content": "The translator has been added to the <a href=\"#\">project</a> and can begin work",
+    "timestamp": "2023-12-20T12:06:04.930Z"
+  }
+},
+{
+  "model": "translation_request.translationrequestmessage",
+  "pk": 7,
+  "fields": {
+    "author": 3,
+    "translation_request": 1,
+    "content": "Glad to hear that, good luck!",
+    "timestamp": "2023-12-20T12:06:33.030Z"
+  }
+},
+{
+  "model": "translation_request.translationrequestmessage",
+  "pk": 8,
+  "fields": {
+    "author": null,
+    "translation_request": 1,
+    "content": "The translator marked his work as completed",
+    "timestamp": "2023-12-20T12:06:42.252Z"
+  }
+},
+{
+  "model": "translation_request.translationrequestmessage",
+  "pk": 9,
+  "fields": {
+    "author": null,
+    "translation_request": 1,
+    "content": "The author sent the translator's work for revision",
+    "timestamp": "2023-12-20T12:06:53.512Z"
+  }
+},
+{
+  "model": "translation_request.translationrequestmessage",
+  "pk": 10,
+  "fields": {
+    "author": 3,
+    "translation_request": 1,
+    "content": "You need to correct something",
+    "timestamp": "2023-12-20T12:07:04.733Z"
+  }
+},
+{
+  "model": "translation_request.translationrequestmessage",
+  "pk": 11,
+  "fields": {
+    "author": 2,
+    "translation_request": 1,
+    "content": "Corrected!",
+    "timestamp": "2023-12-20T12:07:13.650Z"
+  }
+},
+{
+  "model": "translation_request.translationrequestmessage",
+  "pk": 12,
+  "fields": {
+    "author": null,
+    "translation_request": 1,
+    "content": "The translator marked his work as completed",
+    "timestamp": "2023-12-20T12:07:14.255Z"
+  }
+},
+{
+  "model": "translation_request.translationrequestmessage",
+  "pk": 13,
+  "fields": {
+    "author": 3,
+    "translation_request": 1,
+    "content": "Great!",
+    "timestamp": "2023-12-20T12:07:24.448Z"
+  }
+},
+{
+  "model": "translation_request.translationrequestmessage",
+  "pk": 14,
+  "fields": {
+    "author": null,
+    "translation_request": 1,
+    "content": "The author closed the request, the translator was rewarded",
+    "timestamp": "2023-12-20T12:07:29.015Z"
+  }
+},
+{
+  "model": "translation_request.translationrequestmessage",
+  "pk": 15,
+  "fields": {
+    "author": null,
+    "translation_request": 1,
+    "content": "The author of the request rated the translator.",
+    "timestamp": "2023-12-20T12:07:48.342Z"
+  }
+},
+{
+  "model": "translator_request.translatorrequest",
+  "pk": 1,
+  "fields": {
+    "user": 2,
+    "status": "AC"
+  }
+},
+{
+  "model": "translator_request.translatorrequeststatuslog",
+  "pk": 1,
+  "fields": {
+    "translator_request": 1,
+    "user": 1,
+    "from_status": "SE",
+    "to": "UR",
+    "comment": null,
+    "timestamp": "2023-12-20T11:50:09.638Z"
+  }
+},
+{
+  "model": "translator_request.translatorrequeststatuslog",
+  "pk": 2,
+  "fields": {
+    "translator_request": 1,
+    "user": 1,
+    "from_status": "UR",
+    "to": "RJ",
+    "comment": null,
+    "timestamp": "2023-12-20T11:50:35.107Z"
+  }
+},
+{
+  "model": "translator_request.translatorrequeststatuslog",
+  "pk": 3,
+  "fields": {
+    "translator_request": 1,
+    "user": 1,
+    "from_status": "SE",
+    "to": "UR",
+    "comment": null,
+    "timestamp": "2023-12-20T11:51:05.223Z"
+  }
+},
+{
+  "model": "translator_request.translatorrequeststatuslog",
+  "pk": 4,
+  "fields": {
+    "translator_request": 1,
+    "user": 1,
+    "from_status": "UR",
+    "to": "AC",
+    "comment": null,
+    "timestamp": "2023-12-20T11:51:08.136Z"
+  }
+},
+{
+  "model": "resume.resume",
+  "pk": 1,
+  "fields": {
+    "user": 2,
+    "about": "Hi, this is my public about section(pls accept my request)"
+  }
+},
+{
+  "model": "rating.rating",
+  "pk": 1,
+  "fields": {
+    "translation_request": 1,
+    "text": "Very good translator!",
+    "rating": 5,
+    "created_at": "2023-12-20T12:07:48.351Z"
+  }
 }
 ]

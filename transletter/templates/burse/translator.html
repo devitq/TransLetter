@@ -125,11 +125,7 @@
                                         <h6 class="mb-0 mt-1">{% get_verbose_field_name translator.account "native_lang" %}:</h6>
                                     </div>
                                     <div class="col-sm-6 text-secondary">
-                                        {% if translator.native_lang is not None %}
-                                            {{ translator.account.get_native_lang_display }}
-                                        {% else %}
-                                            N/A
-                                        {% endif %}
+                                        {{ translator.account.get_native_lang_display|default:"N/A" }}
                                     </div>
                                 </div>
                                 <hr>

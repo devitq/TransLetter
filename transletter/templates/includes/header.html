@@ -38,15 +38,16 @@
                                    class="nav-link{% if view_name == 'accounts:signup' %} active{% endif %}">{% translate "Signup" %}</a>
                             </li>
                         {% else %}
-                            <li class="nav-item">
-                                <a href="{% url 'dashboard:index' %}"
-                                   class="nav-link{% if view_name == 'dashboard:index' %} active{% endif %}">{% translate "Dashboard" %}</a>
+                                <li class="nav-item">
+                                    <a href="{% url 'dashboard:index' %}"
+                                        class="nav-link{% if view_name == 'dashboard:index' %} active{% endif %}">{% translate "Dashboard" %}</a>
+                                </li>
                                 <li class="nav-item">
                                     <a href="{% url 'accounts:logout' %}"
                                        class="nav-link{% if view_name == 'accounts:logout' %} active{% endif %}">{% translate "Logout" %}</a>
                                 </li>
                             {% endif %}
-                            {% if request.user.is_superuser %}
+                            {% if request.user.is_staff %}
                                 <li class="nav-item">
                                     <a href="{% url 'admin:index' %}" class="nav-link">{% translate "Admin" %}</a>
                                 </li>
