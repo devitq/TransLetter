@@ -13,7 +13,12 @@
             {% thumbnail request.user.account.avatar "300x300" as avatar %}
                 <img src="{{ avatar.url }}" alt="Avatar">
             {% empty %}
-                <svg alt="Avatar" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
+                <svg alt="Avatar"
+                     xmlns="http://www.w3.org/2000/svg"
+                     role="img"
+                     aria-label="Placeholder: Thumbnail"
+                     preserveAspectRatio="xMidYMid slice"
+                     focusable="false">
                     <title>{% translate "No image" %}</title>
                     <rect width="100%" height="100%" fill="#55595c"></rect>
                 </svg>

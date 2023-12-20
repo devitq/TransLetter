@@ -1,67 +1,69 @@
 {% extends "base-dashboard.html" %}
 {% block main %}
-{% load i18n %}
+    {% load i18n %}
+    <div class="container mt-3">
+        <h2>{% translate "Notifications" %}</h2>
+        <div class="row mt-3">
+            {% csrf_token %}
+            {% for notification in page_obj %}
+                {% include "includes/notification_card.html" %}
+            {% empty %}
+            </div>
+            <p class="text-muted">{% translate "No notifications" %}</p>
+            <div>{% endfor %}</div>
+        {% include "includes/pagination.html" %}
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            function getCSRFToken() {
+                var csrfTokenElement = document.getElementsByName("csrfmiddlewaretoken")[0];
+                return csrfTokenElement ? csrfTokenElement.value : null;
+            }
 
-<div class="container mt-3">
-  <h2>{% translate "Notifications" %}</h2>
-  <div
-    class="row mt-3"
-  >
-      {% csrf_token %}
-      {% for notification in page_obj %}
-        {% include "includes/notification_card.html" %}
-      {% empty %}
-      </div>
-      <p class="text-muted">{% translate "No notifications" %}</p>
-      <div>
-    {% endfor %}
-  </div>
-  {% include "includes/pagination.html" %}
-</div>
+            function markNotificationsRead() {
+                var xhr = new XMLHttpRequest();
+                var csrfToken = getCSRFToken();
+                var notificationIds = []
 
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    function getCSRFToken() {
-      var csrfTokenElement = document.getElementsByName("csrfmiddlewaretoken")[0];
-      return csrfTokenElement ? csrfTokenElement.value : null;
-    }
-    function markNotificationsRead() {
-      var xhr = new XMLHttpRequest();
-      var csrfToken = getCSRFToken();
-      var notificationIds = []
+                {
+                    %
+                    for notification in page_obj %
+                }
+                notificationIds.push({
+                    {
+                        notification.id
+                    }
+                });
+                {
+                    % endfor %
+                }
 
-      {% for notification in page_obj %}
-        notificationIds.push({{ notification.id }});
-      {% endfor %}
+                if (!csrfToken) {
+                    console.error("CSRF token not found.");
+                    return;
+                }
 
-      if (!csrfToken) {
-        console.error("CSRF token not found.");
-        return;
-      }
+                xhr.open("POST", "{% url 'notifications:read_notifications' %}", true);
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                xhr.setRequestHeader("X-CSRFToken", csrfToken);
 
-      xhr.open("POST", "{% url 'notifications:read_notifications' %}", true);
-      xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-      xhr.setRequestHeader("X-CSRFToken", csrfToken);
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === 4) {
+                        if (xhr.status === 200) {
+                            var responseData = JSON.parse(xhr.responseText);
+                            console.log("Notifications marked as read:", responseData);
+                            // You can perform additional actions after successful marking
+                        } else {
+                            console.error("Error marking notifications as read:", xhr.status, xhr.statusText);
+                            // Handle error as needed
+                        }
+                    }
+                };
 
-      xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4) {
-          if (xhr.status === 200) {
-            var responseData = JSON.parse(xhr.responseText);
-            console.log("Notifications marked as read:", responseData);
-            // You can perform additional actions after successful marking
-          } else {
-            console.error("Error marking notifications as read:", xhr.status, xhr.statusText);
-            // Handle error as needed
-          }
-        }
-      };
-
-      var formData = "notification_ids=" + notificationIds;
-      xhr.send(formData);
-    }
-    markNotificationsRead();
-  });
-</script>
-
-
+                var formData = "notification_ids=" + notificationIds;
+                xhr.send(formData);
+            }
+            markNotificationsRead();
+        });
+    </script>
 {% endblock main %}
