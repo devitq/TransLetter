@@ -25,7 +25,10 @@ class CreateProjectForm(forms.ModelForm, BaseFormMixin):
 
 class AddProjectMemberForm(forms.Form, BaseFormMixin):
     email_address = forms.EmailField(
-        help_text=pgettext("add member form", "Enter the user's email address"),
+        help_text=pgettext(
+            "add member form",
+            "Enter the user's email address",
+        ),
     )
     mail_header = forms.CharField(
         help_text=pgettext("add member form", "Enter a title for the mail"),
