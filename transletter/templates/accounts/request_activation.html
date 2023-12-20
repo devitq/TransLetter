@@ -1,14 +1,12 @@
 {% extends "base.html" %}
-{% block main %}
 {% load i18n %}
-
-<div class="container">
-    <h1>{% translate "Request activation email" %}</h1>
-    <form method="post">
-        {% csrf_token %}
-        {% include "includes/form.html" %}
-        <input class="btn btn-primary" type="submit" value="{% translate 'Send' %}">
-    </form>
-</div>
-
+{% block main %}
+    <div class="container">
+        <h1>{% translate "Request activation email" %}</h1>
+        <form method="post">
+            {% csrf_token %}
+            {% include "includes/form.html" %}
+            <input class="btn btn-primary" type="submit" value="{% translate 'Send' %}">
+        </form>
+    </div>
 {% endblock %}

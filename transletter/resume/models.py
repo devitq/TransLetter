@@ -1,5 +1,6 @@
 from pathlib import Path
 
+from django.contrib.auth.models import User
 from django.db import models
 from django.utils.translation import gettext_lazy as _, pgettext_lazy
 
@@ -27,6 +28,13 @@ class ResumeManager(models.Manager):
 class Resume(models.Model):
     objects = ResumeManager()
 
+    user = models.OneToOneField(
+        User,
+        on_delete=models.CASCADE,
+        related_name="resume",
+        null=True,
+        blank=True,
+    )
     about = models.TextField(
         pgettext_lazy("about field name", "about"),
         null=True,
@@ -35,7 +43,7 @@ class Resume(models.Model):
 
     def __str__(self) -> str:
         verbose = _(
-            (f"{self.account.user.username}`s resume"),
+            (f"{self.user.username}`s resume"),
         )
         return str(verbose)
 
@@ -69,7 +77,7 @@ class ResumeFile(models.Model):
         verbose = _(
             (
                 f"{self.resume.account.user.username}'s"
-                f" resume file №{self.id}"
+                f" resume file, ID:{self.id}"
             ),
         )
         return str(verbose)

@@ -43,3 +43,14 @@ class Handler403View(TemplateView):
     def get(self, request, *args, **kwargs):
         context = self.get_context_data(**kwargs)
         return self.render_to_response(context, status=HTTPStatus.FORBIDDEN)
+
+
+class Handler500View(TemplateView):
+    template_name = "errors/500.html"
+
+    def get(self, request, *args, **kwargs):
+        context = self.get_context_data(**kwargs)
+        return self.render_to_response(
+            context,
+            status=HTTPStatus.INTERNAL_SERVER_ERROR,
+        )

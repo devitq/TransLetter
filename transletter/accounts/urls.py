@@ -77,4 +77,9 @@ urlpatterns = [
         accounts.views.AccountActivationRequestView.as_view(),
         name="request_activation",
     ),
+    path(
+        "account/edit/",
+        accounts.views.AccountEditView.as_view(),
+        name="edit_account",
+    ),
 ]

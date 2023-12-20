@@ -40,7 +40,15 @@ class UserChangeForm(auth.forms.UserChangeForm, BaseFormMixin):
     class Meta(auth.forms.UserChangeForm.Meta):
         model = User
         fields = ("username", "email", "first_name", "last_name")
-        eclude = ("password",)
+        help_texts = {
+            "email": pgettext_lazy(
+                "Help text for email in user change form",
+                (
+                    "WARNING: If you change your email, "
+                    "your account will be deactivated"
+                ),
+            ),
+        }
 
 
 class UserAccountChangeForm(forms.ModelForm, BaseFormMixin):
@@ -161,6 +169,14 @@ class CreateUserAdminForm(auth.admin.UserCreationForm):
 class MyLoginForm(auth.forms.AuthenticationForm, BaseFormMixin):
     def __init__(self, *args, **kwargs):
         super(MyLoginForm, self).__init__(*args, **kwargs)
+        self.fields["username"].label = pgettext_lazy(
+            "login field in form",
+            "Login",
+        )
+        self.fields["username"].help_text = pgettext_lazy(
+            "help text for login field in form",
+            "Your email or username",
+        )
         self.set_field_attributes()
 
     if settings.RECAPTCHA_ENABLED:

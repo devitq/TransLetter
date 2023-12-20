@@ -97,6 +97,27 @@ And change .env for your needs
 > python manage.py loaddata fixtures/data.json
 ```
 
+#### Fixtures credits
+
+Admin:
+<br>
+login: admin
+<br>
+password: admin
+<br>
+Translator:
+<br>
+login: translator
+<br>
+password: h8URT&xm4qOI#yeDPz3b9hDgq0DNnm
+<br>
+Orderer:
+<br>
+login: orderer
+<br>
+password: jVm07WVMuAWZ0LEy8zDQtV^0WZnX&^
+<br>
+
 ### Using bult-in command
 
 ```cmd

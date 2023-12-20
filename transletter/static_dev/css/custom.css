@@ -9,6 +9,36 @@ footer {
   margin-top: auto;
 }
 
+::-moz-selection { /* Code for Firefox */
+  color: black;
+  background: rgba(50, 152, 253, 0.8);
+}
+
+::selection {
+  color: black;
+  background: rgba(50, 152, 253, 0.8);
+}
+
+::-webkit-scrollbar {
+  width: 20px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #555758;
+  border-radius: 20px;
+  border: 6px solid transparent;
+  background-clip: content-box;
+  transition: background-color 0.2s;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #676b6c;
+}
+
 .zoomable-card {
   border-radius: 6px;
   box-shadow: 0 6px 10px rgba(0, 0, 0, 0.08), 0 0 6px rgba(0, 0, 0, 0.05);

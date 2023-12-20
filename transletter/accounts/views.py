@@ -1,9 +1,9 @@
 from django.conf import settings
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.mail import EmailMultiAlternatives
-from django.core.mail import send_mail
 from django.core.signing import BadSignature, SignatureExpired, TimestampSigner
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.template.loader import render_to_string
 from django.urls import reverse, reverse_lazy
 from django.utils import timezone
@@ -14,8 +14,15 @@ from django.views.generic import (
     View,
 )
 
-from accounts.forms import RequestAccountActivationForm, UserSignupForm
+from accounts.forms import (
+    AccountAvatarChangeForm,
+    RequestAccountActivationForm,
+    UserAccountChangeForm,
+    UserChangeForm,
+    UserSignupForm,
+)
 import accounts.models
+from transletter.email import EmailThread
 
 __all__ = ()
 
@@ -90,7 +97,7 @@ class UserSignupView(CreateView):
                 to=[user.email],
             )
             email.attach_alternative(email_body, "text/html")
-            email.send(fail_silently=False)
+            EmailThread(email).start()
 
             messages.success(
                 self.request,
@@ -134,20 +141,22 @@ class AccountActivationRequestView(FormView):
         if not user.is_active:
             signer = TimestampSigner()
             token = signer.sign(user.username)
-            activation_url = self.request.build_absolute_uri(
+            link = self.request.build_absolute_uri(
                 reverse("accounts:activate_account", kwargs={"token": token}),
             )
 
-            send_mail(
-                "Account Activation Request",
-                (
-                    "Please click the following link to activate"
-                    f"your account: {activation_url}"
-                ),
-                settings.EMAIL,
-                [user_email],
-                fail_silently=False,
+            email_body = render_to_string(
+                "accounts/email/activate_account_request.html",
+                {"username": user.username, "link": link},
             )
+            email = EmailMultiAlternatives(
+                subject="Account activation - TransLetter",
+                body=email_body,
+                from_email=settings.EMAIL,
+                to=[user.email],
+            )
+            email.attach_alternative(email_body, "text/html")
+            EmailThread(email).start()
 
             messages.success(
                 self.request,
@@ -171,3 +180,68 @@ class AccountActivationRequestView(FormView):
         )
 
         return super().form_invalid(form)
+
+
+class AccountEditView(LoginRequiredMixin, View):
+    template_name = "accounts/edit_account.html"
+
+    def get(self, request, *args, **kwargs):
+        user_form = UserChangeForm(instance=request.user)
+        initial_languages = request.user.account.languages
+        account_form = UserAccountChangeForm(
+            instance=request.user.account,
+            initial={"languages": initial_languages},
+        )
+        avatar_form = AccountAvatarChangeForm(instance=request.user.account)
+        return render(
+            request,
+            self.template_name,
+            {
+                "user_form": user_form,
+                "account_form": account_form,
+                "avatar_form": avatar_form,
+            },
+        )
+
+    def post(self, request, *args, **kwargs):
+        old_email = request.user.email
+        user_form = UserChangeForm(request.POST, instance=request.user)
+        account_form = UserAccountChangeForm(
+            request.POST,
+            instance=request.user.account,
+        )
+        avatar_form = AccountAvatarChangeForm(
+            request.POST,
+            request.FILES,
+            instance=request.user.account,
+        )
+
+        if (
+            user_form.is_valid()
+            and account_form.is_valid()
+            and avatar_form.is_valid()
+        ):
+            user_form.save()
+            account_form.save()
+            avatar_form.save()
+            request.user.account.languages = account_form.cleaned_data[
+                "languages"
+            ]
+            request.user.account.save()
+
+            if old_email != request.user.email:
+                request.user.is_active = False
+                request.user.save()
+
+            messages.success(request, "Account updated successfully!")
+            return redirect("accounts:edit_account")
+
+        return render(
+            request,
+            self.template_name,
+            {
+                "user_form": user_form,
+                "account_form": account_form,
+                "avatar_form": avatar_form,
+            },
+        )

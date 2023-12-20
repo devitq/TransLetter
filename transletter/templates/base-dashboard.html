@@ -1,5 +1,4 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="ru" data-bs-theme="dark">
     <head>
@@ -14,7 +13,8 @@
         <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
         <link rel="stylesheet" href="{% static 'css/custom.css' %}">
         <link rel="stylesheet" href="{% static 'css/dashboard-header.css' %}">
-        <link rel="stylesheet" href="{% static 'fontawesome/css/fontawesome.min.css' %}">
+        <link rel="stylesheet"
+              href="{% static 'fontawesome/css/fontawesome.min.css' %}">
         <link rel="stylesheet" href="{% static 'fontawesome/css/solid.min.css' %}">
         <link rel="stylesheet" href="{% static 'boxicons/css/boxicons.min.css' %}">
         <script src="{% static 'js/toast.js' %}"></script>
@@ -25,7 +25,8 @@
         {% include "includes/header-dashboard.html" %}
         {% include "includes/toasts.html" %}
         <main id="main-pd">
-            {% block main %}{% endblock main %}
+            {% block main %}
+            {% endblock main %}
         </main>
         <script>
             (function(d, w, c) {
@@ -39,6 +40,6 @@
                 if (d.head) d.head.appendChild(s);
             })(document, window, 'BrevoConversations');
         </script>
-        <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>     
+        <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
     </body>
 </html>

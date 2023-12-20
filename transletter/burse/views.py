@@ -3,6 +3,7 @@ from django.shortcuts import get_object_or_404, render
 from django.views.generic import ListView, View
 
 from accounts.models import User
+from rating.models import Rating
 
 __all__ = ()
 
@@ -15,14 +16,13 @@ class TranslatorsView(LoginRequiredMixin, ListView):
         return User.objects.translators()
 
 
-class TranslatorView(View):
+class TranslatorView(LoginRequiredMixin, View):
     template_name = "burse/translator.html"
 
     def get(self, request, username, *args, **kwargs):
         translator = get_object_or_404(
-            User.objects.select_related("account"),
-            username=username,
-            account__is_translator=True,
+            User.objects.translator(username),
         )
-        context = {"translator": translator}
+        ratings = Rating.objects.by_translator(username)
+        context = {"translator": translator, "ratings": ratings}
         return render(request, self.template_name, context)
