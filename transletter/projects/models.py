@@ -44,8 +44,8 @@ class Project(models.Model):
     )
     last_activity = models.DateTimeField(
         pgettext_lazy("last activity field name", "last activity"),
+        auto_now_add=True,
         blank=True,
-        null=True,
     )
     public = models.BooleanField(
         pgettext_lazy("public field name", "public"),
@@ -89,7 +89,11 @@ class ProjectMembership(models.Model):
 class ProjectLanguage(models.Model):
     LANGUAGES = get_available_langs()
 
-    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    project = models.ForeignKey(
+        Project,
+        on_delete=models.CASCADE,
+        related_name="languages",
+    )
     lang_code = models.CharField(max_length=10, choices=LANGUAGES)
 
     class Meta:

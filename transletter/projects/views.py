@@ -1,20 +1,26 @@
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
 from django.core.mail import send_mail
-from django.core.signing import BadSignature, TimestampSigner
-from django.shortcuts import redirect, render
+from django.core.signing import BadSignature
+from django.db import models
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
+from django.utils.decorators import method_decorator
 from django.utils.translation import pgettext_lazy
 from django.views.generic import CreateView, ListView
 
 import accounts.models
+from projects.decorators import can_access_project_decorator
 from projects.forms import (
     AddProjectMemberForm,
     CreateProjectForm,
     UpdateProjectMemberForm,
 )
 import projects.models
+from projects.tokens import decode_token, generate_token
+
 
 __all__ = ()
 
@@ -24,7 +30,9 @@ class ProjectsListView(LoginRequiredMixin, ListView):
     context_object_name = "projects"
 
     def get_queryset(self):
-        return projects.models.Project.objects.filter(public=1).all()
+        return projects.models.Project.objects.filter(
+            projectmembership__user=self.request.user,
+        ).all()
 
 
 class CreateProjectView(LoginRequiredMixin, CreateView):
@@ -39,45 +47,21 @@ class CreateProjectView(LoginRequiredMixin, CreateView):
         if form.is_valid():
             project = form.save(commit=False)
             project.save()
-            return redirect("projects:project_page", pk=project.pk)
+            return redirect("projects:project_page", slug=project.slug)
         return render(request, self.template_name, {"form": form})
 
 
+@method_decorator(can_access_project_decorator, name="dispatch")
 class ProjectMembersView(LoginRequiredMixin, ListView):
     template_name = "projects/project_members.html"
 
-    def get(self, request, pk):
-        is_public = (
-            projects.models.ProjectMembership.objects.filter(project_id=pk)
-            .values("user_id")
-            .all()
-        )
-        project_ids = [i["user_id"] for i in is_public]
-        request_id = request.user.id
-        if request_id not in project_ids:
-            messages.error(
-                request,
-                pgettext_lazy(
-                    "error message in views",
-                    "There is no such repository or it is private",
-                ),
-            )
-            return redirect("projects:projects_list")
-        if not bool(is_public):
-            messages.error(
-                request,
-                pgettext_lazy(
-                    "error message in views",
-                    "There is no such repository or it is private",
-                ),
-            )
-            return redirect("projects:projects_list")
+    def get(self, request, slug):
         members = projects.models.ProjectMembership.objects.filter(
-            project_id=pk,
+            project__slug=slug,
         )
         active_user_role = projects.models.ProjectMembership.objects.filter(
             user_id=request.user.id,
-            project_id=pk,
+            project__slug=slug,
         ).first()
         return render(
             request,
@@ -85,44 +69,20 @@ class ProjectMembersView(LoginRequiredMixin, ListView):
             context={
                 "members": members,
                 "active_user_role": active_user_role,
-                "pk": pk,
+                "slug": slug,
             },
         )
 
 
+@method_decorator(can_access_project_decorator, name="dispatch")
 class AddProjectMemberView(LoginRequiredMixin, CreateView):
     template_name = "projects/add_project_member.html"
 
-    def get(self, request, pk):
-        is_public = (
-            projects.models.ProjectMembership.objects.filter(project_id=pk)
-            .values("user_id")
-            .all()
-        )
-        project_ids = [i["user_id"] for i in is_public]
-        request_id = request.user.id
-        if request_id not in project_ids:
-            messages.error(
-                request,
-                pgettext_lazy(
-                    "error message in views",
-                    "There is no such repository or it is private",
-                ),
-            )
-            return redirect("projects:projects_list")
+    def get(self, request, slug):
         user = projects.models.ProjectMembership.objects.filter(
             user_id=request.user.id,
-            project_id=pk,
+            project__slug=slug,
         ).first()
-        if not user:
-            messages.error(
-                request,
-                pgettext_lazy(
-                    "error message in views",
-                    "You don't have permission to do this",
-                ),
-            )
-            return redirect("projects:project_members", pk)
         if user.role not in ["owner", "admin"]:
             messages.error(
                 request,
@@ -131,15 +91,18 @@ class AddProjectMemberView(LoginRequiredMixin, CreateView):
                     "You don't have permission to do this",
                 ),
             )
-            return redirect("projects:project_members", pk)
+            return redirect("projects:project_members", slug)
         form = AddProjectMemberForm()
         return render(request, self.template_name, {"form": form})
 
-    def post(self, request, pk):
+    def post(self, request, slug):
         form = AddProjectMemberForm(request.POST)
+        project = get_object_or_404(
+            projects.models.Project,
+            slug=slug,
+        )
         if form.is_valid():
             data = form.cleaned_data
-            signer = TimestampSigner()
             try:
                 user = accounts.models.User.objects.get(
                     email=data["email_address"],
@@ -153,11 +116,11 @@ class AddProjectMemberView(LoginRequiredMixin, CreateView):
                     ),
                 )
             else:
-                token = signer.sign(user.username)
+                token = generate_token(user.username, project.id)
                 link = self.request.build_absolute_uri(
                     reverse(
                         "projects:activate_project_member",
-                        kwargs={"pk": pk, "token": token},
+                        kwargs={"slug": slug, "token": token},
                     ),
                 )
                 msg = (
@@ -181,30 +144,15 @@ class AddProjectMemberView(LoginRequiredMixin, CreateView):
                         "The invitation has been sent",
                     ),
                 )
-        return redirect("projects:project_members", pk)
+        return redirect("projects:project_members", slug)
 
 
+@method_decorator(can_access_project_decorator, name="dispatch")
 class DeleteProjectMemberView(LoginRequiredMixin, ListView):
-    def get(self, request, pk, user_id):
-        is_public = (
-            projects.models.ProjectMembership.objects.filter(project_id=pk)
-            .values("user_id")
-            .all()
-        )
-        project_ids = [i["user_id"] for i in is_public]
-        request_id = request.user.id
-        if request_id not in project_ids:
-            messages.error(
-                request,
-                pgettext_lazy(
-                    "error message in views",
-                    "There is no such repository or it is private",
-                ),
-            )
-            return redirect("projects:projects_list")
+    def get(self, request, slug, user_id):
         user = projects.models.ProjectMembership.objects.filter(
             user_id=request.user.id,
-            project_id=pk,
+            project__slug=slug,
         ).first()
         if not user:
             messages.error(
@@ -214,7 +162,7 @@ class DeleteProjectMemberView(LoginRequiredMixin, ListView):
                     "You don't have permission to do this",
                 ),
             )
-            return redirect("projects:project_members", pk)
+            return redirect("projects:project_members", slug)
         if user.role not in ["owner", "admin"]:
             messages.error(
                 request,
@@ -223,7 +171,7 @@ class DeleteProjectMemberView(LoginRequiredMixin, ListView):
                     "You don't have permission to do this",
                 ),
             )
-            return redirect("projects:project_members", pk)
+            return redirect("projects:project_members", slug)
         user_for_delete = projects.models.ProjectMembership.objects.get(
             user_id=user_id,
         ).role
@@ -234,7 +182,7 @@ class DeleteProjectMemberView(LoginRequiredMixin, ListView):
                 or (user_for_delete == "admin" and user.role == "owner")
             ):
                 projects.models.ProjectMembership.objects.filter(
-                    project_id=pk,
+                    project_id=slug,
                     user_id=user_id,
                 ).delete()
             elif user_for_delete == "admin" and user.role == "admin":
@@ -261,32 +209,17 @@ class DeleteProjectMemberView(LoginRequiredMixin, ListView):
                     "It is forbidden to delete the owner",
                 ),
             )
-        return redirect("projects:project_members", pk)
+        return redirect("projects:project_members", slug)
 
 
+@method_decorator(can_access_project_decorator, name="dispatch")
 class UpdateProjectMemberView(LoginRequiredMixin, ListView):
     template_name = "projects/update_project_member.html"
 
-    def get(self, request, pk, user_id):
-        is_public = (
-            projects.models.ProjectMembership.objects.filter(project_id=pk)
-            .values("user_id")
-            .all()
-        )
-        project_ids = [i["user_id"] for i in is_public]
-        request_id = request.user.id
-        if request_id not in project_ids:
-            messages.error(
-                request,
-                pgettext_lazy(
-                    "error message in views",
-                    "There is no such repository or it is private",
-                ),
-            )
-            return redirect("projects:projects_list")
+    def get(self, request, slug, user_id):
         user = projects.models.ProjectMembership.objects.filter(
             user_id=request.user.id,
-            project_id=pk,
+            project_id=slug,
         ).first()
         if not user:
             messages.error(
@@ -296,7 +229,7 @@ class UpdateProjectMemberView(LoginRequiredMixin, ListView):
                     "You don't have permission to do this",
                 ),
             )
-            return redirect("projects:project_members", pk)
+            return redirect("projects:project_members", slug)
         if user.role != "owner":
             messages.error(
                 request,
@@ -305,45 +238,37 @@ class UpdateProjectMemberView(LoginRequiredMixin, ListView):
                     "You don't have permission to do this",
                 ),
             )
-            return redirect("projects:project_members", pk)
+            return redirect("projects:project_members", slug)
         form = UpdateProjectMemberForm()
         return render(request, self.template_name, {"form": form})
 
-    def post(self, request, pk, user_id):
+    def post(self, request, slug, user_id):
         form = UpdateProjectMemberForm(request.POST or None)
         if form.is_valid():
             data = form.cleaned_data
             user = projects.models.ProjectMembership.objects.filter(
-                project_id=pk,
+                project__slug=slug,
                 user_id=user_id,
             ).first()
             user.role = data["role"]
             user.save()
-        return redirect("projects:project_members", pk)
+        return redirect("projects:project_members", slug)
 
 
 class ActivateProjectMemberView(LoginRequiredMixin, ListView):
-    def get(self, request, pk, token):
-        signer = TimestampSigner()
+    def get(self, request, slug, token):
         try:
-            username = signer.unsign(
-                token,
-            )
-        except BadSignature:
-            messages.error(
-                request,
-                pgettext_lazy("error message in views", "Invalid link!"),
-            )
-        else:
+            username, project_id = decode_token(token)
             user = accounts.models.User.objects.get(username=username)
-            try:
-                projects.models.ProjectMembership.objects.get(
-                    user_id=user.id,
-                    project_id=pk,
-                )
-            except projects.models.ProjectMembership.DoesNotExist:
+            if request.user != user:
+                raise PermissionDenied()
+            membership = projects.models.ProjectMembership.objects.filter(
+                user_id=user.id,
+                project__slug=slug,
+            ).first()
+            if membership is None:
                 member = projects.models.ProjectMembership(
-                    project_id=pk,
+                    project__slug=slug,
                     user_id=user.id,
                     role="static_translator",
                 )
@@ -363,30 +288,28 @@ class ActivateProjectMemberView(LoginRequiredMixin, ListView):
                         "Existing member",
                     ),
                 )
-        return redirect("projects:project_members", pk)
+        except BadSignature:
+            messages.error(
+                request,
+                pgettext_lazy("error message in views", "Invalid link!"),
+            )
+        return redirect("projects:project_members", slug)
 
 
+@method_decorator(can_access_project_decorator, name="dispatch")
 class ProjectPageView(LoginRequiredMixin, ListView):
     template_name = "projects/project_page.html"
 
-    def get(self, request, pk):
-        is_public = (
-            projects.models.ProjectMembership.objects.filter(project_id=pk)
-            .values("user_id")
-            .all()
-        )
-        project_ids = [i["user_id"] for i in is_public]
-        request_id = request.user.id
-        if request_id not in project_ids:
-            messages.error(
-                request,
-                pgettext_lazy(
-                    "error message in views",
-                    "There is no such repository or it is private",
+    def get(self, request, slug):
+        project = get_object_or_404(
+            projects.models.Project.objects.prefetch_related(
+                models.Prefetch(
+                    "languages",
+                    projects.models.ProjectLanguage.objects.all(),
                 ),
-            )
-            return redirect("projects:projects_list")
-        project = projects.models.Project.objects.get(id=pk)
+            ).prefetch_related("members"),
+            slug=slug,
+        )
         return render(
             request,
             self.template_name,
@@ -396,32 +319,14 @@ class ProjectPageView(LoginRequiredMixin, ListView):
         )
 
 
+@method_decorator(can_access_project_decorator, name="dispatch")
 class ProjectFilesView(LoginRequiredMixin, ListView):
     template_name = "projects/project_files.html"
 
-    def get(self, request, pk):
-        is_public = (
-            projects.models.ProjectMembership.objects.filter(
-                project_id=pk,
-            )
-            .values("user_id")
-            .all()
-        )
-        project_ids = [i["user_id"] for i in is_public]
-        request_id = request.user.id
-        if request_id not in project_ids:
-            messages.error(
-                request,
-                pgettext_lazy(
-                    "error message in views",
-                    "There is no such repository or it is private",
-                ),
-            )
-            return redirect("projects:projects_list")
+    def get(self, request, slug):
         project_files = projects.models.ProjectLanguage.objects.filter(
-            project_id=pk,
+            project__slug=slug,
         )
-        print(project_files)
         return render(
             request,
             self.template_name,

@@ -89,7 +89,7 @@ a {
   transition: 0.5s;
   z-index: var(--z-fixed);
 }
-.nav {
+.l-navbar > .nav {
   height: 100%;
   display: flex;
   flex-direction: column;

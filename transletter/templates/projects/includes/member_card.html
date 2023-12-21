@@ -28,14 +28,14 @@
             {% if member.role != "owner" and member.role != "hired_translator" %}
                 {% if active_user_role.role == "admin" and member.role == "admin" %}
                 {% else %}
-                    <a href="{% url 'projects:delete_project_member' pk=pk user_id=member.user_id %}">
+                    <a href="{% url 'projects:delete_project_member' slug=slug user_id=member.user_id %}">
                         <button type="button" class="btn btn-danger">{% translate "Delete" %}</button>
                     </a>
                 {% endif %}
             {% endif %}
             <br>
             {% if member.role != "owner" and member.role != "hired_translator" and active_user_role.role != "admin" %}
-                <a href="{% url 'projects:update_project_member' pk=pk user_id=member.user_id %}">
+                <a href="{% url 'projects:update_project_member' slug=slug user_id=member.user_id %}">
                     <button type="button" class="btn btn-warning">{% translate "Update role" %}</button>
                 </a>
             {% endif %}

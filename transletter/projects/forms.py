@@ -35,7 +35,7 @@ class AddProjectMemberForm(forms.Form, BaseFormMixin):
         max_length=50,
     )
     mail_text = forms.CharField(
-        help_text=pgettext("add member form", "Enter the text of the mail"),
+        help_text=pgettext("add member form", "Enter the text of the email"),
         widget=forms.Textarea(),
     )
 
