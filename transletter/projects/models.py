@@ -40,12 +40,12 @@ class Project(models.Model):
     created_at = models.DateTimeField(
         pgettext_lazy("created at field name", "created at"),
         auto_now_add=True,
-        blank=True,
+        null=True,
     )
     last_activity = models.DateTimeField(
         pgettext_lazy("last activity field name", "last activity"),
         auto_now_add=True,
-        blank=True,
+        null=True,
     )
     public = models.BooleanField(
         pgettext_lazy("public field name", "public"),
@@ -129,8 +129,8 @@ class TranslationFile(models.Model):
 
 
 class TranslationRow(models.Model):
-    created_at = models.DateTimeField(auto_now_add=True, blank=True)
-    updated_at = models.DateTimeField(auto_now=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True)
     msg_context = models.TextField(null=True, blank=True)
     msg_id = models.TextField()
     msg_str = models.TextField()
@@ -157,4 +157,4 @@ class TranslationComment(models.Model):
         pgettext_lazy("comment field name", "comment"),
     )
     author = models.ForeignKey(User, on_delete=models.CASCADE)
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True)

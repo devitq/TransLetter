@@ -96,6 +96,7 @@ class TranslatorRequestStatusLog(models.Model):
     )
     timestamp = models.DateTimeField(
         auto_now_add=True,
+        null=True,
         verbose_name=pgettext_lazy("timestamp field name", "timestamp"),
     )
 
