@@ -91,18 +91,14 @@ def export_po_file(rows, file_path, project_slug, filename):
     ]
 
     filename = str(filename).rsplit("/")[-1]
-    file = Path(export_filepath + filename).open(encoding="utf8", mode="w")
-    file.write("# Translated using TransLetter <3\n\n")
-    file.write('msgid ""\nmsgstr ""\n')
-    for i, j in po.metadata.items():
-        file.write(f'"{i}: {j}"\n')
-    for row in rows:
-        occur = ""
-        for i in row[3]:
-            occur += i[0] + " "
-        file.write(f"#: {occur}\n")
-        file.write(f'msgctxt "{row[1]}"\n')
-        file.write(f'msgid "{row[0]}"\n')
-        file.write(f'msgstr "{row[2]}"\n\n')
 
+    for row in rows:
+        entry = polib.POEntry(
+            msgid=row[0],
+            msgstr=row[2],
+            msgctxt=row[1],
+            occurrences=row[3],
+        )
+        po.append(entry)
+    po.save(export_filepath + filename)
     return export_filepath + filename
