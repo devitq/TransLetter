@@ -4,6 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.core.mail import send_mail
 from django.db import models
+from django.http import FileResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.utils.decorators import method_decorator
@@ -26,7 +27,7 @@ from projects.forms import (
 )
 import projects.models
 from projects.tokens import decode_token, generate_token
-from projects.utils import parse_file_and_create_translations
+from projects.utils import export_po_file, parse_file_and_create_translations
 
 
 __all__ = ()
@@ -461,3 +462,20 @@ class ProjectRowsTranslateView(LoginRequiredMixin, ListView):
         row_object.msg_str = msg_str
         row_object.save()
         return redirect("projects:project_files_translate", slug, file_pk)
+
+
+@method_decorator(can_access_project_decorator, name="dispatch")
+class ProjectFileExportView(LoginRequiredMixin, ListView):
+    def get(self, request, slug, file_pk):
+        file_object = projects.models.TranslationFile.objects.get(id=file_pk)
+        rows = projects.models.TranslationRow.objects.filter(
+            translation_file_id=file_object.id,
+        ).all()
+        filename = projects.models.TranslationFile.objects.get(id=file_pk).file
+        export_filename = export_po_file(
+            rows,
+            str(file_object.file),
+            slug,
+            filename,
+        )
+        return FileResponse(open(export_filename, "rb"), as_attachment=True)

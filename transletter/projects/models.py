@@ -134,6 +134,7 @@ class TranslationRow(models.Model):
     msg_context = models.TextField(null=True, blank=True)
     msg_id = models.TextField()
     msg_str = models.TextField()
+    occurrences = models.JSONField(default=list, null=True, blank=True)
     translation_file = models.ForeignKey(
         TranslationFile,
         on_delete=models.CASCADE,

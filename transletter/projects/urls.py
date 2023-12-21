@@ -70,4 +70,9 @@ urlpatterns = [
         projects.views.ProjectRowsTranslateView.as_view(),
         name="project_rows_translate",
     ),
+    path(
+        "<slug:slug>/files/<int:file_pk>/export/",
+        projects.views.ProjectFileExportView.as_view(),
+        name="project_file_export",
+    ),
 ]
