@@ -55,4 +55,19 @@ urlpatterns = [
         projects.views.ProjectFilesView.as_view(),
         name="project_files",
     ),
+    path(
+        "<slug:slug>/files/upload_file/",
+        projects.views.ProjectFilesUploadView.as_view(),
+        name="project_files_upload",
+    ),
+    path(
+        "<slug:slug>/files/<int:pk>/",
+        projects.views.ProjectFileRowsView.as_view(),
+        name="project_files_translate",
+    ),
+    path(
+        "<slug:slug>/files/<int:file_pk>/<int:row_pk>/",
+        projects.views.ProjectRowsTranslateView.as_view(),
+        name="project_rows_translate",
+    ),
 ]

@@ -25,6 +25,7 @@ from projects.forms import (
 )
 import projects.models
 from projects.tokens import decode_token, generate_token
+from projects.utils import parse_file_and_create_translations
 
 
 __all__ = ()
@@ -347,13 +348,101 @@ class ProjectFilesView(LoginRequiredMixin, ListView):
     template_name = "projects/project_files.html"
 
     def get(self, request, slug):
-        project_files = projects.models.ProjectLanguage.objects.filter(
+        project_files = projects.models.TranslationFile.objects.filter(
+            project_language__project__slug=slug,
+        )
+        return render(
+            request,
+            self.template_name,
+            context={
+                "project_files": project_files,
+                "slug": slug,
+            },
+        )
+
+
+@method_decorator(can_access_project_decorator, name="dispatch")
+class ProjectFilesUploadView(LoginRequiredMixin, ListView):
+    template_name = "projects/project_files_upload.html"
+
+    def get(self, request, slug):
+        project_files = projects.models.TranslationFile.objects.filter(
+            project_language__project__slug=slug,
+        )
+        project_languages = projects.models.ProjectLanguage.objects.filter(
             project__slug=slug,
         )
         return render(
             request,
             self.template_name,
             context={
-                "project_info": project_files,
+                "project_files": project_files,
+                "project_languages": project_languages,
             },
         )
+
+    def post(self, request, slug):
+        if request.FILES:
+            file = request.FILES["filename"]
+            lang_object = projects.models.ProjectLanguage.objects.filter(
+                lang_code=request.POST["lang"],
+                project__slug=slug,
+            ).first()
+            file_object = projects.models.TranslationFile.objects.create(
+                file=file,
+                project_language_id=lang_object.id,
+            )
+            parse_file_and_create_translations(
+                file_object,
+                str(file_object.file),
+            )
+        return redirect("projects:project_files", slug)
+
+
+@method_decorator(can_access_project_decorator, name="dispatch")
+class ProjectFileRowsView(LoginRequiredMixin, ListView):
+    template_name = "projects/project_file_translate.html"
+
+    def get(self, request, slug, pk):
+        project_rows = projects.models.TranslationRow.objects.filter(
+            translation_file_id=pk,
+        )
+        return render(
+            request,
+            self.template_name,
+            context={
+                "project_rows": project_rows,
+                "slug": slug,
+            },
+        )
+
+
+@method_decorator(can_access_project_decorator, name="dispatch")
+class ProjectRowsTranslateView(LoginRequiredMixin, ListView):
+    template_name = "projects/project_row_translate.html"
+
+    def get(self, request, slug, file_pk, row_pk):
+        try:
+            row = projects.models.TranslationRow.objects.get(
+                translation_file_id=file_pk,
+                id=row_pk,
+            )
+        except projects.models.TranslationRow.DoesNotExist:
+            return redirect("projects:project_files_translate", slug, file_pk)
+        return render(
+            request,
+            self.template_name,
+            context={
+                "row_info": row,
+            },
+        )
+
+    def post(self, request, slug, file_pk, row_pk):
+        msg_str = request.POST["msg_str"]
+        row_object = projects.models.TranslationRow.objects.get(
+            translation_file_id=file_pk,
+            id=row_pk,
+        )
+        row_object.msg_str = msg_str
+        row_object.save()
+        return redirect("projects:project_files_translate", slug, file_pk)

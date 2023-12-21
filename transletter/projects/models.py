@@ -142,7 +142,12 @@ class TranslationRow(models.Model):
     class Meta:
         constraints = [
             models.UniqueConstraint(
-                fields=["msg_context", "msg_id"],
+                fields=[
+                    "msg_str",
+                    "msg_id",
+                    "msg_context",
+                    "translation_file",
+                ],
                 name="unique_row",
             ),
         ]
