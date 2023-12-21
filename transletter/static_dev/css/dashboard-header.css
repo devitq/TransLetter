@@ -54,7 +54,7 @@ a {
   transition: 0.3s;
 }
 .header_toggle:hover {
-    color: var(--hover-color);
+  color: var(--hover-color);
 }
 .header_notification {
   color: var(--first-color);
@@ -65,7 +65,10 @@ a {
   margin-right: 1rem;
 }
 .header_notification:hover {
-    color: var(--hover-color);
+  color: var(--hover-color);
+}
+.header_notification.selected {
+  color: var(--hover-color);
 }
 .header_img {
   width: 35px;

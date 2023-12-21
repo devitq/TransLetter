@@ -34,7 +34,6 @@ def project_admin_decorator(view_func):
             user=request.user,
             role__in=("owner", "admin"),
         ).exists()
-
         if not has_access:
             raise PermissionDenied()
 
@@ -50,7 +49,7 @@ def project_owner_decorator(view_func):
         has_access = ProjectMembership.objects.filter(
             project__slug=slug,
             user=request.user,
-            role__in="owner",
+            role__in=("owner",),
         ).exists()
 
         if not has_access:

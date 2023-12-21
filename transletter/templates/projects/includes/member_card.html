@@ -23,23 +23,24 @@
             {% if member.user.first_name != "" %}{{ member.user.last_name }}{% endif %}
         </h5>
         <p class="card-text text-muted">{{ member.account.about|truncatechars_html:80|striptags|safe }}</p>
-        <p class="card-text text-muted">{% translate "Role:" %} {{ member.role }}</p>
-        {% if active_user_role.role == "owner" or active_user_role.role == "admin" %}
-            {% if member.role != "owner" and member.role != "hired_translator" %}
-                {% if active_user_role.role == "admin" and member.role == "admin" %}
-                {% else %}
-                    <a href="{% url 'projects:delete_project_member' slug=slug user_id=member.user_id %}">
-                        <button type="button" class="btn btn-danger">{% translate "Delete" %}</button>
-                    </a>
+        <p class="card-text text-muted">{% translate "Role:" %} {{ member.get_role_display }}</p>
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="btn-group">
+                {% if active_user_role.role == "owner" or active_user_role.role == "admin" %}
+                    {% if member.role != "owner" and member.role != "hired_translator" %}
+                        {% if active_user_role.role == "admin" and member.role == "admin" %}
+                        {% else %}
+                            <a href="{% url 'projects:delete_project_member' slug=slug user_id=member.user_id %}"
+                               class="btn btn-sm btn-outline-danger">{% translate "Delete" %}</a>
+                        {% endif %}
+                    {% endif %}
+                    {% if member.role != "owner" and member.role != "hired_translator" and active_user_role.role != "admin" %}
+                        <a href="{% url 'projects:update_project_member' slug=slug user_id=member.user_id %}"
+                           class="btn btn-sm btn-outline-secondary">{% translate "Update role" %}</a>
+                    {% endif %}
                 {% endif %}
-            {% endif %}
-            <br>
-            {% if member.role != "owner" and member.role != "hired_translator" and active_user_role.role != "admin" %}
-                <a href="{% url 'projects:update_project_member' slug=slug user_id=member.user_id %}">
-                    <button type="button" class="btn btn-warning">{% translate "Update role" %}</button>
-                </a>
-            {% endif %}
-        {% endif %}
+            </div>
+        </div>
     </a>
 </div>
 </div>
