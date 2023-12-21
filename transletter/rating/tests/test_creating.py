@@ -49,7 +49,6 @@ class RatingCreatingTests(TestCase):
             ),
             (
                 {
-                    "text": "Some rating text",
                     "rating": 0,
                 },
             ),
