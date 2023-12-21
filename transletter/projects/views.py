@@ -9,6 +9,7 @@ from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.utils.translation import pgettext_lazy
 from django.views.generic import CreateView, ListView, View
+import jwt
 
 import accounts.models
 from projects.decorators import (
@@ -62,10 +63,15 @@ class ProjectMembersView(LoginRequiredMixin, ListView):
     template_name = "projects/project_members.html"
 
     def get(self, request, slug):
-        members = projects.models.ProjectMembership.objects.filter(
-            project__slug=slug,
+        members = (
+            projects.models.ProjectMembership.objects.filter(
+                project__slug=slug,
+            )
+            .prefetch_related("user")
+            .select_related("project")
+            .select_related("user__account")
         )
-        active_user_role = projects.models.ProjectMembership.objects.filter(
+        active_user_role = members.filter(
             user_id=request.user.id,
             project__slug=slug,
         ).first()
@@ -256,8 +262,17 @@ class UpdateProjectMemberView(LoginRequiredMixin, ListView):
     template_name = "projects/update_project_member.html"
 
     def get(self, request, slug, user_id):
-        form = UpdateProjectMemberForm()
-        return render(request, self.template_name, {"form": form})
+        membership = get_object_or_404(
+            projects.models.ProjectMembership,
+            project__slug=slug,
+            user_id=user_id,
+        )
+        form = UpdateProjectMemberForm(
+            initial={
+                "role": membership.role,
+            },
+        )
+        return render(request, self.template_name, {"form": form, "slug": slug})
 
     def post(self, request, slug, user_id):
         form = UpdateProjectMemberForm(request.POST or None)
@@ -273,7 +288,7 @@ class UpdateProjectMemberView(LoginRequiredMixin, ListView):
 
 
 class ActivateProjectMemberView(LoginRequiredMixin, ListView):
-    def get(self, request, slug, token):
+    def get(self, request, token):
         try:
             username, project_id = decode_token(token)
             user = get_object_or_404(
@@ -282,13 +297,13 @@ class ActivateProjectMemberView(LoginRequiredMixin, ListView):
             )
             project = get_object_or_404(
                 projects.models.Project,
-                slug=slug,
+                pk=project_id,
             )
             if request.user != user:
                 raise PermissionDenied()
             membership = projects.models.ProjectMembership.objects.filter(
                 user_id=user.id,
-                project__slug=slug,
+                project=project,
             ).first()
             if membership is None:
                 member = projects.models.ProjectMembership(
@@ -301,7 +316,7 @@ class ActivateProjectMemberView(LoginRequiredMixin, ListView):
                     request,
                     pgettext_lazy(
                         "success message in views",
-                        "Account successfully activated",
+                        "User successfully added to project",
                     ),
                 )
             else:
@@ -312,12 +327,12 @@ class ActivateProjectMemberView(LoginRequiredMixin, ListView):
                         "Existing member.",
                     ),
                 )
-        except Exception:
+        except jwt.InvalidTokenError:
             messages.error(
                 request,
                 pgettext_lazy("error message in views", "Invalid link!"),
             )
-        return redirect("projects:project_members", slug)
+        return redirect("projects:project_members", project.slug)
 
 
 @method_decorator(can_access_project_decorator, name="dispatch")
@@ -361,7 +376,7 @@ class ProjectFilesView(LoginRequiredMixin, ListView):
         )
 
 
-@method_decorator(can_access_project_decorator, name="dispatch")
+@method_decorator(project_admin_decorator, name="dispatch")
 class ProjectFilesUploadView(LoginRequiredMixin, ListView):
     template_name = "projects/project_files_upload.html"
 

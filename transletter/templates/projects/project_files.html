@@ -1,14 +1,9 @@
 {% extends "base-dashboard.html" %}
+{% load static i18n %}
 {% block main %}
-    {% load static i18n %}
-    <script src="{% static 'js/anime.min.js' %}"></script>
-    <script src="{% static 'js/scrollreveal.min.js' %}"></script>
-    <div class="container mt-3 height-100">
+    <div class="container mt-3 mb-3">
+        {% include "projects/includes/projects_nav.html" %}
         <div class="album py-4">
-            <input type="button"
-                   value="Previous Page"
-                   onClick="javascript:history.go(-1);"
-                   class="btn btn-primary">
             <div class="container">
                 <h1>
                     {% translate "Files" %} <a class="btn btn-primary text-end float-end"
@@ -20,7 +15,7 @@
                         </div>
                         <div class="row g-3 g-lg-4 g-md-3 row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-xl-3">
                         {% endifchanged %}
-                        {% include "./includes/files_card.html" %}
+                        {% include "projects/includes/files_card.html" %}
                     {% empty %}
                         <p>{% translate "No files" %}</p>
                     {% endfor %}
@@ -28,5 +23,4 @@
             </div>
         </div>
     </div>
-    <script src="{% static 'js/animation_setup.min.js' %}"></script>
 {% endblock main %}

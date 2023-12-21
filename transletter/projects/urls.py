@@ -36,7 +36,7 @@ urlpatterns = [
         name="add_project_member",
     ),
     path(
-        "<slug:slug>/members/invite/activate/<str:token>/",
+        "invite/<str:token>/",
         projects.views.ActivateProjectMemberView.as_view(),
         name="activate_project_member",
     ),

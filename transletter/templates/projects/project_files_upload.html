@@ -1,6 +1,6 @@
 {% extends "base-dashboard.html" %}
+{% load static i18n %}
 {% block main %}
-    {% load static i18n %}
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <input type="file" name="filename">
