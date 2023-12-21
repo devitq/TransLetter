@@ -1,5 +1,4 @@
-django-debug-toolbar
-freezegun
-parameterized
-beautifulsoup4
+freezegun==1.4.0
+parameterized==0.9.0
+beautifulsoup4==4.12.2
 -r prod.txt
