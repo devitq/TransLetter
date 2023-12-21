@@ -277,7 +277,11 @@ class UpdateProjectMemberView(LoginRequiredMixin, ListView):
                 "role": membership.role,
             },
         )
-        return render(request, self.template_name, {"form": form, "slug": slug})
+        return render(
+            request,
+            self.template_name,
+            {"form": form, "slug": slug},
+        )
 
     def post(self, request, slug, user_id):
         form = UpdateProjectMemberForm(request.POST or None)
