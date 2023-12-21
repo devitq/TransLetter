@@ -2,10 +2,11 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
-from django.core.mail import send_mail
+from django.core.mail import EmailMultiAlternatives
 from django.db import models
 from django.http import FileResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django.template.loader import render_to_string
 from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.utils.translation import pgettext_lazy
@@ -28,6 +29,7 @@ from projects.forms import (
 import projects.models
 from projects.tokens import decode_token, generate_token
 from projects.utils import export_po_file, parse_file_and_create_translations
+from transletter.email import EmailThread
 
 
 __all__ = ()
@@ -178,20 +180,22 @@ class AddProjectMemberView(LoginRequiredMixin, CreateView):
                         kwargs={"slug": slug, "token": token},
                     ),
                 )
-                msg = (
-                    data["mail_header"]
-                    + "\n\n"
-                    + data["mail_text"]
-                    + "\n\n"
-                    + link
+                email_body = render_to_string(
+                    "projects/email/invitation.html",
+                    {
+                        "header": data["mail_header"],
+                        "text": data["mail_text"],
+                        "link": link,
+                    },
                 )
-                send_mail(
-                    subject="Inviting to the project",
-                    message=msg,
-                    recipient_list=[data["email_address"]],
+                email = EmailMultiAlternatives(
+                    subject="Invitation to project - TransLetter",
+                    body=email_body,
                     from_email=settings.EMAIL,
-                    fail_silently=False,
+                    to=[data["email_address"]],
                 )
+                email.attach_alternative(email_body, "text/html")
+                EmailThread(email).start()
                 messages.success(
                     request,
                     pgettext_lazy(

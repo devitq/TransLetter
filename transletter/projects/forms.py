@@ -52,11 +52,12 @@ class AddProjectMemberForm(forms.Form, BaseFormMixin):
         )
 
 
-CHOICES = (
-    ("admin", "Administrator"),
-    ("static_translator", "Static translator"),
-)
-blank_choice = (("", pgettext("add member form", "--- Choose role ---")),)
+CHOICES = [
+    (key, value)
+    for key, value in models.ProjectMembership.ROLES
+    if key not in ["owner", "hired_translator"]
+]
+blank_choice = [("", pgettext("add member form", "--- Choose role ---"))]
 
 
 class UpdateProjectMemberForm(forms.Form, BaseFormMixin):
