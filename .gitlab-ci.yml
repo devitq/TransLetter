@@ -6,7 +6,7 @@ stages:
 
 flake8:
   stage: linting
-  image: registry.gitlab.com/pipeline-components/flake8:latest
+  image: python:3.11
   script:
     - pip install -r requirements/lints.txt
     - flake8 .
@@ -17,9 +17,24 @@ black:
   script:
     - black --diff --check .
 
+djlint:
+  stage: linting
+  image: python:3.11
+  script:
+    - pip install djlint
+    - djlint . --check
+
+requirements_check:
+  stage: linting
+  image: python:3.11
+  script:
+    - pip install sort-requirements
+    - cd requirements
+    - sort-requirements --check dev.txt prod.txt test.txt lints.txt
+
 pytest:
   stage: testing
-  image: python:3.10
+  image: python:3.11
   script:
     - apt-get update -y && apt-get install -y gettext 
     - pip install -r requirements/test.txt
@@ -32,7 +47,7 @@ pytest:
 
 prod-run:
   stage: running
-  image: python:3.10
+  image: python:3.11
   variables:
     DJANGO_DEBUG: "False"
   script:
@@ -45,7 +60,7 @@ prod-run:
 
 dev-run:
   stage: running
-  image: python:3.10
+  image: python:3.11
   script:
     - pip install -r requirements/dev.txt
     - cd transletter

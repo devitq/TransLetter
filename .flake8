@@ -5,7 +5,15 @@ exclude =
     venv
 import-order-style=google
 application-import-names =
-    transletter,
-    landing,
     accounts,
+    burse,
+    dashboard,
+    landing,
+    notifications,
+    projects,
+    rating,
+    resume,
+    transletter,
+    translation_request,
+    translator_request,
 inline-quotes = "

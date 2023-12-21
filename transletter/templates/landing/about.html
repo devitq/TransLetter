@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% load static i18n %}
+{% block main %}
+    <div class="container">
+        <h1>{% translate "About" %}</h1>
+        {% blocktranslate  %}
+        <p>About text that will be added soon</p>
+    {% endblocktranslate %}
+    </div>
+{% endblock %}

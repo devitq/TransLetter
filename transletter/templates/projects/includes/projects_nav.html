@@ -1,0 +1,22 @@
+{% load i18n %}
+{% with request.resolver_match.view_name as view_name %}
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link{% if view_name == 'projects:project_page' %} active{% else %} text-muted{% endif %}"
+               aria-current="page"
+               href="{% url 'projects:project_page' slug=slug %}">{% translate "Info" %}</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link{% if view_name == 'projects:project_members' %} active{% else %} text-muted{% endif %}"
+               href="{% url 'projects:project_members' slug=slug %}">{% translate "Members" %}</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link{% if view_name == 'projects:project_files' %} active{% else %} text-muted{% endif %}"
+               href="{% url 'projects:project_files' slug=slug %}">{% translate "Files" %}</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link{% if view_name == 'projects:edit_project' %} active{% else %} text-muted{% endif %}"
+               href="{% url 'projects:edit_project' slug=slug %}">{% translate "Edit" %}</a>
+        </li>
+    </ul>
+{% endwith %}

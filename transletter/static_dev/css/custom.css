@@ -1,174 +1,275 @@
 body {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0;
 }
 
 footer {
-    margin-top: auto;
+  margin-top: auto;
+}
+
+::-moz-selection { /* Code for Firefox */
+  color: black;
+  background: rgba(50, 152, 253, 0.8);
+}
+
+::selection {
+  color: black;
+  background: rgba(50, 152, 253, 0.8);
+}
+
+::-webkit-scrollbar {
+  width: 20px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #555758;
+  border-radius: 20px;
+  border: 6px solid transparent;
+  background-clip: content-box;
+  transition: background-color 0.2s;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #676b6c;
 }
 
 .zoomable-card {
-    border-radius: 6px;
-    box-shadow: 0 6px 10px rgba(0,0,0,.08), 0 0 6px rgba(0,0,0,.05);
-    transition: .3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12);
-    cursor: pointer;
+  border-radius: 6px;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.08), 0 0 6px rgba(0, 0, 0, 0.05);
+  transition: 0.3s transform cubic-bezier(0.155, 1.105, 0.295, 1.12),
+    0.3s box-shadow,
+    0.3s -webkit-transform cubic-bezier(0.155, 1.105, 0.295, 1.12);
+  cursor: pointer;
 }
 
 .zoomable-card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+  transform: scale(1.05);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.06);
 }
 
 .zoomable-card h3 {
-    font-weight: 600;
+  font-weight: 600;
 }
 
 a {
-    text-decoration: none !important;
+  text-decoration: none !important;
 }
 
 .height100 {
-    height: 100%;
+  height: 100%;
 }
 
 .saas_navbar {
-    margin-top: 3px;
+  margin-top: 3px;
 }
 
 .download_image {
-    top: 0.5rem;
-    right: 0.5rem;
+  top: 0.5rem;
+  right: 0.5rem;
+}
+
+.delete_image {
+  top: 0.5rem;
+  right: 2.7rem;
 }
 
 .no-margin-top {
-    margin-top: 0;
+  margin-top: 0;
 }
 
 .margin-top-10px {
-    margin-top: 10px;
+  margin-top: 10px;
 }
 
 label {
-    color: #FFFFFF;
+  color: #ffffff;
 }
 
 .white-text {
-    color: white;
+  color: white;
 }
 
 .toast-custom {
-    position: fixed;
-    top: 0.5rem;
-    right: 0.5rem;
-    min-height: 200px;
-    width: 250px;
-    z-index: 99999999999999;
+  position: fixed;
+  top: 0.5rem;
+  right: 0.5rem;
+  min-height: 200px;
+  width: 250px;
+  z-index: 99999999999999;
 }
 
 .top {
-    --offset: 50px;
-    position: fixed;
-    bottom: -60px; /* Initially, hide the element off-screen */
-    margin-right: 10px;
-    place-self: end;
-    width: 45px;
-    aspect-ratio: 1;
-    background: #2071e2;
-    border-radius: 10px;
-    transition: bottom 0.3s ease;
-    z-index: 99999999999999;
+  --offset: 50px;
+  position: fixed;
+  bottom: -60px; /* Initially, hide the element off-screen */
+  margin-right: 10px;
+  place-self: end;
+  width: 45px;
+  aspect-ratio: 1;
+  background: #2071e2;
+  border-radius: 10px;
+  transition: bottom 0.3s ease;
+  z-index: 99999999999999;
 }
 
 .top.active {
-    bottom: 90px;
+  bottom: 90px;
 }
 
 .top:before {
-    content: "";
-    position: absolute;
-    inset: 30%;
-    transform: translateY(20%) rotate(-45deg);
-    border-top: 5px solid #fff;
-    border-right: 5px solid #fff;
+  content: "";
+  position: absolute;
+  inset: 30%;
+  transform: translateY(20%) rotate(-45deg);
+  border-top: 5px solid #fff;
+  border-right: 5px solid #fff;
 }
 
 html,
 body {
-    scroll-behavior: smooth;
+  scroll-behavior: smooth;
 }
 
 .bold {
-    font-weight: 800;
+  font-weight: 800;
 }
 
 .ratings_section .card-no-border .card {
-    border: 0px;
-    border-radius: 4px;
-    -webkit-box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.05);
-    box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.05);
+  border: 0px;
+  border-radius: 4px;
+  -webkit-box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.05);
+  box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.05);
 }
 
 .ratings_section .card-body {
-    -ms-flex: 1 1 auto;
-    flex: 1 1 auto;
-    padding: 1.25rem;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  padding: 1.25rem;
 }
 
 .ratings_section .comment-widgets .comment-row:hover {
-    background: rgba(0, 0, 0, 0.02);
-    cursor: pointer;
+  background: rgba(0, 0, 0, 0.02);
+  cursor: pointer;
 }
 
 .ratings_section .comment-widgets .comment-row {
-    border-bottom: 1px solid rgba(120, 130, 140, 0.13);
-    padding: 15px;
+  border-bottom: 1px solid rgba(120, 130, 140, 0.13);
+  padding: 15px;
 }
 
 .ratings_section .comment-text:hover {
-    visibility: hidden;
+  visibility: hidden;
 }
 
 .ratings_section .comment-text:hover {
-    visibility: visible;
+  visibility: visible;
 }
 
 .ratings_section .label {
-    padding: 3px 10px;
-    line-height: 13px;
-    color: #ffffff;
-    font-weight: 400;
-    border-radius: 4px;
-    font-size: 75%;
+  padding: 3px 10px;
+  line-height: 13px;
+  color: #ffffff;
+  font-weight: 400;
+  border-radius: 4px;
+  font-size: 75%;
 }
 
 .ratings_section .round img {
-    border-radius: 100%;
+  border-radius: 100%;
 }
 
 .ratings_section .round svg {
-    border-radius: 100%;
+  border-radius: 100%;
 }
 
 .ratings_section .action-icons a {
-    padding-left: 7px;
-    vertical-align: middle;
-    color: #99abb4;
+  padding-left: 7px;
+  vertical-align: middle;
+  color: #99abb4;
 }
 
 .ratings_section .action-icons a:hover {
-    color: #1976d2;
+  color: #1976d2;
 }
 
 .ratings_section .mt-10 {
-    margin-top: 10px;
+  margin-top: 10px;
 }
 
 .ratings_section .mb-100 {
-    margin-bottom: 100px;
+  margin-bottom: 100px;
 }
 
 w-100 {
-    width: 100%;
+  width: 100%;
+}
+
+.avatar-wrapper {
+  position: relative;
+  height: 150px;
+  width: 150px;
+  margin: 15px auto;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 1px 1px 15px -5px black;
+  transition: all 0.3s ease;
+}
+.avatar-wrapper:hover {
+  transform: scale(1.05);
+  cursor: pointer;
+}
+.avatar-wrapper:hover .profile-pic {
+  opacity: 0.5;
+}
+.avatar-wrapper .profile-pic {
+  height: 100%;
+  width: 100%;
+  transition: all 0.3s ease;
+}
+.avatar-wrapper .profile-pic:after {
+  font-family: FontAwesome;
+  content: "";
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  font-size: 190px;
+  background: #ecf0f1;
+  color: #34495e;
+  text-align: center;
+}
+.avatar-wrapper .upload-button {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+.avatar-wrapper .upload-button .fa-arrow-circle-up {
+  position: absolute;
+  font-size: 160px;
+  top: -4px;
+  left: -5px;
+  text-align: center;
+  opacity: 0;
+  transition: all 0.3s ease;
+  color: #545657;
+}
+.avatar-wrapper .upload-button:hover .fa-arrow-circle-up {
+  opacity: 0.9;
+}
+.avatar-form {
+  visibility: hidden;
+  display: none;
+}
+.avatar-section > .invalid-feedback {
+  visibility: visible !important;
+  display: block !important;
 }

@@ -1,19 +1,22 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 import django.contrib.auth.models
+from django.utils.translation import gettext_lazy as _
 
 from accounts.forms import CreateUserAdminForm, EditUserAdminForm
 from accounts.models import Account
 
 __all__ = ()
 
+admin.site.site_header = _("TransLetter Admin")
+admin.site.site_title = _("TransLetter Admin")
+admin.site.index_title = _("TransLetter Admin")
 
-class AccountInline(admin.TabularInline):
+
+class AccountInline(admin.StackedInline):
     model = Account
     can_delete = False
     readonly_fields = (Account.attempts_count.field.name,)
-    min_num = 1
-    max_num = 1
 
 
 class UserAdmin(BaseUserAdmin):

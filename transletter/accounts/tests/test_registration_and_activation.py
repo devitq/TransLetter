@@ -1,5 +1,7 @@
 from http import HTTPStatus
+from time import sleep
 
+from bs4 import BeautifulSoup
 from django.core import mail
 from django.test import override_settings, TestCase
 from django.urls import reverse
@@ -8,10 +10,12 @@ from freezegun import freeze_time
 
 import accounts.models
 
+
 __all__ = ()
 
 
 class RegistrationActivationTests(TestCase):
+    @override_settings(RECAPTCHA_ENABLED=False, USE_REAL_EMAIL=False)
     def setUp(self):
         self.signup_url = reverse("accounts:signup")
         self.activation_url = reverse(
@@ -20,7 +24,11 @@ class RegistrationActivationTests(TestCase):
         )
         self.time_now = timezone.now()
 
-    @override_settings(DEFAULT_USER_IS_ACTIVE=False)
+    @override_settings(
+        DEFAULT_USER_IS_ACTIVE=False,
+        RECAPTCHA_ENABLED=False,
+        USE_REAL_EMAIL=False,
+    )
     def test_user_registration_and_late_activation(self):
         response = self.client.post(
             self.signup_url,
@@ -38,20 +46,26 @@ class RegistrationActivationTests(TestCase):
         user = accounts.models.User.objects.get(username="testuser")
         user.refresh_from_db()
         self.assertFalse(user.is_active)
-        link = mail.outbox[0].body
+        sleep(1)
+        soup = BeautifulSoup(mail.outbox[0].body, "html.parser")
+        links = soup.find_all("a")
 
         with freeze_time(
-            self.time_now + timezone.timedelta(hours=12, minutes=1),
+            self.time_now + timezone.timedelta(hours=1, minutes=1),
         ):
             response = self.client.get(
-                link,
+                links[0].get("href"),
                 follow=True,
             )
             self.assertEqual(response.status_code, HTTPStatus.OK)
             user.refresh_from_db()
             self.assertFalse(user.is_active)
 
-    @override_settings(DEFAULT_USER_IS_ACTIVE=False)
+    @override_settings(
+        DEFAULT_USER_IS_ACTIVE=False,
+        RECAPTCHA_ENABLED=False,
+        USE_REAL_EMAIL=False,
+    )
     def test_user_registration_and_on_time_activation(self):
         response = self.client.post(
             self.signup_url,
@@ -69,13 +83,14 @@ class RegistrationActivationTests(TestCase):
         user = accounts.models.User.objects.get(username="testuser")
         user.refresh_from_db()
         self.assertFalse(user.is_active)
-        link = mail.outbox[0].body
+        soup = BeautifulSoup(mail.outbox[0].body, "html.parser")
+        links = soup.find_all("a")
 
         with freeze_time(
-            self.time_now + timezone.timedelta(hours=11, minutes=59),
+            self.time_now + timezone.timedelta(minutes=1),
         ):
             response = self.client.get(
-                link,
+                links[0].get("href"),
                 follow=True,
             )
             self.assertEqual(

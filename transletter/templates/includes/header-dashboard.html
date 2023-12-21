@@ -1,0 +1,93 @@
+{% load static thumbnail i18n %}
+<header class="header" id="header">
+    <div class="header_toggle">
+        <i class='bx bx-menu' id="header-toggle"></i>
+    </div>
+    <div class="header_right">
+        <a href="{% url 'notifications:all' %}">
+            <div class="header_notification{% if request.resolver_match.view_name == 'notifications:all' %} selected{% endif %}">
+                <i class='bx bxs-bell'></i>
+            </div>
+        </a>
+        <div class="header_img">
+            {% thumbnail request.user.account.avatar "300x300" as avatar %}
+                <img src="{{ avatar.url }}" alt="Avatar">
+            {% empty %}
+                <svg alt="Avatar"
+                     xmlns="http://www.w3.org/2000/svg"
+                     role="img"
+                     aria-label="Placeholder: Thumbnail"
+                     preserveAspectRatio="xMidYMid slice"
+                     focusable="false">
+                    <title>{% translate "No image" %}</title>
+                    <rect width="100%" height="100%" fill="#55595c"></rect>
+                </svg>
+            {% endthumbnail %}
+        </div>
+    </div>
+</header>
+<div class="l-navbar" id="nav-bar">
+    {% with request.resolver_match.view_name as view_name %}
+        <nav class="nav">
+            <div>
+                <a href="{% url 'dashboard:index' %}" class="nav_logo">
+                    <img src="{% static 'img/transletter.png' %}"
+                         alt="Logo"
+                         width="25"
+                         height="25">
+                    <span class="nav_logo-name">TransLetter</span>
+                </a>
+                <div class="nav_list">
+                    <a href="{% url 'dashboard:index' %}"
+                       class="nav_link{% if view_name == 'dashboard:index' %} active{% endif %}">
+                        <i class='bx bx-home nav_icon'></i>
+                        <span class="nav_name">{% translate "Home" %}</span>
+                    </a>
+                    <a href="{% url 'projects:projects_list' %}"
+                       class="nav_link{% if view_name == 'projects:projects_list' %} active{% endif %}">
+                        <i class='bx bx-grid-alt nav_icon'></i>
+                        <span class="nav_name">{% translate "Projects" %}</span>
+                    </a>
+                    <a href="{% url 'translation_request:translation_request_list' %}"
+                       class="nav_link{% if view_name == 'translation_request:translation_request_list' %} active{% endif %}">
+                        <i class='bx bx-git-pull-request'></i>
+                        <span class="nav_name">{% translate "Translation requests" %}</span>
+                    </a>
+                    <a href="{% url 'burse:translators' %}"
+                       class="nav_link{% if view_name == 'burse:translators' %} active{% endif %}">
+                        <i class='bx bxs-credit-card nav_icon'></i>
+                        <span class="nav_name">{% translate "Burse" %}</span>
+                    </a>
+                    {% if perms.translator_request.edit_translator_request %}
+                        <a href="{% url 'translator_request:translator_requests' %}"
+                           class="nav_link{% if view_name == 'translator_request:translator_requests' %} active{% endif %}">
+                            <i class='bx bxs-chat nav_icon'></i>
+                            <span class="nav_name">{% translate "Translator requests" %}</span>
+                        </a>
+                    {% endif %}
+                    <a href="{% url 'translator_request:request_translator' %}"
+                       class="nav_link{% if view_name == 'translator_request:request_translator' %} active{% endif %}">
+                        <i class='bx bx-plus nav_icon'></i>
+                        <span class="nav_name">{% translate "Request translator" %}</span>
+                    </a>
+                </div>
+            </div>
+            <div>
+                <a href="{% url 'accounts:edit_account' %}"
+                   class="nav_link{% if view_name == 'accounts:edit_account' %} active{% endif %}">
+                    <i class='bx bxs-user nav_icon'></i>
+                    <span class="nav_name">{% translate "Account" %}</span>
+                </a>
+                <a href="{% url 'accounts:password_change' %}"
+                   class="nav_link{% if view_name == 'accounts:password_change' %} active{% endif %}">
+                    <i class='bx bxs-lock-alt nav_icon'></i>
+                    <span class="nav_name">{% translate "Change password" %}</span>
+                </a>
+                <a href="{% url 'accounts:logout' %}" class="nav_link">
+                    <i class='bx bx-log-out nav_icon'></i>
+                    <span class="nav_name">{% translate "Signout" %}</span>
+                </a>
+            </div>
+        </nav>
+    {% endwith %}
+</div>

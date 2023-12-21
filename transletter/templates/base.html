@@ -14,7 +14,8 @@
         <link rel="stylesheet" href="{% static 'landing/css/style.css' %}">
         <link rel="stylesheet" href="{% static 'css/custom.css' %}">
         <link rel="stylesheet" href="{% static 'css/font_links.css' %}">
-        <link rel="stylesheet" href="{% static 'fontawesome/css/fontawesome.min.css' %}">
+        <link rel="stylesheet"
+              href="{% static 'fontawesome/css/fontawesome.min.css' %}">
         <link rel="stylesheet" href="{% static 'fontawesome/css/solid.min.css' %}">
         <script src="{% static 'js/toast.js' %}"></script>
         <script src="{% static 'js/scrollToTop.js' %}"></script>
@@ -23,11 +24,12 @@
     <body class="is-boxed has-animations">
         {% include "includes/header.html" %}
         <main>
-            {% block main %}{% endblock main %}
+            {% block main %}
+            {% endblock main %}
         </main>
         {% include "includes/footer.html" %}
         {% include "includes/toasts.html" %}
-        <script src="{% static 'js/setLocalTimezone.js' %}"></script>   
+        <script src="{% static 'js/setLocalTimezone.js' %}"></script>
         <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
         <script src="{% static 'js/yearInFooter.js' %}"></script>
         <script>
@@ -42,6 +44,6 @@
                 if (d.head) d.head.appendChild(s);
             })(document, window, 'BrevoConversations');
         </script>
-        <a href="#" class="top" id="ScrollToTop"></a>       
+        <a href="#" class="top" id="ScrollToTop"></a>
     </body>
 </html>

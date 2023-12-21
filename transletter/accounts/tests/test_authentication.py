@@ -1,9 +1,11 @@
 from http import HTTPStatus
 import os
+from time import sleep
 
+from bs4 import BeautifulSoup
 from django.conf import settings
 from django.core import mail
-from django.test import Client, TestCase
+from django.test import Client, override_settings, TestCase
 from django.urls import reverse
 from django.utils import timezone
 from freezegun import freeze_time
@@ -14,6 +16,7 @@ __all__ = ()
 
 
 class AuthenticationTests(TestCase):
+    @override_settings(RECAPTCHA_ENABLED=False, USE_REAL_EMAIL=False)
     def setUp(self):
         self.client = Client()
         self.username = "testuser"
@@ -26,10 +29,11 @@ class AuthenticationTests(TestCase):
         )
         self.time_now = timezone.now()
         self.reactivation_url = reverse(
-            "accounts:reactivate_account",
+            "accounts:activate_account",
             args=["token"],
         )
 
+    @override_settings(RECAPTCHA_ENABLED=False, USE_REAL_EMAIL=False)
     def test_login_by_username(self):
         response = self.client.post(
             reverse("login"),
@@ -37,6 +41,7 @@ class AuthenticationTests(TestCase):
         )
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
 
+    @override_settings(RECAPTCHA_ENABLED=False, USE_REAL_EMAIL=False)
     def test_login_by_email(self):
         response = self.client.post(
             reverse("login"),
@@ -44,6 +49,7 @@ class AuthenticationTests(TestCase):
         )
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
 
+    @override_settings(RECAPTCHA_ENABLED=False, USE_REAL_EMAIL=False)
     def test_account_deactivation_and_late_reactivation(self):
         for _ in range(settings.MAX_AUTH_ATTEMPTS):
             self.client.post(
@@ -52,19 +58,22 @@ class AuthenticationTests(TestCase):
             )
         self.user.refresh_from_db()
         self.assertFalse(self.user.is_active)
-        link = mail.outbox[0].body
+        sleep(1)
+        soup = BeautifulSoup(mail.outbox[0].body, "html.parser")
+        links = soup.find_all("a")
 
         with freeze_time(
-            self.time_now + timezone.timedelta(weeks=1, minutes=1),
+            self.time_now + timezone.timedelta(hours=1, minutes=1),
         ):
             response = self.client.get(
-                link,
+                links[0].get("href"),
                 follow=True,
             )
             self.assertEqual(response.status_code, HTTPStatus.OK)
             self.user.refresh_from_db()
             self.assertFalse(self.user.is_active)
 
+    @override_settings(RECAPTCHA_ENABLED=False, USE_REAL_EMAIL=False)
     def test_account_deactivation_and_on_time_reactivation(self):
         for _ in range(settings.MAX_AUTH_ATTEMPTS):
             self.client.post(
@@ -73,13 +82,14 @@ class AuthenticationTests(TestCase):
             )
         self.user.refresh_from_db()
         self.assertFalse(self.user.is_active)
-        link = mail.outbox[0].body
+        soup = BeautifulSoup(mail.outbox[0].body, "html.parser")
+        links = soup.find_all("a")
 
         with freeze_time(
-            self.time_now + timezone.timedelta(days=6, hours=23, minutes=59),
+            self.time_now + timezone.timedelta(minutes=59),
         ):
             response = self.client.get(
-                link,
+                links[0].get("href"),
                 follow=True,
             )
             self.assertEqual(response.status_code, HTTPStatus.OK)

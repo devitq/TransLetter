@@ -1,9 +1,8 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% block main %}
-
-<div class="container">
-    <h2>Выход выполнен</h2>
-    <p>Вы успешно вышли из аккаунта</p>
-</div>
-
+    <div class="container">
+        <h2>{% translate "Successful logout" %}</h2>
+        <p>{% translate "You have successfully logged out of your account" %}</p>
+    </div>
 {% endblock %}

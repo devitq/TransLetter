@@ -9,8 +9,19 @@ from landing import views
 __all__ = ()
 
 handler404 = views.Handler404View.as_view()
+handler403 = views.Handler403View.as_view()
+handler500 = views.Handler500View.as_view()
+
 urlpatterns = [
     path("", include("landing.urls")),
+    path("burse/", include("burse.urls")),
+    path("dashboard/", include("dashboard.urls")),
+    path("translator_request/", include("translator_request.urls")),
+    path("notifications/", include("notifications.urls")),
+    path("projects/", include("projects.urls")),
+    path("translation_request/", include("translation_request.urls")),
+    path("rating/", include("rating.urls")),
+    path("resume/", include("resume.urls")),
     path("auth/", include("accounts.urls")),
     path("auth/", include(django.contrib.auth.urls), name="auth_default"),
     path("admin/", admin.site.urls),
@@ -19,8 +30,12 @@ urlpatterns = [
 
 if settings.MEDIA_ROOT:
     urlpatterns += static(
-        settings.MEDIA_URL,
-        document_root=settings.MEDIA_ROOT,
+        settings.MEDIA_URL + "avatars",
+        document_root=settings.MEDIA_ROOT / "avatars",
+    )
+    urlpatterns += static(
+        settings.MEDIA_URL + "cache",
+        document_root=settings.MEDIA_ROOT / "cache",
     )
 
 if settings.DEBUG:

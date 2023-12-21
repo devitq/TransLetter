@@ -1,0 +1,14 @@
+{% extends "base-dashboard.html" %}
+{% block main %}
+    {% load i18n %}
+    <div class="container mt-3 mb-3">
+        <h2>{% translate "Translators" %}</h2>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 mt-3">
+            {% for translator in translators.all %}
+                {% include "burse/includes/translator_card.html" %}
+            {% empty %}
+            </div>
+            <p class="text-muted">{% translate "No translators" %}</p>
+            <div>{% endfor %}</div>
+    </div>
+{% endblock main %}

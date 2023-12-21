@@ -164,5 +164,5 @@ cython_debug/
 
 .vscode/
 cache
-*django.mo
 static/
+media/

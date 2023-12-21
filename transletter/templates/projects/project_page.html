@@ -1,0 +1,109 @@
+{% extends "base-dashboard.html" %}
+{% load static i18n thumbnail field_verbose_name language_filters %}
+{% block main %}
+    <div class="container mt-3 mb-3">
+        {% include "projects/includes/projects_nav.html" with slug=project_info.slug %}
+        <div class="main-body mt-3">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex flex-column align-items-center text-center">
+                                {% thumbnail project_info.avatar "300x300" as avatar %}
+                                    <div class="avatar-wrapper">
+                                        <img class="profile-pic" src="{{ avatar.url }}" />
+                                    </div>
+                                {% empty %}
+                                    <div class="avatar-wrapper">
+                                        <img alt="{% translate 'No image' %}"
+                                             class="profile-pic"
+                                             src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' role='img' aria-label='Placeholder: Thumbnail' preserveAspectRatio='xMidYMid slice' focusable='false'%3E%3Ctitle>{% translate 'No image' %}%3C/title%3E%3Crect width='100%' height='100%' fill='%2355595c'%3E%3C/rect%3E%3C/svg%3E">
+                                    </div>
+                                {% endthumbnail %}
+                                <div class="mt-3">
+                                    <h4>{{ project_info.name }}</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8 mt-3 mt-lg-0 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <h6 class="mb-0 mt-1">{% get_verbose_field_name project_info "source_lang" %}:</h6>
+                                    </div>
+                                    <div class="col-sm-6 text-secondary">{{ project_info.get_source_lang_display|default:"N/A" }}</div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <h6 class="mb-0 mt-1">{% get_verbose_field_name project_info "created_at" %}:</h6>
+                                    </div>
+                                    <div class="col-sm-6 text-secondary">{{ project_info.created_at }}</div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <h6 class="mb-0 mt-1">{% get_verbose_field_name project_info "last_activity" %}:</h6>
+                                    </div>
+                                    <div class="col-sm-6 text-secondary">{{ project_info.last_activity }}</div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <h6 class="mb-0 mt-1">{% translate "Languages" %}:</h6>
+                                    </div>
+                                    <div class="col-sm-6 text-secondary">{{ project_info.languages.count }}</div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <h6 class="mb-0 mt-1">{% translate "Members" %}:</h6>
+                                    </div>
+                                    <div class="col-sm-6 text-secondary">{{ project_info.members.count }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title text-white">{% get_verbose_field_name project_info "description" %}</h5>
+                            <p class="card-text text-muted">{{ project_info.description|safe|linebreaks|default:"N/A" }}</p>
+                            <div class="accordion" id="LanguagesAccordion">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed"
+                                                type="button"
+                                                data-bs-toggle="collapse"
+                                                data-bs-target="#collapseOne"
+                                                aria-expanded="true"
+                                                aria-controls="collapseOne">{% translate "Languages" %}</button>
+                                    </h2>
+                                    <div id="collapseOne"
+                                         class="accordion-collapse collapse"
+                                         data-bs-parent="#LanguagesAccordion">
+                                        <div class="accordion-body">
+                                            {% for lang in project_info.languages.all %}
+                                                <span class="text-muted">{{ lang.lang_code|language_name }}</span>
+                                                <br />
+                                            {% empty %}
+                                                <span class="text-muted">N/A</span>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock main %}

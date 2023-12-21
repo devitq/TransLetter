@@ -1,0 +1,252 @@
+{% extends "base-dashboard.html" %}
+{% load i18n static thumbnail language_filters %}
+{% block main %}
+    <link rel="stylesheet" href="{% static 'css/chat.css' %}">
+    <div class="">
+        <div class="row clearfix">
+            <div class="col-lg-12">
+                <div class="card chat-app">
+                    <div class="chat">
+                        <div class="chat-header clearfix">
+                            <div class="row">
+                                <div class="col">
+                                    {% if request.user == translation_request.author %}
+                                        <a>
+                                            {% thumbnail translation_request.translator.account.avatar "50x50" as avatar %}
+                                                <img src="{{ avatar.url }}" alt="User Avatar" width="50px">
+                                            {% empty %}
+                                                <img src="data:image/svg+xml,%3Csvg height='50px' width='50px' xmlns='http://www.w3.org/2000/svg' role='img' aria-label='Placeholder: Avatar' preserveAspectRatio='xMidYMid slice' focusable='false'%3E%3Ctitle%3E{%25%20translate%20%22No%20image%22%20%25%7D%3C/title%3E%3Crect width='100%25' height='100%25' fill='%2355595c'%3E%3C/rect%3E%3C/svg%3E"
+                                                     alt="No image">
+                                            {% endthumbnail %}
+                                        </a>
+                                        <div class="chat-about">
+                                            <h6 class="mb-0">
+                                                {{ translation_request.translator.first_name|default:translation_request.translator.username }}
+                                                {% if translation_request.translator.first_name != "" %}{{ translation_request.translator.last_name }}{% endif %}
+                                            </h6>
+                                            <small class="text-muted">Translator</small>
+                                        </div>
+                                    {% else %}
+                                        <a>
+                                            {% thumbnail translation_request.author.account.avatar "50x50" as avatar %}
+                                                <img src="{{ avatar.url }}" alt="User Avatar" width="50px">
+                                            {% empty %}
+                                                <img src="data:image/svg+xml,%3Csvg height='50px' width='50px' xmlns='http://www.w3.org/2000/svg' role='img' aria-label='Placeholder: Avatar' preserveAspectRatio='xMidYMid slice' focusable='false'%3E%3Ctitle%3E{%25%20translate%20%22No%20image%22%20%25%7D%3C/title%3E%3Crect width='100%25' height='100%25' fill='%2355595c'%3E%3C/rect%3E%3C/svg%3E"
+                                                     alt="No image">
+                                            {% endthumbnail %}
+                                        </a>
+                                        <div class="chat-about">
+                                            <h6 class="mb-0">
+                                                {{ translation_request.author.first_name|default:translation_request.author.username }}
+                                                {% if translation_request.author.first_name != "" %}{{ translation_request.author.last_name }}{% endif %}
+                                            </h6>
+                                            <small class="text-muted">Author</small>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chat-history" id="chat-history">
+                            <ul class="mb-2">
+                                {% if translation_request.text %}
+                                    {% if request.user.id == translation_request.author.id %}
+                                        <li class="clearfix">
+                                            <div class="message-data text-end">
+                                                <span class="message-data-time">{{ translation_request.created_at }}</span>
+                                            </div>
+                                            <div class="message other-message float-right">
+                                                {% translate "Languages to translate" %}:
+                                                <br>
+                                                {% for language in translation_request.languages %}
+                                                    {{ language|language_name }}
+                                                    <br>
+                                                {% endfor %}
+                                            </div>
+                                        </li>
+                                        <li class="clearfix">
+                                            <div class="message-data text-end">
+                                                <span class="message-data-time">{{ translation_request.created_at }}</span>
+                                            </div>
+                                            <div class="message other-message float-right">
+                                                {% translate "Price" %}:
+                                                <br>
+                                                {{ translation_request.price }}
+                                            </div>
+                                        </li>
+                                        <li class="clearfix">
+                                            <div class="message-data text-end">
+                                                <span class="message-data-time">{{ translation_request.created_at }}</span>
+                                            </div>
+                                            <div class="message other-message float-right">{{ translation_request.text }}</div>
+                                        </li>
+                                    {% else %}
+                                        <li class="clearfix">
+                                            <div class="message-data">
+                                                {% thumbnail translation_request.author.account.avatar "50x50" as avatar %}
+                                                    <img src="{{ avatar.url }}" alt="User Avatar" width="50px">
+                                                {% empty %}
+                                                    <img src="data:image/svg+xml,%3Csvg height='50px' width='50px' xmlns='http://www.w3.org/2000/svg' role='img' aria-label='Placeholder: Avatar' preserveAspectRatio='xMidYMid slice' focusable='false'%3E%3Ctitle%3E{%25%20translate%20%22No%20image%22%20%25%7D%3C/title%3E%3Crect width='100%25' height='100%25' fill='%2355595c'%3E%3C/rect%3E%3C/svg%3E"
+                                                         alt="No image">
+                                                {% endthumbnail %}
+                                                <span class="message-data-time">{{ translation_request.created_at }}</span>
+                                            </div>
+                                            <div class="message my-message">
+                                                {% translate "Languages to translate" %}:
+                                                <br>
+                                                {% for language in translation_request.languages %}
+                                                    {{ language|language_name }}
+                                                    <br>
+                                                {% endfor %}
+                                            </div>
+                                        </li>
+                                        <li class="clearfix">
+                                            <div class="message-data">
+                                                {% thumbnail translation_request.author.account.avatar "50x50" as avatar %}
+                                                    <img src="{{ avatar.url }}" alt="User Avatar" width="50px">
+                                                {% empty %}
+                                                    <img src="data:image/svg+xml,%3Csvg height='50px' width='50px' xmlns='http://www.w3.org/2000/svg' role='img' aria-label='Placeholder: Avatar' preserveAspectRatio='xMidYMid slice' focusable='false'%3E%3Ctitle%3E{%25%20translate%20%22No%20image%22%20%25%7D%3C/title%3E%3Crect width='100%25' height='100%25' fill='%2355595c'%3E%3C/rect%3E%3C/svg%3E"
+                                                         alt="No image">
+                                                {% endthumbnail %}
+                                                <span class="message-data-time">{{ translation_request.created_at }}</span>
+                                            </div>
+                                            <div class="message my-message">
+                                                {% translate "Price" %}:
+                                                <br>
+                                                {{ translation_request.price }}
+                                            </div>
+                                        </li>
+                                        <li class="clearfix">
+                                            <div class="message-data">
+                                                {% thumbnail translation_request.author.account.avatar "50x50" as avatar %}
+                                                    <img src="{{ avatar.url }}" alt="User Avatar" width="50px">
+                                                {% empty %}
+                                                    <img src="data:image/svg+xml,%3Csvg height='50px' width='50px' xmlns='http://www.w3.org/2000/svg' role='img' aria-label='Placeholder: Avatar' preserveAspectRatio='xMidYMid slice' focusable='false'%3E%3Ctitle%3E{%25%20translate%20%22No%20image%22%20%25%7D%3C/title%3E%3Crect width='100%25' height='100%25' fill='%2355595c'%3E%3C/rect%3E%3C/svg%3E"
+                                                         alt="No image">
+                                                {% endthumbnail %}
+                                                <span class="message-data-time">{{ translation_request.created_at }}</span>
+                                            </div>
+                                            <div class="message my-message">{{ translation_request.text }}</div>
+                                        </li>
+                                    {% endif %}
+                                {% endif %}
+                                {% for message in translation_request.messages.all %}
+                                    {% if message.author_id == request.user.id %}
+                                        <li class="clearfix">
+                                            <div class="message-data text-end">
+                                                <span class="message-data-time">{{ message.timestamp }}</span>
+                                            </div>
+                                            <div class="message other-message float-right">{{ message.content }}</div>
+                                        </li>
+                                    {% elif message.author_id == request.user.id %}
+                                        <li class="clearfix">
+                                            <div class="message-data">
+                                                {% thumbnail message.author.account.avatar "50x50" as avatar %}
+                                                    <img src="{{ avatar.url }}" alt="User Avatar" width="50px">
+                                                {% empty %}
+                                                    <svg width="50px"
+                                                         xmlns="http://www.w3.org/2000/svg"
+                                                         role="img"
+                                                         aria-label="Placeholder: Avatar"
+                                                         preserveAspectRatio="xMidYMid slice"
+                                                         focusable="false">
+                                                        <title>{% translate "No image" %}</title>
+                                                        <rect width="100%" height="100%" fill="#55595c"></rect>
+                                                    </svg>
+                                                {% endthumbnail %}
+                                                <span class="message-data-time">{{ message.timestamp }}</span>
+                                            </div>
+                                            <div class="message my-message">{{ message.content }}</div>
+                                        </li>
+                                    {% else %}
+                                        <li class="clearfix">
+                                            <div class="message-data">
+                                                <span class="message-data-time">System, {{ message.timestamp }}</span>
+                                            </div>
+                                            <div class="system-message">{{ message.content|safe }}</div>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        {% if translation_request.status == "SE" %}
+                            {% if translation_request.translator == request.user %}
+                                <div class="chat-message clearfix">
+                                    <a class="btn btn-success"
+                                       href="{% url 'translation_request:update_translation_request_status' pk=translation_request.id %}?to_status=AC">{% translate "Accept" %}</a>
+                                    <a class="btn btn-danger"
+                                       href="{% url 'translation_request:update_translation_request_status' pk=translation_request.id %}?to_status=RJ">{% translate "Reject" %}</a>
+                                </div>
+                            {% else %}
+                                <div class="chat-message clearfix">
+                                    <p class="text-muted">{% translate "Wait for the translator to approve your request before writing messages" %}</p>
+                                </div>
+                            {% endif %}
+                        {% elif translation_request.status == "RJ" %}
+                            <div class="chat-message clearfix">
+                                <p class="text-muted">{% translate "Request was rejected" %}</p>
+                            </div>
+                        {% elif translation_request.status == "CL" %}
+                            <div class="chat-message clearfix">
+                                <p class="text-muted">{% translate "Request closed, you can't write messages anymore" %}</p>
+                                {% if request.user == translation_request.author and translation_request.rating == "" %}
+                                    <a class="btn btn-info"
+                                       href="{% url 'rating:create_rating' pk=translation_request.id %}">{% translate "Rate translator" %}</a>
+                                {% endif %}
+                            </div>
+                        {% else %}
+                            <form method="post" action="">
+                                <div class="chat-message clearfix">
+                                    {% csrf_token %}
+                                    <div class="input-group mb-0">
+                                        {% for field in form %}
+                                            {{ field }}
+                                            {% if field.errors %}
+                                                {% for error in field.errors %}<div class="invalid-feedback">{{ error|safe }}</div>{% endfor %}
+                                            {% endif %}
+                                            {% if field.help_text %}
+                                                <div class="form-text text-muted">
+                                                    <p>{{ field.help_text|safe }}</p>
+                                                </div>
+                                            {% endif %}
+                                        {% endfor %}
+                                        <button type="submit" class="btn btn-outline-primary">
+                                            <i class="fa-solid fa-paper-plane"></i>
+                                        </button>
+                                    </div>
+                                    <br>
+                                    {% if request.user == translation_request.translator %}
+                                        {% if translation_request.status == "AC" %}
+                                            <a class="btn btn-primary"
+                                               href="{% url 'translation_request:update_translation_request_status' pk=translation_request.id %}?to_status=IP">{% translate "Start working" %}</a>
+                                            <a class="btn btn-danger"
+                                               href="{% url 'translation_request:update_translation_request_status' pk=translation_request.id %}?to_status=RJ">{% translate "Reject" %}</a>
+                                        {% elif translation_request.status == "IP" %}
+                                            <a class="btn btn-success"
+                                               href="{% url 'translation_request:update_translation_request_status' pk=translation_request.id %}?to_status=FN">{% translate "Mark it as finished" %}</a>
+                                        {% endif %}
+                                    {% else %}
+                                        {% if translation_request.status == "AC" %}
+                                            <a class="btn btn-danger"
+                                               href="{% url 'translation_request:update_translation_request_status' pk=translation_request.id %}?to_status=RJ">{% translate "Reject" %}</a>
+                                        {% elif translation_request.status == "FN" %}
+                                            <a class="btn btn-danger"
+                                               href="{% url 'translation_request:update_translation_request_status' pk=translation_request.id %}?to_status=IP">{% translate "Send for revision" %}</a>
+                                            <a class="btn btn-danger"
+                                               href="{% url 'translation_request:update_translation_request_status' pk=translation_request.id %}?to_status=CL">{% translate "Close" %}</a>
+                                        {% endif %}
+                                    {% endif %}
+                                </div>
+                            </form>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var chatHistoryDiv = document.querySelector('.chat-history');
+            chatHistoryDiv.scrollTop = chatHistoryDiv.scrollHeight + 100;
+        });
+    </script>
+{% endblock %}
