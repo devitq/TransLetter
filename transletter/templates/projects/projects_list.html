@@ -1,25 +1,28 @@
 {% extends "base-dashboard.html" %}
-{% load static i18n %}
+{% load static i18n check_for_owner %}
 {% block main %}
     <script src="{% static 'js/anime.min.js' %}"></script>
     <script src="{% static 'js/scrollreveal.min.js' %}"></script>
-    <div class="container mt-3 height-100">
+    <div class="container mt-3 mb-3">
         <div class="album py-4">
             <div class="container">
-                <h1>
-                    {% translate "Projects" %} <a class="btn btn-primary text-end float-end"
-    href="{% url 'projects:create_project' %}"><i class="fa-solid fa-plus"></i> {% translate "Create project" %}</a>
-                </h1>
+                <h1>{% translate "Projects" %}</h1>
                 <div>
                     {% for project in projects %}
                         {% ifchanged %}
                         </div>
-                        <h2>{{ project.author }}</h2>
-                        <div class="row g-3 g-lg-4 g-md-3 row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-xl-3">
+                        <h3 class="mt-3 mb-3">
+                            {% if project|is_owner:request.user %}
+                                {% translate "Owned" %}
+                            {% else %}
+                                {% translate "Contributed" %}
+                            {% endif %}
+                        </h3>
+                        <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-xl-3">
                         {% endifchanged %}
-                        {% include "includes/project_card.html" %}
+                        {% include "projects/includes/project_card.html" %}
                     {% empty %}
-                        <p>{% translate "No projects" %}</p>
+                        <p class="text-muted">{% translate "No projects" %}</p>
                     {% endfor %}
                 </div>
             </div>

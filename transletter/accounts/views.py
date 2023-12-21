@@ -233,7 +233,13 @@ class AccountEditView(LoginRequiredMixin, View):
                 request.user.is_active = False
                 request.user.save()
 
-            messages.success(request, "Account updated successfully!")
+            messages.success(
+                request,
+                pgettext_lazy(
+                    "success message in views",
+                    "Account updated successfully!",
+                ),
+            )
             return redirect("accounts:edit_account")
 
         return render(

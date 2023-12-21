@@ -5,7 +5,7 @@
     </div>
     <div class="header_right">
         <a href="{% url 'notifications:all' %}">
-            <div class="header_notification">
+            <div class="header_notification{% if request.resolver_match.view_name == 'notifications:all' %} selected{% endif %}">
                 <i class='bx bxs-bell'></i>
             </div>
         </a>

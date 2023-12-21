@@ -40,11 +40,11 @@ class Project(models.Model):
     created_at = models.DateTimeField(
         pgettext_lazy("created at field name", "created at"),
         auto_now_add=True,
-        blank=True,
+        null=True,
     )
     last_activity = models.DateTimeField(
         pgettext_lazy("last activity field name", "last activity"),
-        blank=True,
+        auto_now_add=True,
         null=True,
     )
     public = models.BooleanField(
@@ -89,7 +89,11 @@ class ProjectMembership(models.Model):
 class ProjectLanguage(models.Model):
     LANGUAGES = get_available_langs()
 
-    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    project = models.ForeignKey(
+        Project,
+        on_delete=models.CASCADE,
+        related_name="languages",
+    )
     lang_code = models.CharField(max_length=10, choices=LANGUAGES)
 
     class Meta:
@@ -125,11 +129,12 @@ class TranslationFile(models.Model):
 
 
 class TranslationRow(models.Model):
-    created_at = models.DateTimeField(auto_now_add=True, blank=True)
-    updated_at = models.DateTimeField(auto_now=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True)
     msg_context = models.TextField(null=True, blank=True)
     msg_id = models.TextField()
     msg_str = models.TextField()
+    occurrences = models.JSONField(default=list, null=True, blank=True)
     translation_file = models.ForeignKey(
         TranslationFile,
         on_delete=models.CASCADE,
@@ -138,7 +143,12 @@ class TranslationRow(models.Model):
     class Meta:
         constraints = [
             models.UniqueConstraint(
-                fields=["msg_context", "msg_id"],
+                fields=[
+                    "msg_str",
+                    "msg_id",
+                    "msg_context",
+                    "translation_file",
+                ],
                 name="unique_row",
             ),
         ]
@@ -153,4 +163,4 @@ class TranslationComment(models.Model):
         pgettext_lazy("comment field name", "comment"),
     )
     author = models.ForeignKey(User, on_delete=models.CASCADE)
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True)

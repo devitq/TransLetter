@@ -91,26 +91,14 @@
                                     <div class="col-sm-6">
                                         <h6 class="mb-0 mt-1">{% get_verbose_field_name translator "first_name" %}:</h6>
                                     </div>
-                                    <div class="col-sm-6 text-secondary">
-                                        {% if translator.first_name != "" %}
-                                            {{ translator.first_name }}
-                                        {% else %}
-                                            N/A
-                                        {% endif %}
-                                    </div>
+                                    <div class="col-sm-6 text-secondary">{{ translator.first_name|default:"N/A" }}</div>
                                 </div>
                                 <hr>
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <h6 class="mb-0 mt-1">{% get_verbose_field_name translator "last_name" %}:</h6>
                                     </div>
-                                    <div class="col-sm-6 text-secondary">
-                                        {% if translator.last_name != "" %}
-                                            {{ translator.last_name }}
-                                        {% else %}
-                                            N/A
-                                        {% endif %}
-                                    </div>
+                                    <div class="col-sm-6 text-secondary">{{ translator.last_name|default:"N/A" }}</div>
                                 </div>
                                 <hr>
                                 <div class="row">

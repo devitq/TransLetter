@@ -10,7 +10,10 @@ __all__ = ()
 
 class StaticUrlTests(TestCase):
     @parameterized.parameterized.expand(
-        ("landing:index",),
+        [
+            "landing:index",
+            "landing:about",
+        ],
     )
     def test_endpoints(self, url):
         response = Client().get(reverse(url))

@@ -136,6 +136,20 @@ class CreateTranslationRequest(LoginRequiredMixin, CreateView):
             )
             return self.render_form(form)
 
+        project_membership_exist = ProjectMembership.objects.filter(
+            user=form.instance.translator,
+            project=form.instance.project,
+        ).exists()
+        if project_membership_exist:
+            messages.error(
+                self.request,
+                pgettext_lazy(
+                    "error message in views",
+                    ("The translator is already in this project."),
+                ),
+            )
+            return self.render_form(form)
+
         form.instance.languages = form.cleaned_data["languages"]
         translator_languages = set(form.instance.translator.account.languages)
         project_languages = set(
@@ -241,17 +255,26 @@ class UpdateTranslationRequestStatusView(LoginRequiredMixin, View):
                 elif translation_request.status == "AC" and to_status == "IP":
                     translation_request.status = to_status
                     translation_request.save()
-                    ProjectMembership.objects.create(
+                    exist = ProjectMembership.objects.filter(
                         user=translation_request.translator,
                         project=translation_request.project,
-                        role="hired_translator",
+                    )
+                    if not exist:
+                        ProjectMembership.objects.create(
+                            user=translation_request.translator,
+                            project=translation_request.project,
+                            role="hired_translator",
+                        )
+                    url = reverse_lazy(
+                        "projects:project_page",
+                        args={"slug": translation_request.project.slug},
                     )
                     TranslationRequestMessage.objects.create(
                         translation_request=translation_request,
                         author=None,
                         content=(
                             "The translator has been added to the "
-                            '<a href="#">project</a> and can begin work'
+                            f'<a href="{url}">project</a> and can begin work'
                         ),
                     )
                 elif translation_request.status == "AC" and to_status == "RJ":

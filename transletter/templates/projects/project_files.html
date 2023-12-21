@@ -1,0 +1,26 @@
+{% extends "base-dashboard.html" %}
+{% load static i18n %}
+{% block main %}
+    <div class="container mt-3 mb-3">
+        {% include "projects/includes/projects_nav.html" %}
+        <div class="album py-4">
+            <div class="container">
+                <h1>
+                    {% translate "Files" %} <a class="btn btn-primary text-end float-end"
+    href="{% url 'projects:project_files_upload' slug=slug %}"><i class="fa-solid fa-plus"></i> {% translate "Upload file" %}</a>
+                </h1>
+                <div>
+                    {% for file in project_files %}
+                        {% ifchanged %}
+                        </div>
+                        <div class="row g-3 g-lg-4 g-md-3 row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-xl-3">
+                        {% endifchanged %}
+                        {% include "projects/includes/files_card.html" %}
+                    {% empty %}
+                        <p>{% translate "No files" %}</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock main %}

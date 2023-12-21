@@ -60,6 +60,7 @@ class Rating(models.Model):
     created_at = models.DateTimeField(
         pgettext_lazy("created_at field name", "created at"),
         auto_now_add=True,
+        null=True,
     )
 
     def __str__(self):
