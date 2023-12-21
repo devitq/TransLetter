@@ -1,4 +1,5 @@
 from django import forms
+from django.utils.translation import pgettext
 
 from projects import models
 from transletter.mixins import BaseFormMixin
@@ -24,14 +25,17 @@ class CreateProjectForm(forms.ModelForm, BaseFormMixin):
 
 class AddProjectMemberForm(forms.Form, BaseFormMixin):
     email_address = forms.EmailField(
-        help_text="Enter the user's email address",
+        help_text=pgettext(
+            "add member form",
+            "Enter the user's email address",
+        ),
     )
     mail_header = forms.CharField(
-        help_text="Enter a title for the mail",
+        help_text=pgettext("add member form", "Enter a title for the mail"),
         max_length=50,
     )
     mail_text = forms.CharField(
-        help_text="Enter the text of the mail",
+        help_text=pgettext("add member form", "Enter the text of the email"),
         widget=forms.Textarea(),
     )
 
@@ -48,11 +52,12 @@ class AddProjectMemberForm(forms.Form, BaseFormMixin):
         )
 
 
-CHOICES = (
-    ("admin", "admin"),
-    ("static translator", "static translator"),
-)
-blank_choice = (("", "--- Choose role ---"),)
+CHOICES = [
+    (key, value)
+    for key, value in models.ProjectMembership.ROLES
+    if key not in ["owner", "hired_translator"]
+]
+blank_choice = [("", pgettext("add member form", "--- Choose role ---"))]
 
 
 class UpdateProjectMemberForm(forms.Form, BaseFormMixin):
@@ -63,5 +68,30 @@ class UpdateProjectMemberForm(forms.Form, BaseFormMixin):
         self.set_field_attributes()
 
     class Meta:
-        model = models.Project
+        model = models.ProjectMembership
         fields = ("role",)
+
+
+class ProjectChangeForm(forms.ModelForm, BaseFormMixin):
+    def __init__(self, *args, **kwargs):
+        super(ProjectChangeForm, self).__init__(*args, **kwargs)
+        self.set_field_attributes()
+
+    class Meta:
+        model = models.Project
+        fields = (
+            "name",
+            "slug",
+            "description",
+        )
+
+
+class ProjectAvatarChangeForm(forms.ModelForm, BaseFormMixin):
+    def __init__(self, *args, **kwargs):
+        super(ProjectAvatarChangeForm, self).__init__(*args, **kwargs)
+        for field in self.visible_fields():
+            field.field.widget.attrs["class"] = "file-upload"
+
+    class Meta:
+        model = models.Project
+        fields = ("avatar",)

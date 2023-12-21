@@ -1,0 +1,15 @@
+{% load i18n thumbnail %}
+<div class="col">
+    <div class="card h-100 shadow-sm item_card is-revealing zoomable-card">
+        <div class="card-body">
+            <a href="{% url 'projects:project_rows_translate' slug=slug file_pk=row.translation_file_id row_pk=row.id %}">
+                <h5 class="card-text text-white">{{ row.msg_id|truncatechars_html:45|striptags|safe }}</h5>
+                {% if row.msg_str %}
+                    <p class="card-text text-bg-primary">{{ row.msg_str|truncatechars_html:45|striptags|safe }}</p>
+                {% else %}
+                    <p class="text-bg-danger">{% translate "Not translated yet" %}</p>
+                {% endif %}
+            </a>
+        </div>
+    </div>
+</div>

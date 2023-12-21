@@ -1,0 +1,25 @@
+{% extends "base-dashboard.html" %}
+{% load static i18n %}
+{% block main %}
+    <div class="container mt-3 mb-3">
+        <div class="album py-4">
+            <input type="button"
+                   value="Previous Page"
+                   onClick="javascript:history.go(-1);"
+                   class="btn btn-primary">
+            <div class="container">
+                <div>
+                    {% for row in project_rows %}
+                        {% ifchanged %}
+                        </div>
+                        <div class="row g-3 g-lg-4 g-md-3 row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-xl-3">
+                        {% endifchanged %}
+                        {% include "projects/includes/row_card.html" %}
+                    {% empty %}
+                        <p>{% translate "No rows" %}</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock main %}

@@ -2,7 +2,7 @@
 {% load i18n %}
 {% block main %}
     <div class="container mt-3 mb-3">
-        <h2>Create Project</h2>
+        <h2>{% translate "Create project" %}</h2>
         <form method="post" action="">
             {% csrf_token %}
             {% include "includes/form.html" %}

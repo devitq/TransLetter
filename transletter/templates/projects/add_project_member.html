@@ -2,13 +2,13 @@
 {% load i18n %}
 {% block main %}
     <div class="container mt-3 mb-3">
-        <h2>Invite user</h2>
+        <h2>{% translate "Invite user" %}</h2>
         <form method="post" action="">
             {% csrf_token %}
             {% include "includes/form.html" %}
             <input class="btn btn-primary"
                    type="submit"
-                   value="{% translate "Invite" %}">
+                   value="{% translate 'Invite' %}">
         </form>
     </div>
 {% endblock %}

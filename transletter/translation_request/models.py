@@ -67,7 +67,7 @@ class TranslationRequest(models.Model):
             "created at",
         ),
         auto_now_add=True,
-        blank=True,
+        null=True,
     )
     closed_at = models.DateTimeField(
         pgettext_lazy("translation request closed at field name", "closed at"),
@@ -131,7 +131,7 @@ class TranslationRequestMessage(models.Model):
     timestamp = models.DateTimeField(
         pgettext_lazy("translation request timestamp field name", "timestamp"),
         auto_now_add=True,
-        blank=True,
+        null=True,
     )
 
     def __str__(self) -> str:
