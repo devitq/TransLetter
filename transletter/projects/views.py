@@ -12,7 +12,11 @@ from django.views.generic import CreateView, ListView
 from jwt import InvalidSignatureError
 
 import accounts.models
-from projects.decorators import can_access_project_decorator
+from projects.decorators import (
+    can_access_project_decorator,
+    project_admin_decorator,
+    project_owner_decorator,
+)
 from projects.forms import (
     AddProjectMemberForm,
     CreateProjectForm,
@@ -74,24 +78,11 @@ class ProjectMembersView(LoginRequiredMixin, ListView):
         )
 
 
-@method_decorator(can_access_project_decorator, name="dispatch")
+@method_decorator(project_admin_decorator, name="dispatch")
 class AddProjectMemberView(LoginRequiredMixin, CreateView):
     template_name = "projects/add_project_member.html"
 
     def get(self, request, slug):
-        user = projects.models.ProjectMembership.objects.filter(
-            user_id=request.user.id,
-            project__slug=slug,
-        ).first()
-        if user.role not in ["owner", "admin"]:
-            messages.error(
-                request,
-                pgettext_lazy(
-                    "error message in views",
-                    "You don't have permission to do this",
-                ),
-            )
-            return redirect("projects:project_members", slug)
         form = AddProjectMemberForm()
         return render(request, self.template_name, {"form": form})
 
@@ -147,7 +138,7 @@ class AddProjectMemberView(LoginRequiredMixin, CreateView):
         return redirect("projects:project_members", slug)
 
 
-@method_decorator(can_access_project_decorator, name="dispatch")
+@method_decorator(project_admin_decorator, name="dispatch")
 class DeleteProjectMemberView(LoginRequiredMixin, ListView):
     def get(self, request, slug, user_id):
         user = projects.models.ProjectMembership.objects.filter(
@@ -155,15 +146,6 @@ class DeleteProjectMemberView(LoginRequiredMixin, ListView):
             project__slug=slug,
         ).first()
         if not user:
-            messages.error(
-                request,
-                pgettext_lazy(
-                    "error message in views",
-                    "You don't have permission to do this",
-                ),
-            )
-            return redirect("projects:project_members", slug)
-        if user.role not in ["owner", "admin"]:
             messages.error(
                 request,
                 pgettext_lazy(
@@ -198,7 +180,7 @@ class DeleteProjectMemberView(LoginRequiredMixin, ListView):
                 request,
                 pgettext_lazy(
                     "error message in views",
-                    "Deleting hired only via TransRequest",
+                    "Deleting hired only via TranslationRequest",
                 ),
             )
         elif user_for_delete == "owner":
@@ -212,33 +194,11 @@ class DeleteProjectMemberView(LoginRequiredMixin, ListView):
         return redirect("projects:project_members", slug)
 
 
-@method_decorator(can_access_project_decorator, name="dispatch")
+@method_decorator(project_owner_decorator, name="dispatch")
 class UpdateProjectMemberView(LoginRequiredMixin, ListView):
     template_name = "projects/update_project_member.html"
 
     def get(self, request, slug, user_id):
-        user = projects.models.ProjectMembership.objects.filter(
-            user_id=request.user.id,
-            project_id=slug,
-        ).first()
-        if not user:
-            messages.error(
-                request,
-                pgettext_lazy(
-                    "error message in views",
-                    "You don't have permission to do this",
-                ),
-            )
-            return redirect("projects:project_members", slug)
-        if user.role != "owner":
-            messages.error(
-                request,
-                pgettext_lazy(
-                    "error message in views",
-                    "You don't have permission to do this",
-                ),
-            )
-            return redirect("projects:project_members", slug)
         form = UpdateProjectMemberForm()
         return render(request, self.template_name, {"form": form})
 
