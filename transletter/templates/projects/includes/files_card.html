@@ -1,0 +1,11 @@
+{% load i18n thumbnail %}
+<div class="col">
+    <div class="card h-100 shadow-sm item_card is-revealing zoomable-card">
+        <div class="card-body">
+            <h2>File №{{ forloop.counter }}</h2>
+            {{ file.file }}
+        </div>
+        <a class="btn btn-primary text-end float-end"
+           href="{% url 'projects:project_files_translate' slug=slug pk=file.id %}"><i class="fa-solid fa-plus"></i> {% translate "Translate" %}</a>
+    </div>
+</div>

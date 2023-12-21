@@ -1,0 +1,17 @@
+{% extends "base-dashboard.html" %}
+{% block main %}
+    {% load static i18n %}
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="filename">
+        <button type="submit">{% translate "Upload" %}</button>
+        <p>
+            {% translate "Select file language:" %}
+            <select name="lang">
+                {% for lang in project_languages %}<option>{{ lang.lang_code }}</option>{% endfor %}
+            </select>
+        </p>
+        <br>
+    </form>
+    <script src="{% static 'js/animation_setup.min.js' %}"></script>
+{% endblock main %}
