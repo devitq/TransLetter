@@ -26,12 +26,12 @@ urlpatterns = [
         name="project_members",
     ),
     path(
-        "<slug:slug>/members/add_member/",
+        "<slug:slug>/members/invite/",
         projects.views.AddProjectMemberView.as_view(),
         name="add_project_member",
     ),
     path(
-        "<slug:slug>/members/add_member/activate/<str:token>/",
+        "<slug:slug>/members/invite/activate/<str:token>/",
         projects.views.ActivateProjectMemberView.as_view(),
         name="activate_project_member",
     ),

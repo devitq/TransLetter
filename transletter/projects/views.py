@@ -3,13 +3,13 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.core.mail import send_mail
-from django.core.signing import BadSignature
 from django.db import models
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.utils.translation import pgettext_lazy
 from django.views.generic import CreateView, ListView
+from jwt import InvalidSignatureError
 
 import accounts.models
 from projects.decorators import can_access_project_decorator
@@ -259,7 +259,14 @@ class ActivateProjectMemberView(LoginRequiredMixin, ListView):
     def get(self, request, slug, token):
         try:
             username, project_id = decode_token(token)
-            user = accounts.models.User.objects.get(username=username)
+            user = get_object_or_404(
+                accounts.models.User,
+                username=username,
+            )
+            project = get_object_or_404(
+                projects.models.Project,
+                slug=slug,
+            )
             if request.user != user:
                 raise PermissionDenied()
             membership = projects.models.ProjectMembership.objects.filter(
@@ -268,7 +275,7 @@ class ActivateProjectMemberView(LoginRequiredMixin, ListView):
             ).first()
             if membership is None:
                 member = projects.models.ProjectMembership(
-                    project__slug=slug,
+                    project=project,
                     user_id=user.id,
                     role="static_translator",
                 )
@@ -285,10 +292,10 @@ class ActivateProjectMemberView(LoginRequiredMixin, ListView):
                     request,
                     pgettext_lazy(
                         "error message in views",
-                        "Existing member",
+                        "Existing member.",
                     ),
                 )
-        except BadSignature:
+        except InvalidSignatureError:
             messages.error(
                 request,
                 pgettext_lazy("error message in views", "Invalid link!"),
