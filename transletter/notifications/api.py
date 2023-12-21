@@ -30,5 +30,5 @@ def read_notifications(request):
 
     return JsonResponse(
         {"status": "error", "message": "Invalid request method"},
-        status=HTTPStatus.BAD_REQUEST,
+        status=HTTPStatus.METHOD_NOT_ALLOWED,
     )
