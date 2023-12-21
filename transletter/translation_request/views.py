@@ -172,7 +172,12 @@ class CreateTranslationRequest(LoginRequiredMixin, CreateView):
             return self.render_form(form)
         self.request.user.account.balance -= form.instance.price
         self.request.user.account.save()
-
+        form.instance.translator.add_notification(
+            "Invitation to the Project",
+            f"{form.instance.translator.username}, you have been invited to"
+            f' join the project "{form.instance.project.name}"'
+            "as a translator.",
+        )
         return super().form_valid(form)
 
     def render_form(self, form):

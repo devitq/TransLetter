@@ -9,6 +9,7 @@ from django.urls import reverse, reverse_lazy
 from django.utils.translation import pgettext_lazy
 from django.views.generic import DetailView, ListView, View
 
+import accounts.models
 from resume.models import ResumeFile
 from translator_request.forms import (
     RejectRequestForm,
@@ -206,6 +207,11 @@ class TranslatorRequestView(LoginRequiredMixin, DetailView):
                 from_status="SE",
                 to="UR",
             )
+            accounts.models.User.objects.get(id=item.user.id).add_notification(
+                "Translator Request Status Change",
+                f"Hello, {item.user.username}, our team has taken your "
+                "request under review, expect further updates soon.",
+            )
             text = (
                 f"Hello, {item.user.username}, our team has taken your "
                 "request under review, expect further updates soon."
@@ -253,6 +259,11 @@ class AcceptRequestView(LoginRequiredMixin, DetailView):
             translator_request=item,
             from_status=item.status,
             to="AC",
+        )
+        accounts.models.User.objects.get(id=item.user.id).add_notification(
+            "Translator Request Status Change",
+            f"Hello, {item.user.username}, your translator "
+            "request has been successfully accepted! ",
         )
         text = (
             f"Hello, {item.user.username}, your translator "
@@ -302,6 +313,11 @@ class RejectRequestView(LoginRequiredMixin, DetailView):
             translator_request=item,
             from_status=item.status,
             to="RJ",
+        )
+        accounts.models.User.objects.get(id=item.user.id).add_notification(
+            "Translator Request Status Change",
+            f"Hello, {item.user.username}, your request has been "
+            "rejected, our team has deemed you incompetent.",
         )
         text = (
             f"Hello, {item.user.username}, your request has been "
