@@ -54,7 +54,7 @@ class AddProjectMemberForm(forms.Form, BaseFormMixin):
 
 CHOICES = (
     ("admin", "Administrator"),
-    ("static translator", "Static translator"),
+    ("static_translator", "Static translator"),
 )
 blank_choice = (("", pgettext("add member form", "--- Choose role ---")),)
 
@@ -67,7 +67,7 @@ class UpdateProjectMemberForm(forms.Form, BaseFormMixin):
         self.set_field_attributes()
 
     class Meta:
-        model = models.Project
+        model = models.ProjectMembership
         fields = ("role",)
 
 
@@ -80,6 +80,7 @@ class ProjectChangeForm(forms.ModelForm, BaseFormMixin):
         model = models.Project
         fields = (
             "name",
+            "slug",
             "description",
         )
 
