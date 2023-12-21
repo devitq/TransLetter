@@ -11,7 +11,7 @@
                     {% for project in projects %}
                         {% ifchanged %}
                         </div>
-                        <h3 class="mt-2">
+                        <h3 class="mt-3 mb-3">
                             {% if project|is_owner:request.user %}
                                 {% translate "Owned" %}
                             {% else %}

@@ -1,0 +1,94 @@
+{% extends "base-dashboard.html" %}
+{% load i18n thumbnail static %}
+{% block main %}
+    <div class="container mt-3 mb-3">
+        {% include "projects/includes/projects_nav.html" with slug=project_form.instance.slug %}
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="main-body mt-3">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex flex-column align-items-center text-center">
+                                    {% thumbnail project_form.instance.avatar "300x300" as avatar %}
+                                        <div class="avatar-section">
+                                            <div class="avatar-wrapper">
+                                                <img class="profile-pic" src="{{ avatar.url }}" />
+                                                <div class="upload-button">
+                                                    <i class="fa fa-arrow-circle-up" aria-hidden="true"></i>
+                                                </div>
+                                            </div>
+                                            {% with avatar_form as form %}
+                                                {% for field in form %}
+                                                    {% if field.errors %}
+                                                        {% for error in field.errors %}<div class="invalid-feedback">{{ error|safe }}</div>{% endfor %}
+                                                    {% endif %}
+                                                    <div class="avatar-form">{{ field }}</div>
+                                                {% endfor %}
+                                            {% endwith %}
+                                        </div>
+                                    {% empty %}
+                                        <div class="avatar-section">
+                                            <div class="avatar-wrapper">
+                                                <img alt="{% translate 'No image' %}"
+                                                     class="profile-pic"
+                                                     src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' role='img' aria-label='Placeholder: Thumbnail' preserveAspectRatio='xMidYMid slice' focusable='false'%3E%3Ctitle>{% translate 'No image' %}%3C/title%3E%3Crect width='100%' height='100%' fill='%2355595c'%3E%3C/rect%3E%3C/svg%3E">
+                                                <div class="upload-button">
+                                                    <i class="fa fa-arrow-circle-up" aria-hidden="true"></i>
+                                                </div>
+                                            </div>
+                                            {% with avatar_form as form %}
+                                                {% for field in form %}
+                                                    {% if field.errors %}
+                                                        {% for error in field.errors %}<div class="invalid-feedback">{{ error|safe }}</div>{% endfor %}
+                                                    {% endif %}
+                                                    <div class="avatar-form">{{ field }}</div>
+                                                {% endfor %}
+                                            {% endwith %}
+                                        </div>
+                                    {% endthumbnail %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-8 mt-3 mt-lg-0 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                {% with project_form as form %}
+                                    {% include "includes/form.html" %}
+                                {% endwith %}
+                                <input class="btn btn-primary" type="submit" value="{% translate 'Save' %}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>
+    <script>
+        $(document).ready(function() {
+
+            var readURL = function(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function(e) {
+                        $('.profile-pic').attr('src', e.target.result);
+                    };
+
+                    reader.readAsDataURL(input.files[0]);
+                }
+            };
+
+            $(".file-upload").on('change', function() {
+                readURL(this);
+            });
+
+            $(".upload-button").on('click', function() {
+                $(".file-upload").click();
+            });
+        });
+    </script>
+{% endblock %}

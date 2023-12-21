@@ -21,6 +21,11 @@ urlpatterns = [
         name="project_page",
     ),
     path(
+        "<slug:slug>/edit/",
+        projects.views.ChangeProjectView.as_view(),
+        name="edit_project",
+    ),
+    path(
         "<slug:slug>/members/",
         projects.views.ProjectMembersView.as_view(),
         name="project_members",

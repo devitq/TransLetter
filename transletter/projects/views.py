@@ -8,8 +8,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.utils.translation import pgettext_lazy
-from django.views.generic import CreateView, ListView
-from jwt import InvalidSignatureError
+from django.views.generic import CreateView, ListView, View
 
 import accounts.models
 from projects.decorators import (
@@ -20,6 +19,8 @@ from projects.decorators import (
 from projects.forms import (
     AddProjectMemberForm,
     CreateProjectForm,
+    ProjectAvatarChangeForm,
+    ProjectChangeForm,
     UpdateProjectMemberForm,
 )
 import projects.models
@@ -74,6 +75,61 @@ class ProjectMembersView(LoginRequiredMixin, ListView):
                 "members": members,
                 "active_user_role": active_user_role,
                 "slug": slug,
+            },
+        )
+
+
+@method_decorator(project_admin_decorator, name="dispatch")
+class ChangeProjectView(LoginRequiredMixin, View):
+    template_name = "projects/edit_project.html"
+
+    def get(self, request, slug, *args, **kwargs):
+        project = get_object_or_404(
+            projects.models.Project,
+            slug=slug,
+        )
+        project_form = ProjectChangeForm(instance=project)
+        avatar_form = ProjectAvatarChangeForm(instance=project)
+        return render(
+            request,
+            self.template_name,
+            {
+                "project_form": project_form,
+                "avatar_form": avatar_form,
+            },
+        )
+
+    def post(self, request, slug, *args, **kwargs):
+        project = get_object_or_404(
+            projects.models.Project,
+            slug=slug,
+        )
+        project_form = ProjectChangeForm(request.POST, instance=project)
+        avatar_form = ProjectAvatarChangeForm(
+            request.POST,
+            request.FILES,
+            instance=project,
+        )
+
+        if project_form.is_valid() and avatar_form.is_valid():
+            project_form.save()
+            avatar_form.save()
+
+            messages.success(
+                request,
+                pgettext_lazy(
+                    "success message in views",
+                    "Project updated successfully!",
+                ),
+            )
+            return redirect("projects:edit_project", project.slug)
+
+        return render(
+            request,
+            self.template_name,
+            {
+                "project_form": project_form,
+                "avatar_form": avatar_form,
             },
         )
 
@@ -164,7 +220,7 @@ class DeleteProjectMemberView(LoginRequiredMixin, ListView):
                 or (user_for_delete == "admin" and user.role == "owner")
             ):
                 projects.models.ProjectMembership.objects.filter(
-                    project_id=slug,
+                    project__slug=slug,
                     user_id=user_id,
                 ).delete()
             elif user_for_delete == "admin" and user.role == "admin":
@@ -255,7 +311,7 @@ class ActivateProjectMemberView(LoginRequiredMixin, ListView):
                         "Existing member.",
                     ),
                 )
-        except InvalidSignatureError:
+        except Exception:
             messages.error(
                 request,
                 pgettext_lazy("error message in views", "Invalid link!"),

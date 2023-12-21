@@ -53,8 +53,8 @@ class AddProjectMemberForm(forms.Form, BaseFormMixin):
 
 
 CHOICES = (
-    ("admin", "admin"),
-    ("static translator", "static translator"),
+    ("admin", "Administrator"),
+    ("static translator", "Static translator"),
 )
 blank_choice = (("", pgettext("add member form", "--- Choose role ---")),)
 
@@ -69,3 +69,27 @@ class UpdateProjectMemberForm(forms.Form, BaseFormMixin):
     class Meta:
         model = models.Project
         fields = ("role",)
+
+
+class ProjectChangeForm(forms.ModelForm, BaseFormMixin):
+    def __init__(self, *args, **kwargs):
+        super(ProjectChangeForm, self).__init__(*args, **kwargs)
+        self.set_field_attributes()
+
+    class Meta:
+        model = models.Project
+        fields = (
+            "name",
+            "description",
+        )
+
+
+class ProjectAvatarChangeForm(forms.ModelForm, BaseFormMixin):
+    def __init__(self, *args, **kwargs):
+        super(ProjectAvatarChangeForm, self).__init__(*args, **kwargs)
+        for field in self.visible_fields():
+            field.field.widget.attrs["class"] = "file-upload"
+
+    class Meta:
+        model = models.Project
+        fields = ("avatar",)
