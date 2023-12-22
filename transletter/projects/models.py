@@ -1,3 +1,4 @@
+from pathlib import Path
 import uuid
 
 from django.conf import settings
@@ -85,6 +86,9 @@ class ProjectMembership(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     role = models.CharField(max_length=20, choices=ROLES)
 
+    def __str__(self) -> str:
+        return f"{self.project} -> {self.user.username}"
+
 
 class ProjectLanguage(models.Model):
     LANGUAGES = get_available_langs()
@@ -95,6 +99,10 @@ class ProjectLanguage(models.Model):
         related_name="languages",
     )
     lang_code = models.CharField(max_length=10, choices=LANGUAGES)
+
+    def __str__(self) -> str:
+        language_dict = dict(self.LANGUAGES)
+        return language_dict.get(self.lang_code, "")
 
     class Meta:
         constraints = [
@@ -126,6 +134,12 @@ class TranslationFile(models.Model):
             validate_translation_file,
         ],
     )
+
+    def filename(self):
+        return Path(self.file.name).name
+
+    def __str__(self) -> str:
+        return self.filename()
 
 
 class TranslationRow(models.Model):

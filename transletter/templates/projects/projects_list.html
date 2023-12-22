@@ -6,7 +6,16 @@
     <div class="container mt-3 mb-3">
         <div class="album py-4">
             <div class="container">
-                <h1>{% translate "Projects" %}</h1>
+                <div class="row">
+                    <div class="col-md-12 d-flex">
+                        <h1>{% translate "Projects" %}</h1>
+                        <a class="ms-auto mt-1" href="{% url 'projects:create_project' %}">
+                            <button class="btn btn-primary ms-auto">
+                                <i class="fa-solid fa-plus"></i>&nbsp;{% translate "Create" %}
+                            </button>
+                        </a>
+                    </div>
+                </div>
                 <div>
                     {% for project in projects %}
                         {% ifchanged %}

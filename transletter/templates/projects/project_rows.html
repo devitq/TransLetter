@@ -1,0 +1,15 @@
+{% extends "base-dashboard.html" %}
+{% load static i18n %}
+{% block main %}
+    <div class="container mt-3 mb-3">
+        {% include "projects/includes/projects_nav.html" %}
+        <div class="row g-3 g-lg-4 g-md-3 row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-xl-3 mt-3">
+            {% for row in page_obj %}
+                {% include "projects/includes/row_card.html" %}
+            {% empty %}
+                <p class="text-muted">{% translate "No rows" %}</p>
+            {% endfor %}
+        </div>
+        {% include "includes/pagination.html" %}
+    </div>
+{% endblock main %}

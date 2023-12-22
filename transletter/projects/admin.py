@@ -26,10 +26,12 @@ class ProjectLanguageInline(admin.StackedInline):
 
 class ProjectLanguageAdmin(admin.ModelAdmin):
     inlines = (ProjectTranslationFileInline,)
+    list_display = ("lang_code", "project")
 
 
 class TranslationFileAdmin(admin.ModelAdmin):
     actions = ("create_translation_rows_from_file",)
+    list_display = ("filename", "project_language")
 
     def create_translation_rows_from_file(self, request, queryset):
         for language_file in queryset:

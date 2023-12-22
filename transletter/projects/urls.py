@@ -61,6 +61,11 @@ urlpatterns = [
         name="project_files_upload",
     ),
     path(
+        "<slug:slug>/files/<int:file_id>/update",
+        projects.views.UpdateTranslationFileView.as_view(),
+        name="update_translation_file",
+    ),
+    path(
         "<slug:slug>/files/<int:pk>/",
         projects.views.ProjectFileRowsView.as_view(),
         name="project_files_translate",
