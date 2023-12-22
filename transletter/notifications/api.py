@@ -21,7 +21,10 @@ def read_notifications(request):
                 id__in=notification_ids,
             ).update(read=True)
 
-            return JsonResponse({"status": "success"})
+            return JsonResponse(
+                {"status": "success"},
+                status=HTTPStatus.OK,
+            )
         except Exception:
             return JsonResponse(
                 {"status": "error", "message": "Invalid request"},
@@ -30,5 +33,5 @@ def read_notifications(request):
 
     return JsonResponse(
         {"status": "error", "message": "Invalid request method"},
-        status=HTTPStatus.BAD_REQUEST,
+        status=HTTPStatus.METHOD_NOT_ALLOWED,
     )
