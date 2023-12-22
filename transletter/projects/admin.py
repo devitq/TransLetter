@@ -40,14 +40,14 @@ class TranslationFileAdmin(admin.ModelAdmin):
                 )
                 self.message_user(
                     request,
-                    f"{_('success in admin', 'TranslationRows created for')} "
+                    f"{_("success in admin", "TranslationRows created for")} "
                     f"{language_file.file}",
                     level="SUCCESS",
                 )
             except ValidationError as e:
                 self.message_user(
                     request,
-                    f"{_('error in admin', 'Error:')} {str(e)}",
+                    f"{_("error in admin", "Error:")} {str(e)}",
                     level="ERROR",
                 )
 
