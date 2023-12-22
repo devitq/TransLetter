@@ -33,11 +33,17 @@ class AddProjectMemberForm(forms.Form, BaseFormMixin):
     )
     email_header = forms.CharField(
         label=pgettext_lazy("add member form", "Email header"),
-        help_text=pgettext_lazy("add member form", "Enter the title of the email"),
+        help_text=pgettext_lazy(
+            "add member form",
+            "Enter the title of the email",
+        ),
         max_length=50,
     )
     email_text = forms.CharField(
-        help_text=pgettext_lazy("add member form", "Enter the text of the email"),
+        help_text=pgettext_lazy(
+            "add member form",
+            "Enter the text of the email",
+        ),
         widget=forms.Textarea(),
     )
 

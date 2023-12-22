@@ -1,5 +1,4 @@
 import shutil
-from typing import Any
 
 from django.conf import settings
 from django.contrib import messages
@@ -518,7 +517,9 @@ class UpdateTranslationFileView(LoginRequiredMixin, View):
         )
 
         form = self.form_class(
-            request.POST, request.FILES, instance=file_object,
+            request.POST,
+            request.FILES,
+            instance=file_object,
         )
         if form.is_valid():
             form.save()
@@ -536,7 +537,9 @@ class UpdateTranslationFileView(LoginRequiredMixin, View):
                     ),
                 )
                 return redirect(
-                    "projects:update_translation_file", slug, file_id,
+                    "projects:update_translation_file",
+                    slug,
+                    file_id,
                 )
 
             messages.success(
