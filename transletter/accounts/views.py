@@ -73,45 +73,44 @@ class UserSignupView(CreateView):
         return super().get(request, *args, **kwargs)
 
     def form_valid(self, form):
-        if self.request.user.is_authenticated:
-            return super().form_invalid(form)
-
-        user = form.save(commit=False)
-        user.is_active = settings.DEFAULT_USER_IS_ACTIVE
-        user.save()
-        self.object = user
-        signer = TimestampSigner()
-        token = signer.sign(user.username)
-        link = self.request.build_absolute_uri(
-            reverse(
-                "accounts:activate_account",
-                kwargs={"token": token},
-            ),
-        )
-        email_body = render_to_string(
-            "accounts/email/activate_account.html",
-            {"username": user.username, "link": link},
-        )
-        email = EmailMultiAlternatives(
-            subject="Account activation - TransLetter",
-            body=email_body,
-            from_email=settings.EMAIL,
-            to=[user.email],
-        )
-        email.attach_alternative(email_body, "text/html")
-        EmailThread(email).start()
-
-        messages.success(
-            self.request,
-            pgettext_lazy(
-                "success message in views",
-                (
-                    "You have successfully registered! Check your "
-                    "email for further instructions."
+        if not self.request.user.is_authenticated:
+            user = form.save(commit=False)
+            user.is_active = settings.DEFAULT_USER_IS_ACTIVE
+            user.save()
+            self.object = user
+            signer = TimestampSigner()
+            token = signer.sign(user.username)
+            link = self.request.build_absolute_uri(
+                reverse(
+                    "accounts:activate_account",
+                    kwargs={"token": token},
                 ),
-            ),
-        )
+            )
+            email_body = render_to_string(
+                "accounts/email/activate_account.html",
+                {"username": user.username, "link": link},
+            )
+            email = EmailMultiAlternatives(
+                subject="Account activation - TransLetter",
+                body=email_body,
+                from_email=settings.EMAIL,
+                to=[user.email],
+            )
+            email.attach_alternative(email_body, "text/html")
+            EmailThread(email).start()
 
+            messages.success(
+                self.request,
+                pgettext_lazy(
+                    "success message in views",
+                    (
+                        "You have successfully registered! Check your "
+                        "email for further instructions."
+                    ),
+                ),
+            )
+
+            return super().form_valid(form)
         return super().form_invalid(form)
 
 

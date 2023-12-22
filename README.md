@@ -1,7 +1,5 @@
 # Transletter
 
-TransLetter is the place where you can translate your projects. Also proffecional translators can earn money from translation.
-
 [![Pipeline Status](https://gitlab.crja72.ru/django_2023/projects/team16/badges/main/pipeline.svg)](https://gitlab.crja72.ru/django_2023/projects/team16/-/pipelines)
 
 ## Cloning project
@@ -77,14 +75,12 @@ And change .env for your needs
 ### Creating .po file for language
 
 ```cmd
-> cd transletter
 > django-admin makemessages -l <lang_code>
 ```
 
 ### Compiling translations
 
 ```cmd
-> cd transletter
 > django-admin compilemessages
 ```
 
@@ -93,14 +89,12 @@ And change .env for your needs
 ### Applying migrations
 
 ```cmd
-> cd transletter
 > python manage.py migrate
 ```
 
 ### Loading fixtures
 
 ```cmd
-> cd transletter
 > python manage.py loaddata fixtures/data.json
 ```
 
@@ -128,7 +122,6 @@ password: jVm07WVMuAWZ0LEy8zDQtV^0WZnX&^
 ### Using bult-in command
 
 ```cmd
-> cd transletter
 > python manage.py initdata
 ```
 
@@ -144,20 +137,17 @@ password: jVm07WVMuAWZ0LEy8zDQtV^0WZnX&^
 ## Collecting static
 
 ```cmd
-> cd transletter
 > python manage.py collectstatic
 ```
 
 ## Dev run
 
 ```cmd
-> cd transletter
 > python manage.py runserver
 ```
 
 ## Prod run
 
 ```cmd
-> cd transletter
 > gunicorn transletter.wsgi
 ```
