@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-07 22:38+0300\n"
+"POT-Creation-Date: 2023-12-23 13:03+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,79 +17,124 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\accounts\admin.py:11 .\accounts\admin.py:12 .\accounts\admin.py:13
+msgid "TransLetter Admin"
+msgstr ""
+
 #: .\accounts\apps.py:10
 msgctxt "app name"
 msgid "Accounts"
 msgstr ""
 
-#: .\accounts\forms.py:79 .\accounts\forms.py:100
+#: .\accounts\forms.py:35 .\accounts\forms.py:142 .\accounts\forms.py:163
 msgctxt "error message in forms"
 msgid "A user with this email address already exists"
 msgstr ""
 
-#: .\accounts\models.py:51 .\projects\models.py:20
+#: .\accounts\forms.py:174
+msgctxt "login field in form"
+msgid "Login"
+msgstr ""
+
+#: .\accounts\forms.py:178
+msgctxt "help text for login field in form"
+msgid "Your email or username"
+msgstr ""
+
+#: .\accounts\models.py:105 .\projects\models.py:21
 msgctxt "avatar field name"
 msgid "avatar"
 msgstr ""
 
-#: .\accounts\models.py:57
+#: .\accounts\models.py:111
 msgctxt "attemps count field name"
 msgid "attemps count"
 msgstr ""
 
-#: .\accounts\models.py:63
+#: .\accounts\models.py:117
 msgctxt "is translator count field name"
 msgid "is translator"
 msgstr ""
 
-#: .\accounts\models.py:67
-msgctxt "native lang field name"
-msgid "native lang"
+#: .\accounts\models.py:121
+msgctxt "blocked field name"
+msgid "blocked"
 msgstr ""
 
-#: .\accounts\models.py:74
+#: .\accounts\models.py:127
+msgctxt "blocked reason field name"
+msgid "blocked reason"
+msgstr ""
+
+#: .\accounts\models.py:133
+msgctxt "native lang field name"
+msgid "native language"
+msgstr ""
+
+#: .\accounts\models.py:140 .\translation_request\models.py:93
 msgctxt "languages field name"
 msgid "languages"
 msgstr ""
 
-#: .\accounts\models.py:79
+#: .\accounts\models.py:145
 msgctxt "balance field name"
 msgid "balance"
 msgstr ""
 
-#: .\accounts\models.py:86
+#: .\accounts\models.py:153
 msgctxt "website count field name"
 msgid "website"
 msgstr ""
 
-#: .\accounts\models.py:91
+#: .\accounts\models.py:158
 msgctxt "github count field name"
 msgid "github"
 msgstr ""
 
-#: .\accounts\models.py:97
+#: .\accounts\models.py:163 .\resume\models.py:39
+msgctxt "about field name"
+msgid "about"
+msgstr ""
+
+#: .\accounts\models.py:172
 msgctxt "verbose name for accounts"
 msgid "account"
 msgstr ""
 
-#: .\accounts\models.py:100
+#: .\accounts\models.py:175
 msgctxt "verbose name plural for accounts"
 msgid "accounts"
 msgstr ""
 
-#: .\accounts\views.py:35 .\accounts\views.py:70
+#: .\accounts\views.py:45
 msgctxt "error message in views"
 msgid "Account successfully activated"
 msgstr ""
 
-#: .\accounts\views.py:43 .\accounts\views.py:78
+#: .\accounts\views.py:53
 msgctxt "error message in views"
 msgid "The link has expired"
 msgstr ""
 
-#: .\accounts\views.py:49 .\accounts\views.py:84
+#: .\accounts\views.py:59 .\projects\views.py:369
 msgctxt "error message in views"
-msgid "Broken link!"
+msgid "Invalid link!"
+msgstr ""
+
+#: .\accounts\views.py:178
+msgctxt "warning message in views"
+msgid "Your account is already active. Please proceed to login."
+msgstr ""
+
+#: .\accounts\views.py:240
+msgctxt "success message in views"
+msgid "Account updated successfully!"
+msgstr ""
+
+#: .\burse\apps.py:10
+msgctxt "app name"
+msgid "Burse"
 msgstr ""
 
 #: .\dashboard\apps.py:10
@@ -145,74 +190,290 @@ msgstr ""
 msgid "feature_6_content"
 msgstr ""
 
+#: .\notifications\apps.py:10
+msgctxt "app name"
+msgid "Notifications"
+msgstr ""
+
+#: .\notifications\models.py:22 .\translator_request\models.py:49
+#: .\translator_request\models.py:79
+msgctxt "user field name"
+msgid "user"
+msgstr ""
+
+#: .\notifications\models.py:26
+msgctxt "title field name"
+msgid "title"
+msgstr ""
+
+#: .\notifications\models.py:30
+msgctxt "content field name"
+msgid "content"
+msgstr ""
+
+#: .\notifications\models.py:34
+msgctxt "is notification read field name"
+msgid "read"
+msgstr ""
+
+#: .\notifications\models.py:39 .\rating\models.py:61
+msgctxt "created_at field name"
+msgid "created at"
+msgstr ""
+
+#: .\notifications\models.py:45
+msgctxt "verbose name for notification"
+msgid "notification"
+msgstr ""
+
+#: .\notifications\models.py:49
+msgctxt "verbose name plural for notification"
+msgid "notifications"
+msgstr ""
+
+#: .\projects\admin.py:57
+msgid "short description in admin"
+msgstr ""
+
 #: .\projects\apps.py:10
 msgctxt "app name"
 msgid "Projects"
 msgstr ""
 
-#: .\projects\models.py:26
+#: .\projects\forms.py:28
+msgctxt "add member form"
+msgid "Email"
+msgstr ""
+
+#: .\projects\forms.py:31
+msgctxt "add member form"
+msgid "Enter the user's email address"
+msgstr ""
+
+#: .\projects\forms.py:35
+msgctxt "add member form"
+msgid "Email header"
+msgstr ""
+
+#: .\projects\forms.py:38
+msgctxt "add member form"
+msgid "Enter the title of the email"
+msgstr ""
+
+#: .\projects\forms.py:45
+msgctxt "add member form"
+msgid "Enter the text of the email"
+msgstr ""
+
+#: .\projects\forms.py:68
+msgctxt "add member form"
+msgid "--- Choose role ---"
+msgstr ""
+
+#: .\projects\forms.py:140
+msgctxt "translation edit label"
+msgid "Translation"
+msgstr ""
+
+#: .\projects\models.py:27
 msgctxt "name field name"
 msgid "name"
 msgstr ""
 
-#: .\projects\models.py:30
+#: .\projects\models.py:31
 msgctxt "description field name"
 msgid "description"
 msgstr ""
 
-#: .\projects\models.py:35
+#: .\projects\models.py:36
 msgctxt "slug field name"
 msgid "slug"
 msgstr ""
 
-#: .\projects\models.py:41
+#: .\projects\models.py:42
 msgctxt "created at field name"
 msgid "created at"
 msgstr ""
 
-#: .\projects\models.py:46
+#: .\projects\models.py:47
 msgctxt "last activity field name"
 msgid "last activity"
 msgstr ""
 
-#: .\projects\models.py:51
+#: .\projects\models.py:52
 msgctxt "public field name"
 msgid "public"
 msgstr ""
 
-#: .\projects\models.py:64
+#: .\projects\models.py:56
+msgctxt "source language field name"
+msgid "source language"
+msgstr ""
+
+#: .\projects\models.py:70
 msgctxt "verbose name for project"
 msgid "project"
 msgstr ""
 
-#: .\projects\models.py:67
+#: .\projects\models.py:73
 msgctxt "verbose name plural for projects"
 msgid "projects"
 msgstr ""
 
-#: .\projects\models.py:73
+#: .\projects\models.py:79
 msgctxt "role name"
 msgid "Owner"
 msgstr ""
 
-#: .\projects\models.py:74
+#: .\projects\models.py:80
 msgctxt "role name"
 msgid "Administrator"
 msgstr ""
 
-#: .\projects\models.py:75
+#: .\projects\models.py:81
 msgctxt "role name"
 msgid "Static translator"
 msgstr ""
 
-#: .\projects\models.py:76
+#: .\projects\models.py:82
 msgctxt "role name"
 msgid "Hired translator"
 msgstr ""
 
-#: .\projects\models.py:139
+#: .\projects\models.py:102
+msgctxt "project languge lang code field name"
+msgid "language"
+msgstr ""
+
+#: .\projects\models.py:184 .\translator_request\models.py:93
 msgctxt "comment field name"
 msgid "comment"
+msgstr ""
+
+#: .\projects\views.py:156
+msgctxt "success message in views"
+msgid "Project updated successfully!"
+msgstr ""
+
+#: .\projects\views.py:190
+msgctxt "error message in views"
+msgid "There is no user with this email address"
+msgstr ""
+
+#: .\projects\views.py:221
+msgctxt "success message in views"
+msgid "The invitation has been sent"
+msgstr ""
+
+#: .\projects\views.py:262
+msgctxt "error message in views"
+msgid "You don't have permission to delete other admins"
+msgstr ""
+
+#: .\projects\views.py:270
+msgctxt "error message in views"
+msgid "Deleting hired translator only via TranslationRequest"
+msgstr ""
+
+#: .\projects\views.py:278
+msgctxt "error message in views"
+msgid "It is forbidden to delete the owner"
+msgstr ""
+
+#: .\projects\views.py:285
+msgctxt "success message in views"
+msgid "User successfully deleted from project"
+msgstr ""
+
+#: .\projects\views.py:355
+msgctxt "success message in views"
+msgid "User successfully added to project"
+msgstr ""
+
+#: .\projects\views.py:363
+msgctxt "error message in views"
+msgid "Existing member."
+msgstr ""
+
+#: .\projects\views.py:443
+msgctxt "error message in views"
+msgid "This language is already exist!"
+msgstr ""
+
+#: .\projects\views.py:520
+msgctxt "error message in views"
+msgid "Failed to parse file!"
+msgstr ""
+
+#: .\projects\views.py:598
+#, python-brace-format
+msgctxt "error message in views"
+msgid "Failed to parse file! {e}"
+msgstr ""
+
+#: .\rating\admin.py:30 .\translator_request\admin.py:44
+#: .\translator_request\admin.py:64
+msgid "Title"
+msgstr ""
+
+#: .\rating\apps.py:10
+msgctxt "app name"
+msgid "Rating"
+msgstr ""
+
+#: .\rating\models.py:13
+msgctxt "rating rank"
+msgid "Very poor"
+msgstr ""
+
+#: .\rating\models.py:14
+msgctxt "rating rank"
+msgid "Poor"
+msgstr ""
+
+#: .\rating\models.py:15
+msgctxt "rating rank"
+msgid "Normal"
+msgstr ""
+
+#: .\rating\models.py:16
+msgctxt "rating rank"
+msgid "Good"
+msgstr ""
+
+#: .\rating\models.py:17
+msgctxt "rating rank"
+msgid "Very good"
+msgstr ""
+
+#: .\rating\models.py:51
+msgctxt "text field name"
+msgid "text"
+msgstr ""
+
+#: .\rating\models.py:56
+msgctxt "rating field name"
+msgid "rating"
+msgstr ""
+
+#: .\rating\models.py:80
+msgctxt "verbose name for rating"
+msgid "rating"
+msgstr ""
+
+#: .\rating\models.py:84
+msgctxt "verbose name plural for rating"
+msgid "ratings"
+msgstr ""
+
+#: .\rating\views.py:50
+msgctxt "error message rating is created"
+msgid "Rating already exists"
+msgstr ""
+
+#: .\rating\views.py:64
+msgctxt "success message in rating create view"
+msgid "Rating successfully created"
 msgstr ""
 
 #: .\resume\apps.py:10
@@ -220,12 +481,83 @@ msgctxt "app name"
 msgid "Resume"
 msgstr ""
 
-#: .\templates\accounts\login.html:6 .\templates\accounts\signup.html:13
-#: .\templates\includes\header.html:18
+#: .\resume\forms.py:34
+msgctxt "files form file label"
+msgid "Files"
+msgstr ""
+
+#: .\resume\forms.py:38
+msgctxt "files form file help_text"
+msgid "Add resume files"
+msgstr ""
+
+#: .\resume\models.py:51
+msgctxt "verbose name for resume"
+msgid "resume"
+msgstr ""
+
+#: .\resume\models.py:54
+msgctxt "verbose name plural for resume"
+msgid "resumes"
+msgstr ""
+
+#: .\resume\models.py:67
+msgctxt "resume field name"
+msgid "resume"
+msgstr ""
+
+#: .\resume\models.py:70
+msgctxt "file field name"
+msgid "file"
+msgstr ""
+
+#: .\resume\models.py:91
+msgctxt "verbose name for resume file"
+msgid "resume file"
+msgstr ""
+
+#: .\resume\models.py:95
+msgctxt "verbose name plural for resume file"
+msgid "resume files"
+msgstr ""
+
+#: .\resume\views.py:98
+msgctxt "success message in views"
+msgid "Your resume file was successfully deleted"
+msgstr ""
+
+#: .\templates\accounts\edit_account.html:34
+#: .\templates\accounts\edit_account.html:36
+#: .\templates\burse\includes\translator_card.html:16
+#: .\templates\burse\translator.html:17 .\templates\burse\translator.html:19
+#: .\templates\includes\header-dashboard.html:22
+#: .\templates\projects\edit_project.html:35
+#: .\templates\projects\edit_project.html:37
+#: .\templates\projects\includes\member_card.html:15
+#: .\templates\projects\includes\project_card.html:16
+#: .\templates\projects\project_page.html:18
+#: .\templates\projects\project_page.html:20
+#: .\templates\translation_request\includes\translation_request_card.html:23
+#: .\templates\translation_request\translation_request.html:152
+msgid "No image"
+msgstr ""
+
+#: .\templates\accounts\edit_account.html:118
+#: .\templates\projects\edit_project.html:62
+#: .\templates\projects\project_row_translate.html:23
+msgid "Save"
+msgstr ""
+
+#: .\templates\accounts\login.html:5 .\templates\accounts\signup.html:13
+#: .\templates\includes\header.html:34
 msgid "Login"
 msgstr ""
 
-#: .\templates\accounts\login.html:10 .\templates\accounts\signup.html:10
+#: .\templates\accounts\login.html:9
+#: .\templates\accounts\request_activation.html:9
+#: .\templates\accounts\signup.html:9
+#: .\templates\projects\project_files_upload.html:9
+#: .\templates\translator_request\request_translator.html:84
 msgid "Send"
 msgstr ""
 
@@ -233,55 +565,63 @@ msgstr ""
 msgid "Don't have an account yet?"
 msgstr ""
 
-#: .\templates\accounts\login.html:13 .\templates\includes\header.html:19
-#: .\templates\landing\index.html:30
+#: .\templates\accounts\login.html:13 .\templates\includes\header.html:38
+#: .\templates\landing\index.html:32
 msgid "Signup"
 msgstr ""
 
-#: .\templates\accounts\login.html:14
+#: .\templates\accounts\login.html:16
+msgid "Request account activation"
+msgstr ""
+
+#: .\templates\accounts\login.html:19
 msgid "Forgot password?"
 msgstr ""
 
-#: .\templates\accounts\logout.html:6
+#: .\templates\accounts\logout.html:5
 msgid "Successful logout"
 msgstr ""
 
-#: .\templates\accounts\logout.html:7
+#: .\templates\accounts\logout.html:6
 msgid "You have successfully logged out of your account"
 msgstr ""
 
-#: .\templates\accounts\password_change.html:10
-#: .\templates\includes\header-dashboard.html:53
+#: .\templates\accounts\password_change.html:5
+msgid "Password Change"
+msgstr ""
+
+#: .\templates\accounts\password_change.html:11
+#: .\templates\includes\header-dashboard.html:84
 msgid "Change password"
 msgstr ""
 
-#: .\templates\accounts\password_change_done.html:6
+#: .\templates\accounts\password_change_done.html:5
 msgid "Password successfully changed"
 msgstr ""
 
-#: .\templates\accounts\password_change_done.html:7
+#: .\templates\accounts\password_change_done.html:6
 msgid "Your password has been successfully changed"
 msgstr ""
 
-#: .\templates\accounts\password_reset.html:6
-#: .\templates\accounts\password_reset.html:10
+#: .\templates\accounts\password_reset.html:5
+#: .\templates\accounts\password_reset.html:11
 msgid "Reset password"
 msgstr ""
 
-#: .\templates\accounts\password_reset_complete.html:6
+#: .\templates\accounts\password_reset_complete.html:5
 msgid "Password successfully reset"
 msgstr ""
 
-#: .\templates\accounts\password_reset_complete.html:7
+#: .\templates\accounts\password_reset_complete.html:6
 msgid "Your password has been successfully reset"
 msgstr ""
 
-#: .\templates\accounts\password_reset_confirm.html:6
-#: .\templates\accounts\password_reset_confirm.html:10
+#: .\templates\accounts\password_reset_confirm.html:5
+#: .\templates\accounts\password_reset_confirm.html:11
 msgid "Confirm password reset"
 msgstr ""
 
-#: .\templates\accounts\password_reset_done.html:6
+#: .\templates\accounts\password_reset_done.html:5
 msgid "Password reset email has been sent"
 msgstr ""
 
@@ -291,7 +631,11 @@ msgid ""
 "email address you specified"
 msgstr ""
 
-#: .\templates\accounts\signup.html:6
+#: .\templates\accounts\request_activation.html:5
+msgid "Request activation email"
+msgstr ""
+
+#: .\templates\accounts\signup.html:5
 msgid "Registration"
 msgstr ""
 
@@ -299,17 +643,60 @@ msgstr ""
 msgid "Already have an account?"
 msgstr ""
 
-#: .\templates\dashboard\account-edit.html:35
-#: .\templates\includes\header-dashboard.html:12
-msgid "No image"
-msgstr ""
-
-#: .\templates\dashboard\account-edit.html:58
+#: .\templates\burse\translator.html:31
 msgid "Hire"
 msgstr ""
 
-#: .\templates\dashboard\account-edit.html:91
-msgid "Save"
+#: .\templates\burse\translator.html:133 .\templates\includes\header.html:29
+#: .\templates\landing\about.html:5 .\templates\landing\index.html:33
+#: .\templates\translator_request\translator_request.html:32
+msgid "About"
+msgstr ""
+
+#: .\templates\burse\translator.html:143
+#: .\templates\projects\includes\projects_nav.html:19
+#: .\templates\projects\project_languages.html:9
+#: .\templates\projects\project_page.html:57
+#: .\templates\projects\project_page.html:87
+#: .\templates\translator_request\translator_request.html:21
+msgid "Languages"
+msgstr ""
+
+#: .\templates\burse\translator.html:165
+#: .\templates\projects\includes\projects_nav.html:15
+#: .\templates\projects\project_files.html:9
+#: .\templates\translator_request\request_translator.html:42
+#: .\templates\translator_request\translator_request.html:42
+msgid "Files"
+msgstr ""
+
+#: .\templates\burse\translator.html:183
+#: .\templates\translator_request\request_translator.html:65
+#: .\templates\translator_request\translator_request.html:60
+msgid "File thumbnail"
+msgstr ""
+
+#: .\templates\burse\translator.html:199
+#: .\templates\projects\project_files.html:27
+#: .\templates\translator_request\request_translator.html:81
+#: .\templates\translator_request\translator_request.html:76
+msgid "No files"
+msgstr ""
+
+#: .\templates\burse\translator.html:206
+msgid "Ratings"
+msgstr ""
+
+#: .\templates\burse\translator.html:211
+msgid "No ratings"
+msgstr ""
+
+#: .\templates\burse\translators.html:5
+msgid "Translators"
+msgstr ""
+
+#: .\templates\burse\translators.html:11
+msgid "No translators"
 msgstr ""
 
 #: .\templates\dashboard\index.html:6
@@ -320,158 +707,620 @@ msgid ""
 "        "
 msgstr ""
 
-#: .\templates\dashboard\projects.html:9
-#: .\templates\includes\header-dashboard.html:34
-msgid "Projects"
+#: .\templates\errors\403.html:6
+msgid "403 Forbidden"
 msgstr ""
 
-#: .\templates\dashboard\projects.html:14
-msgid "No projects"
+#: .\templates\errors\403.html:145
+msgid "Forbidden!"
 msgstr ""
 
-#: .\templates\errors\404.html:8
+#: .\templates\errors\403.html:148
+msgid ""
+"You have been blocked from our site! You think that it is a mistake? Contact "
+"support."
+msgstr ""
+
+#: .\templates\errors\403.html:150
+msgid ""
+"You don't have an access to this page! You think that it is a mistake? "
+"Contact support."
+msgstr ""
+
+#: .\templates\errors\403.html:155
+msgid "Comment from administraion:"
+msgstr ""
+
+#: .\templates\errors\403.html:160 .\templates\errors\404.html:150
+#: .\templates\errors\500.html:150
+msgid "HOME"
+msgstr ""
+
+#: .\templates\errors\404.html:6
 msgid "404 Not found"
 msgstr ""
 
-#: .\templates\errors\404.html:276
+#: .\templates\errors\404.html:145
 msgid "Page not found!"
 msgstr ""
 
-#: .\templates\errors\404.html:277
+#: .\templates\errors\404.html:147
 msgid ""
 "The page with this url does not exist or it has been moved to a new address. "
 "Do you think this is a mistake? Contact us via the chat in the lower right "
 "corner."
 msgstr ""
 
-#: .\templates\errors\404.html:280
-msgid "HOME"
+#: .\templates\errors\500.html:6
+msgid "500 Internal Server Error"
 msgstr ""
 
-#: .\templates\includes\footer.html:18
+#: .\templates\errors\500.html:145
+msgid "Internal Server Error!"
+msgstr ""
+
+#: .\templates\errors\500.html:147
+msgid ""
+"Something went wrong but we are aware of the problem and are working on a "
+"solution, check back later."
+msgstr ""
+
+#: .\templates\includes\footer.html:22
 msgid "all rights reserved"
 msgstr ""
 
-#: .\templates\includes\header-dashboard.html:30
+#: .\templates\includes\header-dashboard.html:44
 msgid "Home"
 msgstr ""
 
-#: .\templates\includes\header-dashboard.html:38
+#: .\templates\includes\header-dashboard.html:49
+#: .\templates\projects\projects_list.html:11
+msgid "Projects"
+msgstr ""
+
+#: .\templates\includes\header-dashboard.html:54
 msgid "Translation requests"
 msgstr ""
 
-#: .\templates\includes\header-dashboard.html:42
+#: .\templates\includes\header-dashboard.html:59
+msgid "Burse"
+msgstr ""
+
+#: .\templates\includes\header-dashboard.html:65
+msgid "Translator requests"
+msgstr ""
+
+#: .\templates\includes\header-dashboard.html:71
 msgid "Request translator"
 msgstr ""
 
-#: .\templates\includes\header-dashboard.html:49
+#: .\templates\includes\header-dashboard.html:79
 msgid "Account"
 msgstr ""
 
-#: .\templates\includes\header-dashboard.html:57
+#: .\templates\includes\header-dashboard.html:88
 msgid "Signout"
 msgstr ""
 
-#: .\templates\includes\header.html:16 .\templates\landing\about.html:6
-#: .\templates\landing\index.html:31
-msgid "About"
-msgstr ""
-
-#: .\templates\includes\header.html:21
+#: .\templates\includes\header.html:43
 msgid "Dashboard"
 msgstr ""
 
-#: .\templates\includes\header.html:22
+#: .\templates\includes\header.html:47
 msgid "Logout"
 msgstr ""
 
-#: .\templates\includes\header.html:25
+#: .\templates\includes\header.html:52
 msgid "Admin"
 msgstr ""
 
-#: .\templates\includes\project_card.html:9
-msgid "no_image"
-msgstr ""
-
-#: .\templates\includes\project_card.html:18
-msgid "category"
-msgstr ""
-
-#: .\templates\includes\project_card.html:23
-msgid "tags"
-msgstr ""
-
-#: .\templates\includes\project_card.html:28
-msgid "empty_plural"
-msgstr ""
-
-#: .\templates\includes\project_card.html:34
-msgid "Edit"
-msgstr ""
-
-#: .\templates\landing\about.html:7
+#: .\templates\landing\about.html:6
 msgid ""
 "\n"
 "        <p>About text that will be added soon</p>\n"
 "    "
 msgstr ""
 
-#: .\templates\landing\index.html:28
+#: .\templates\landing\index.html:30
 msgid "Best service to translate your services"
 msgstr ""
 
-#: .\templates\landing\index.html:78
+#: .\templates\landing\index.html:79
 msgid "Tiers"
 msgstr ""
 
-#: .\templates\landing\index.html:79
+#: .\templates\landing\index.html:81
 msgid ""
 "We have generous free tier, lets you to try our features, also if you want "
 "more, you can buy subscription."
 msgstr ""
 
-#: .\templates\landing\index.html:88 .\templates\landing\index.html:115
+#: .\templates\landing\index.html:93 .\templates\landing\index.html:122
 msgid "subscription_features_title"
 msgstr ""
 
-#: .\templates\landing\index.html:91 .\templates\landing\index.html:118
+#: .\templates\landing\index.html:96 .\templates\landing\index.html:125
 msgid "subscription_feature_1"
 msgstr ""
 
-#: .\templates\landing\index.html:94 .\templates\landing\index.html:121
+#: .\templates\landing\index.html:99 .\templates\landing\index.html:128
 msgid "subscription_feature_2"
 msgstr ""
 
-#: .\templates\landing\index.html:97 .\templates\landing\index.html:124
+#: .\templates\landing\index.html:102 .\templates\landing\index.html:131
 msgid "subscription_feature_3"
 msgstr ""
 
-#: .\templates\landing\index.html:100 .\templates\landing\index.html:127
+#: .\templates\landing\index.html:105 .\templates\landing\index.html:134
 msgid "subscription_feature_4"
 msgstr ""
 
-#: .\templates\landing\index.html:105 .\templates\landing\index.html:132
+#: .\templates\landing\index.html:110 .\templates\landing\index.html:139
 msgid "subscription_order_button_text"
 msgstr ""
 
-#: .\templates\landing\index.html:144
+#: .\templates\landing\index.html:150
 msgid "An entrepreneurial company?"
 msgstr ""
 
-#: .\templates\landing\index.html:146
+#: .\templates\landing\index.html:153
 msgid "Contact sales"
 msgstr ""
 
-#: .\translationrequest\apps.py:11
-msgctxt "app name"
-msgid "TranslationRequest"
+#: .\templates\notifications\includes\notification_card.html:14
+msgid "New!"
 msgstr ""
 
-#: .\transletter\settings.py:137
+#: .\templates\notifications\notifications.html:5
+msgid "Notifications"
+msgstr ""
+
+#: .\templates\notifications\notifications.html:12
+msgid "No notifications"
+msgstr ""
+
+#: .\templates\projects\add_project_language.html:6
+msgid "Add language"
+msgstr ""
+
+#: .\templates\projects\add_project_language.html:10
+#: .\templates\projects\project_languages.html:13
+msgid "Add"
+msgstr ""
+
+#: .\templates\projects\add_project_member.html:6
+msgid "Invite user"
+msgstr ""
+
+#: .\templates\projects\add_project_member.html:12
+#: .\templates\projects\project_members.html:14
+msgid "Invite"
+msgstr ""
+
+#: .\templates\projects\create_project.html:5
+msgid "Create project"
+msgstr ""
+
+#: .\templates\projects\create_project.html:11
+#: .\templates\projects\projects_list.html:14
+#: .\templates\rating\create_rating.html:11
+#: .\templates\translation_request\create_translation_request.html:11
+msgid "Create"
+msgstr ""
+
+#: .\templates\projects\includes\file_card.html:14
+msgid "Translate"
+msgstr ""
+
+#: .\templates\projects\includes\file_card.html:16
+msgid "Export"
+msgstr ""
+
+#: .\templates\projects\includes\language_card.html:8
+msgid "Source language"
+msgstr ""
+
+#: .\templates\projects\includes\language_card.html:11
+msgid "Files count"
+msgstr ""
+
+#: .\templates\projects\includes\member_card.html:26
+msgid "Role"
+msgstr ""
+
+#: .\templates\projects\includes\member_card.html:34
+msgid "Delete"
+msgstr ""
+
+#: .\templates\projects\includes\member_card.html:39
+msgid "Update role"
+msgstr ""
+
+#: .\templates\projects\includes\projects_nav.html:7
+msgid "Info"
+msgstr ""
+
+#: .\templates\projects\includes\projects_nav.html:11
+#: .\templates\projects\project_members.html:10
+#: .\templates\projects\project_page.html:64
+msgid "Members"
+msgstr ""
+
+#: .\templates\projects\includes\projects_nav.html:23
+msgid "Edit"
+msgstr ""
+
+#: .\templates\projects\includes\row_card.html:10
+msgid "Not translated yet"
+msgstr ""
+
+#: .\templates\projects\project_files.html:13
+msgid "Upload"
+msgstr ""
+
+#: .\templates\projects\project_languages.html:22
+msgid "No languages"
+msgstr ""
+
+#: .\templates\projects\project_members.html:23
+msgid "No users"
+msgstr ""
+
+#: .\templates\projects\project_row_translate.html:8
+msgid "Row id:"
+msgstr ""
+
+#: .\templates\projects\project_row_translate.html:10
+msgid "Source text:"
+msgstr ""
+
+#: .\templates\projects\project_row_translate.html:13
+msgid "Translation context:"
+msgstr ""
+
+#: .\templates\projects\project_row_translate.html:16
+msgid "Occurrences"
+msgstr ""
+
+#: .\templates\projects\project_rows.html:10
+msgid "No rows"
+msgstr ""
+
+#: .\templates\projects\projects_list.html:25
+msgid "Owned"
+msgstr ""
+
+#: .\templates\projects\projects_list.html:27
+msgid "Contributed"
+msgstr ""
+
+#: .\templates\projects\projects_list.html:34
+msgid "No projects"
+msgstr ""
+
+#: .\templates\projects\update_project_member.html:6
+msgid "Assign role"
+msgstr ""
+
+#: .\templates\projects\update_project_member.html:12
+msgid "Update"
+msgstr ""
+
+#: .\templates\rating\create_rating.html:5
+msgid "Create rating"
+msgstr ""
+
+#: .\templates\rating\includes\rating_card.html:17
+msgid "Rating"
+msgstr ""
+
+#: .\templates\translation_request\create_translation_request.html:5
+msgid "Create translation request"
+msgstr ""
+
+#: .\templates\translation_request\includes\translation_request_card.html:32
+msgid "Translation Request from"
+msgstr ""
+
+#: .\templates\translation_request\translation_request.html:58
+#: .\templates\translation_request\translation_request.html:94
+msgid "Languages to translate"
+msgstr ""
+
+#: .\templates\translation_request\translation_request.html:71
+#: .\templates\translation_request\translation_request.html:113
+msgid "Price"
+msgstr ""
+
+#: .\templates\translation_request\translation_request.html:175
+#: .\templates\translator_request\translator_request.html:81
+msgid "Accept"
+msgstr ""
+
+#: .\templates\translation_request\translation_request.html:177
+#: .\templates\translation_request\translation_request.html:222
+#: .\templates\translation_request\translation_request.html:230
+#: .\templates\translator_request\translator_request.html:84
+msgid "Reject"
+msgstr ""
+
+#: .\templates\translation_request\translation_request.html:181
+msgid "Wait for the translator to approve your request before writing messages"
+msgstr ""
+
+#: .\templates\translation_request\translation_request.html:186
+msgid "Request was rejected"
+msgstr ""
+
+#: .\templates\translation_request\translation_request.html:190
+msgid "Request closed, you can't write messages anymore"
+msgstr ""
+
+#: .\templates\translation_request\translation_request.html:193
+msgid "Rate translator"
+msgstr ""
+
+#: .\templates\translation_request\translation_request.html:220
+msgid "Start working"
+msgstr ""
+
+#: .\templates\translation_request\translation_request.html:225
+msgid "Mark it as finished"
+msgstr ""
+
+#: .\templates\translation_request\translation_request.html:233
+msgid "Send for revision"
+msgstr ""
+
+#: .\templates\translation_request\translation_request.html:235
+msgid "Close"
+msgstr ""
+
+#: .\templates\translation_request\translation_request_list.html:5
+msgid "Translation Requests"
+msgstr ""
+
+#: .\templates\translation_request\translation_request_list.html:11
+msgid "No translation requests"
+msgstr ""
+
+#: .\templates\translator_request\request_translator.html:7
+msgid ""
+" Your request has been sent to the reviewers, please if\n"
+"    you have made mistakes please correct them now. "
+msgstr ""
+
+#: .\templates\translator_request\request_translator.html:12
+msgid ""
+" Your request is under review, you cannot edit it until\n"
+"    our team has verified it, stay tuned! "
+msgstr ""
+
+#: .\templates\translator_request\request_translator.html:17
+msgid ""
+" Your request has been rejected, our team has deemed you\n"
+"    incompetent. Please try to update your bio or upgrade your "
+"qualification. "
+msgstr ""
+
+#: .\templates\translator_request\request_translator.html:22
+msgid ""
+" Your request has been successfully accepted! Now\n"
+"    companies can hire you for their projects! We advise you to update the\n"
+"    \"About\" section of your profile, you can also update your resume files "
+"via\n"
+"    the same form and your translator status will not be removed. "
+msgstr ""
+
+#: .\templates\translator_request\request_translator.html:28
+msgid "Request Translator"
+msgstr ""
+
+#: .\templates\translator_request\request_translator.html:30
+msgid ""
+" Proffecional translator? Here you can submit request to\n"
+"    get translator role, some of the fields are already filled for you from "
+"your\n"
+"    account. In the \"About\" field you can write your education, projects "
+"you\n"
+"    have worked on, etc., and you can also attach identity files and "
+"various\n"
+"    diplomas. Here the about field is visible only to you and us, the "
+"public\n"
+"    \"About\" field can be filled in the \"Account\" section. Please do not "
+"spam and\n"
+"    provide real information about yourself, if we think you are spamming "
+"your\n"
+"    account will be irrevocably blocked. "
+msgstr ""
+
+#: .\templates\translator_request\translator_request.html:7
+msgid "Translator Request from"
+msgstr ""
+
+#: .\templates\translator_request\translator_request.html:13
+msgid "Email"
+msgstr ""
+
+#: .\templates\translator_request\translator_request.html:17
+msgid "Native language"
+msgstr ""
+
+#: .\templates\translator_request\translator_request.html:36
+#: .\templates\translator_request\translator_requests.html:15
+msgid "Status"
+msgstr ""
+
+#: .\templates\translator_request\translator_request.html:87
+msgid "Reject & Block"
+msgstr ""
+
+#: .\templates\translator_request\translator_requests.html:5
+msgid "Translator Requests"
+msgstr ""
+
+#: .\templates\translator_request\translator_requests.html:13
+msgid "Author"
+msgstr ""
+
+#: .\templates\translator_request\translator_requests.html:14
+msgid "Language"
+msgstr ""
+
+#: .\templates\translator_request\translator_requests.html:16
+msgid "Profile"
+msgstr ""
+
+#: .\templates\translator_request\translator_requests.html:25
+msgid "No translator requests"
+msgstr ""
+
+#: .\translation_request\apps.py:11
+msgctxt "app name"
+msgid "Translation Request"
+msgstr ""
+
+#: .\translation_request\models.py:67
+msgctxt "translation request created at field name"
+msgid "created at"
+msgstr ""
+
+#: .\translation_request\models.py:73
+msgctxt "translation request closed at field name"
+msgid "closed at"
+msgstr ""
+
+#: .\translation_request\models.py:78
+msgctxt "translation request text field name"
+msgid "text"
+msgstr ""
+
+#: .\translation_request\models.py:81
+msgctxt "translation request status field name"
+msgid "status"
+msgstr ""
+
+#: .\translation_request\models.py:86
+msgctxt "translation request price field name"
+msgid "price"
+msgstr ""
+
+#: .\translation_request\models.py:100
+#, python-brace-format
+msgid "Translation Request from {self.author}, ID:{self.pk}"
+msgstr ""
+
+#: .\translation_request\models.py:107
+msgctxt "translation request verbose name"
+msgid "translation request"
+msgstr ""
+
+#: .\translation_request\models.py:111
+msgctxt "translation request verbose name plural"
+msgid "translation requests"
+msgstr ""
+
+#: .\translation_request\models.py:129
+msgctxt "message content field name"
+msgid "content"
+msgstr ""
+
+#: .\translation_request\models.py:132
+msgctxt "translation request timestamp field name"
+msgid "timestamp"
+msgstr ""
+
+#: .\translation_request\models.py:139
+#, python-brace-format
+msgid "Message №{self.pk}"
+msgstr ""
+
+#: .\translation_request\models.py:146
+msgctxt "translation request message verbose name"
+msgid "translation request message"
+msgstr ""
+
+#: .\translation_request\models.py:150
+msgctxt "translation request message verbose name plural"
+msgid "translation request messages"
+msgstr ""
+
+#: .\translation_request\views.py:115
+msgctxt "error message in views"
+msgid "You do not own the selected project."
+msgstr ""
+
+#: .\translation_request\views.py:183
+msgctxt "error message in views"
+msgid "Insufficient funds on the account."
+msgstr ""
+
+#: .\translator_request\apps.py:11
+msgctxt "app name"
+msgid "TranslatorRequest"
+msgstr ""
+
+#: .\translator_request\models.py:14
+msgid "Sent"
+msgstr ""
+
+#: .\translator_request\models.py:15
+msgid "Under review"
+msgstr ""
+
+#: .\translator_request\models.py:16
+msgid "Accepted"
+msgstr ""
+
+#: .\translator_request\models.py:17
+msgid "Rejected"
+msgstr ""
+
+#: .\translator_request\models.py:55
+msgctxt "status field name"
+msgid "status"
+msgstr ""
+
+#: .\translator_request\models.py:72
+msgctxt "translator_request field name"
+msgid "translator request"
+msgstr ""
+
+#: .\translator_request\models.py:85
+msgctxt "from field name"
+msgid "from status"
+msgstr ""
+
+#: .\translator_request\models.py:90
+msgctxt "to field name"
+msgid "to status"
+msgstr ""
+
+#: .\translator_request\models.py:100
+msgctxt "timestamp field name"
+msgid "timestamp"
+msgstr ""
+
+#: .\translator_request\views.py:135
+msgctxt "translator request update success"
+msgid "Your request to become a translator has been updated"
+msgstr ""
+
+#: .\translator_request\views.py:146
+msgctxt "translator request create success"
+msgid "Your request to become a translator has been sent"
+msgstr ""
+
+#: .\translator_request\views.py:162
+msgctxt "translator request on review error"
+msgid "Your request is currently under review."
+msgstr ""
+
+#: .\transletter\settings.py:142
 msgid "English"
 msgstr ""
 
-#: .\transletter\settings.py:138
+#: .\transletter\settings.py:143
 msgid "Russian"
 msgstr ""
 
