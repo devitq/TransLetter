@@ -4,8 +4,20 @@ from pathlib import Path
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from dotenv import load_dotenv
+import sentry_sdk
 
 load_dotenv(override=False)
+
+# Sentry setttings
+
+sentry_sdk.init(
+    dsn=(
+        "https://588265496ac767ea238c1ce9e447c766@o4506444514656256"
+        ".ingest.sentry.io/4506444521078784"
+    ),
+    traces_sample_rate=1.0,
+    profiles_sample_rate=1.0,
+)
 
 # Common settings
 
