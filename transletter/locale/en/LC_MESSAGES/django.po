@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-23 13:03+0300\n"
+"POT-Creation-Date: 2023-12-23 14:52+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -400,15 +400,9 @@ msgctxt "error message in views"
 msgid "This language is already exist!"
 msgstr ""
 
-#: .\projects\views.py:520
+#: .\projects\views.py:520 .\projects\views.py:598
 msgctxt "error message in views"
 msgid "Failed to parse file!"
-msgstr ""
-
-#: .\projects\views.py:598
-#, python-brace-format
-msgctxt "error message in views"
-msgid "Failed to parse file! {e}"
 msgstr ""
 
 #: .\rating\admin.py:30 .\translator_request\admin.py:44
@@ -649,7 +643,6 @@ msgstr ""
 
 #: .\templates\burse\translator.html:133 .\templates\includes\header.html:29
 #: .\templates\landing\about.html:5 .\templates\landing\index.html:33
-#: .\templates\translator_request\translator_request.html:32
 msgid "About"
 msgstr ""
 
@@ -1146,6 +1139,11 @@ msgstr ""
 msgid "Native language"
 msgstr ""
 
+#: .\templates\translator_request\translator_request.html:32
+msgctxt "translator request page"
+msgid "About"
+msgstr ""
+
 #: .\templates\translator_request\translator_request.html:36
 #: .\templates\translator_request\translator_requests.html:15
 msgid "Status"
@@ -1316,11 +1314,11 @@ msgctxt "translator request on review error"
 msgid "Your request is currently under review."
 msgstr ""
 
-#: .\transletter\settings.py:142
+#: .\transletter\settings.py:154
 msgid "English"
 msgstr ""
 
-#: .\transletter\settings.py:143
+#: .\transletter\settings.py:155
 msgid "Russian"
 msgstr ""
 

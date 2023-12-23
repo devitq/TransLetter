@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-23 13:02+0300\n"
+"POT-Creation-Date: 2023-12-23 14:52+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,133 +16,131 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
-"%100>=11 && n%100<=14)? 2 : 3);\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: .\accounts\admin.py:11 .\accounts\admin.py:12 .\accounts\admin.py:13
 msgid "TransLetter Admin"
-msgstr ""
+msgstr "TransLetter Admin"
 
 #: .\accounts\apps.py:10
 msgctxt "app name"
 msgid "Accounts"
-msgstr ""
+msgstr "Аккаунты"
 
 #: .\accounts\forms.py:35 .\accounts\forms.py:142 .\accounts\forms.py:163
 msgctxt "error message in forms"
 msgid "A user with this email address already exists"
-msgstr ""
+msgstr "Пользователь с таким адресом электронной почты уже существует"
 
 #: .\accounts\forms.py:174
 msgctxt "login field in form"
 msgid "Login"
-msgstr ""
+msgstr "Логин"
 
 #: .\accounts\forms.py:178
 msgctxt "help text for login field in form"
 msgid "Your email or username"
-msgstr ""
+msgstr "Ваш email или имя пользователя"
 
 #: .\accounts\models.py:105 .\projects\models.py:21
 msgctxt "avatar field name"
 msgid "avatar"
-msgstr ""
+msgstr "аватар"
 
 #: .\accounts\models.py:111
 msgctxt "attemps count field name"
 msgid "attemps count"
-msgstr ""
+msgstr "количество попыток"
 
 #: .\accounts\models.py:117
 msgctxt "is translator count field name"
 msgid "is translator"
-msgstr ""
+msgstr "переводчик"
 
 #: .\accounts\models.py:121
 msgctxt "blocked field name"
 msgid "blocked"
-msgstr ""
+msgstr "заблокирован"
 
 #: .\accounts\models.py:127
 msgctxt "blocked reason field name"
 msgid "blocked reason"
-msgstr ""
+msgstr "причина блокировки"
 
 #: .\accounts\models.py:133
 msgctxt "native lang field name"
 msgid "native language"
-msgstr ""
+msgstr "родной язык"
 
 #: .\accounts\models.py:140 .\translation_request\models.py:93
 msgctxt "languages field name"
 msgid "languages"
-msgstr ""
+msgstr "языки"
 
 #: .\accounts\models.py:145
 msgctxt "balance field name"
 msgid "balance"
-msgstr ""
+msgstr "баланс"
 
 #: .\accounts\models.py:153
 msgctxt "website count field name"
 msgid "website"
-msgstr ""
+msgstr "сайт"
 
 #: .\accounts\models.py:158
 msgctxt "github count field name"
 msgid "github"
-msgstr ""
+msgstr "github"
 
 #: .\accounts\models.py:163 .\resume\models.py:39
 msgctxt "about field name"
 msgid "about"
-msgstr ""
+msgstr "обо мне"
 
 #: .\accounts\models.py:172
 msgctxt "verbose name for accounts"
 msgid "account"
-msgstr ""
+msgstr "аккаунт"
 
 #: .\accounts\models.py:175
 msgctxt "verbose name plural for accounts"
 msgid "accounts"
-msgstr ""
+msgstr "аккаунты"
 
 #: .\accounts\views.py:45
 msgctxt "error message in views"
 msgid "Account successfully activated"
-msgstr ""
+msgstr "Аккаунт успешно активирован"
 
 #: .\accounts\views.py:53
 msgctxt "error message in views"
 msgid "The link has expired"
-msgstr ""
+msgstr "Срок действия ссылки истёк"
 
 #: .\accounts\views.py:59 .\projects\views.py:369
 msgctxt "error message in views"
 msgid "Invalid link!"
-msgstr ""
+msgstr "Неверная ссылка!"
 
 #: .\accounts\views.py:178
 msgctxt "warning message in views"
 msgid "Your account is already active. Please proceed to login."
-msgstr ""
+msgstr "Ваша учетная запись уже активна. Пожалуйста, войдите в систему."
 
 #: .\accounts\views.py:240
 msgctxt "success message in views"
 msgid "Account updated successfully!"
-msgstr ""
+msgstr "Аккаунт успешно обновлен!"
 
 #: .\burse\apps.py:10
 msgctxt "app name"
 msgid "Burse"
-msgstr ""
+msgstr "Биржа"
 
 #: .\dashboard\apps.py:10
 msgctxt "app name"
 msgid "Dashboard"
-msgstr ""
+msgstr "Панель управления"
 
 #: .\landing\views.py:16
 msgid "feature_1_title"
@@ -195,338 +193,332 @@ msgstr ""
 #: .\notifications\apps.py:10
 msgctxt "app name"
 msgid "Notifications"
-msgstr ""
+msgstr "Уведомления"
 
 #: .\notifications\models.py:22 .\translator_request\models.py:49
 #: .\translator_request\models.py:79
 msgctxt "user field name"
 msgid "user"
-msgstr ""
+msgstr "пользователь"
 
 #: .\notifications\models.py:26
 msgctxt "title field name"
 msgid "title"
-msgstr ""
+msgstr "заголовок"
 
 #: .\notifications\models.py:30
 msgctxt "content field name"
 msgid "content"
-msgstr ""
+msgstr "содержание"
 
 #: .\notifications\models.py:34
 msgctxt "is notification read field name"
 msgid "read"
-msgstr ""
+msgstr "прочитано"
 
 #: .\notifications\models.py:39 .\rating\models.py:61
 msgctxt "created_at field name"
 msgid "created at"
-msgstr ""
+msgstr "дата создания"
 
 #: .\notifications\models.py:45
 msgctxt "verbose name for notification"
 msgid "notification"
-msgstr ""
+msgstr "уведомление"
 
 #: .\notifications\models.py:49
 msgctxt "verbose name plural for notification"
 msgid "notifications"
-msgstr ""
+msgstr "уведомления"
 
 #: .\projects\admin.py:57
 msgid "short description in admin"
-msgstr ""
+msgstr "краткое описание в админке"
 
 #: .\projects\apps.py:10
 msgctxt "app name"
 msgid "Projects"
-msgstr ""
+msgstr "Проекты"
 
 #: .\projects\forms.py:28
 msgctxt "add member form"
 msgid "Email"
-msgstr ""
+msgstr "Почта"
 
 #: .\projects\forms.py:31
 msgctxt "add member form"
 msgid "Enter the user's email address"
-msgstr ""
+msgstr "Введите электронный адрес пользователя"
 
 #: .\projects\forms.py:35
 msgctxt "add member form"
 msgid "Email header"
-msgstr ""
+msgstr "Заголовок письма"
 
 #: .\projects\forms.py:38
 msgctxt "add member form"
 msgid "Enter the title of the email"
-msgstr ""
+msgstr "Введите заголовок письма"
 
 #: .\projects\forms.py:45
 msgctxt "add member form"
 msgid "Enter the text of the email"
-msgstr ""
+msgstr "Введите текст письма"
 
 #: .\projects\forms.py:68
 msgctxt "add member form"
 msgid "--- Choose role ---"
-msgstr ""
+msgstr "--- Выберите роль ---"
 
 #: .\projects\forms.py:140
 msgctxt "translation edit label"
 msgid "Translation"
-msgstr ""
+msgstr "Перевод"
 
 #: .\projects\models.py:27
 msgctxt "name field name"
 msgid "name"
-msgstr ""
+msgstr "название"
 
 #: .\projects\models.py:31
 msgctxt "description field name"
 msgid "description"
-msgstr ""
+msgstr "описание"
 
 #: .\projects\models.py:36
 msgctxt "slug field name"
 msgid "slug"
-msgstr ""
+msgstr "слаг"
 
 #: .\projects\models.py:42
 msgctxt "created at field name"
 msgid "created at"
-msgstr ""
+msgstr "дата создания"
 
 #: .\projects\models.py:47
 msgctxt "last activity field name"
 msgid "last activity"
-msgstr ""
+msgstr "последняя активность"
 
 #: .\projects\models.py:52
 msgctxt "public field name"
 msgid "public"
-msgstr ""
+msgstr "публичный"
 
 #: .\projects\models.py:56
 msgctxt "source language field name"
 msgid "source language"
-msgstr ""
+msgstr "исходный язык"
 
 #: .\projects\models.py:70
 msgctxt "verbose name for project"
 msgid "project"
-msgstr ""
+msgstr "проект"
 
 #: .\projects\models.py:73
 msgctxt "verbose name plural for projects"
 msgid "projects"
-msgstr ""
+msgstr "проекты"
 
 #: .\projects\models.py:79
 msgctxt "role name"
 msgid "Owner"
-msgstr ""
+msgstr "Владелец"
 
 #: .\projects\models.py:80
 msgctxt "role name"
 msgid "Administrator"
-msgstr ""
+msgstr "Администратор"
 
 #: .\projects\models.py:81
 msgctxt "role name"
 msgid "Static translator"
-msgstr ""
+msgstr "Постоянный переводчик"
 
 #: .\projects\models.py:82
 msgctxt "role name"
 msgid "Hired translator"
-msgstr ""
+msgstr "Нанятый переводчик"
 
 #: .\projects\models.py:102
 msgctxt "project languge lang code field name"
 msgid "language"
-msgstr ""
+msgstr "язык"
 
 #: .\projects\models.py:184 .\translator_request\models.py:93
 msgctxt "comment field name"
 msgid "comment"
-msgstr ""
+msgstr "комментарий"
 
 #: .\projects\views.py:156
 msgctxt "success message in views"
 msgid "Project updated successfully!"
-msgstr ""
+msgstr "Проект успешно обновлен!"
 
 #: .\projects\views.py:190
 msgctxt "error message in views"
 msgid "There is no user with this email address"
-msgstr ""
+msgstr "Пользователь с таким адресом электронной почты не найден"
 
 #: .\projects\views.py:221
 msgctxt "success message in views"
 msgid "The invitation has been sent"
-msgstr ""
+msgstr "Приглашение было отправлено"
 
 #: .\projects\views.py:262
 msgctxt "error message in views"
 msgid "You don't have permission to delete other admins"
-msgstr ""
+msgstr "У вас нет разрешения на удаление других администраторов"
 
 #: .\projects\views.py:270
 msgctxt "error message in views"
 msgid "Deleting hired translator only via TranslationRequest"
-msgstr ""
+msgstr "Удаление нанятого переводчика только через запрос на перевод"
 
 #: .\projects\views.py:278
 msgctxt "error message in views"
 msgid "It is forbidden to delete the owner"
-msgstr ""
+msgstr "Удалять владельца запрещено"
 
 #: .\projects\views.py:285
 msgctxt "success message in views"
 msgid "User successfully deleted from project"
-msgstr ""
+msgstr "Пользователь успешно удален из проекта"
 
 #: .\projects\views.py:355
 msgctxt "success message in views"
 msgid "User successfully added to project"
-msgstr ""
+msgstr "Пользователь успешно добавлен в проект"
 
 #: .\projects\views.py:363
 msgctxt "error message in views"
 msgid "Existing member."
-msgstr ""
+msgstr "Существующий пользователь."
 
 #: .\projects\views.py:443
 msgctxt "error message in views"
 msgid "This language is already exist!"
-msgstr ""
+msgstr "Этот язык уже существует"
 
-#: .\projects\views.py:520
+#: .\projects\views.py:520 .\projects\views.py:598
 msgctxt "error message in views"
 msgid "Failed to parse file!"
-msgstr ""
-
-#: .\projects\views.py:598
-#, python-brace-format
-msgctxt "error message in views"
-msgid "Failed to parse file! {e}"
-msgstr ""
+msgstr "Не удалось проанализировать файл!"
 
 #: .\rating\admin.py:30 .\translator_request\admin.py:44
 #: .\translator_request\admin.py:64
 msgid "Title"
-msgstr ""
+msgstr "Название"
 
 #: .\rating\apps.py:10
 msgctxt "app name"
 msgid "Rating"
-msgstr ""
+msgstr "Отзыв"
 
 #: .\rating\models.py:13
 msgctxt "rating rank"
 msgid "Very poor"
-msgstr ""
+msgstr "Ужасно"
 
 #: .\rating\models.py:14
 msgctxt "rating rank"
 msgid "Poor"
-msgstr ""
+msgstr "Плохо"
 
 #: .\rating\models.py:15
 msgctxt "rating rank"
 msgid "Normal"
-msgstr ""
+msgstr "Нормально"
 
 #: .\rating\models.py:16
 msgctxt "rating rank"
 msgid "Good"
-msgstr ""
+msgstr "Хорошо"
 
 #: .\rating\models.py:17
 msgctxt "rating rank"
 msgid "Very good"
-msgstr ""
+msgstr "Отлично"
 
 #: .\rating\models.py:51
 msgctxt "text field name"
 msgid "text"
-msgstr ""
+msgstr "текст"
 
 #: .\rating\models.py:56
 msgctxt "rating field name"
 msgid "rating"
-msgstr ""
+msgstr "отзыв"
 
 #: .\rating\models.py:80
 msgctxt "verbose name for rating"
 msgid "rating"
-msgstr ""
+msgstr "отзыв"
 
 #: .\rating\models.py:84
 msgctxt "verbose name plural for rating"
 msgid "ratings"
-msgstr ""
+msgstr "отзывы"
 
 #: .\rating\views.py:50
 msgctxt "error message rating is created"
 msgid "Rating already exists"
-msgstr ""
+msgstr "Отзыв уже существует"
 
 #: .\rating\views.py:64
 msgctxt "success message in rating create view"
 msgid "Rating successfully created"
-msgstr ""
+msgstr "Отзыв успешно создан"
 
 #: .\resume\apps.py:10
 msgctxt "app name"
 msgid "Resume"
-msgstr ""
+msgstr "Резюме"
 
 #: .\resume\forms.py:34
 msgctxt "files form file label"
 msgid "Files"
-msgstr ""
+msgstr "Файлы"
 
 #: .\resume\forms.py:38
 msgctxt "files form file help_text"
 msgid "Add resume files"
-msgstr ""
+msgstr "Добавить файлы резюме"
 
 #: .\resume\models.py:51
 msgctxt "verbose name for resume"
 msgid "resume"
-msgstr ""
+msgstr "резюме"
 
 #: .\resume\models.py:54
 msgctxt "verbose name plural for resume"
 msgid "resumes"
-msgstr ""
+msgstr "резюме"
 
 #: .\resume\models.py:67
 msgctxt "resume field name"
 msgid "resume"
-msgstr ""
+msgstr "резюме"
 
 #: .\resume\models.py:70
 msgctxt "file field name"
 msgid "file"
-msgstr ""
+msgstr "файл"
 
 #: .\resume\models.py:91
 msgctxt "verbose name for resume file"
 msgid "resume file"
-msgstr ""
+msgstr "файл резюме"
 
 #: .\resume\models.py:95
 msgctxt "verbose name plural for resume file"
 msgid "resume files"
-msgstr ""
+msgstr "файлы резюме"
 
 #: .\resume\views.py:98
 msgctxt "success message in views"
 msgid "Your resume file was successfully deleted"
-msgstr ""
+msgstr "Файл резюме успешно удалён"
 
 #: .\templates\accounts\edit_account.html:34
 #: .\templates\accounts\edit_account.html:36
@@ -542,18 +534,18 @@ msgstr ""
 #: .\templates\translation_request\includes\translation_request_card.html:23
 #: .\templates\translation_request\translation_request.html:152
 msgid "No image"
-msgstr ""
+msgstr "Изображение отсутствует"
 
 #: .\templates\accounts\edit_account.html:118
 #: .\templates\projects\edit_project.html:62
 #: .\templates\projects\project_row_translate.html:23
 msgid "Save"
-msgstr ""
+msgstr "Сохранить"
 
 #: .\templates\accounts\login.html:5 .\templates\accounts\signup.html:13
 #: .\templates\includes\header.html:34
 msgid "Login"
-msgstr ""
+msgstr "Войти"
 
 #: .\templates\accounts\login.html:9
 #: .\templates\accounts\request_activation.html:9
@@ -561,99 +553,96 @@ msgstr ""
 #: .\templates\projects\project_files_upload.html:9
 #: .\templates\translator_request\request_translator.html:84
 msgid "Send"
-msgstr ""
+msgstr "Отправить"
 
 #: .\templates\accounts\login.html:13
 msgid "Don't have an account yet?"
-msgstr ""
+msgstr "Еще нет аккаунта?"
 
 #: .\templates\accounts\login.html:13 .\templates\includes\header.html:38
 #: .\templates\landing\index.html:32
 msgid "Signup"
-msgstr ""
+msgstr "Зарегистрироваться"
 
 #: .\templates\accounts\login.html:16
 msgid "Request account activation"
-msgstr ""
+msgstr "Запросить активацию аккаунта"
 
 #: .\templates\accounts\login.html:19
 msgid "Forgot password?"
-msgstr ""
+msgstr "Забыли пароль?"
 
 #: .\templates\accounts\logout.html:5
 msgid "Successful logout"
-msgstr ""
+msgstr "Успешный выход"
 
 #: .\templates\accounts\logout.html:6
 msgid "You have successfully logged out of your account"
-msgstr ""
+msgstr "Вы успешно вышли из своей учетной записи"
 
 #: .\templates\accounts\password_change.html:5
 msgid "Password Change"
-msgstr ""
+msgstr "Изменение пароля"
 
 #: .\templates\accounts\password_change.html:11
 #: .\templates\includes\header-dashboard.html:84
 msgid "Change password"
-msgstr ""
+msgstr "Изменить пароль"
 
 #: .\templates\accounts\password_change_done.html:5
 msgid "Password successfully changed"
-msgstr ""
+msgstr "Пароль успешно изменён"
 
 #: .\templates\accounts\password_change_done.html:6
 msgid "Your password has been successfully changed"
-msgstr ""
+msgstr "Ваш пароль успешно изменен"
 
 #: .\templates\accounts\password_reset.html:5
 #: .\templates\accounts\password_reset.html:11
 msgid "Reset password"
-msgstr ""
+msgstr "Сбросить пароль"
 
 #: .\templates\accounts\password_reset_complete.html:5
 msgid "Password successfully reset"
-msgstr ""
+msgstr "Пароль успешно сброшен"
 
 #: .\templates\accounts\password_reset_complete.html:6
 msgid "Your password has been successfully reset"
-msgstr ""
+msgstr "Ваш пароль был успешно сброшен"
 
 #: .\templates\accounts\password_reset_confirm.html:5
 #: .\templates\accounts\password_reset_confirm.html:11
 msgid "Confirm password reset"
-msgstr ""
+msgstr "Подтвердите сброс пароля"
 
 #: .\templates\accounts\password_reset_done.html:5
 msgid "Password reset email has been sent"
-msgstr ""
+msgstr "Письмо для сброса пароля было отправлено"
 
 #: .\templates\accounts\password_reset_done.html:7
-msgid ""
-"We have sent an email with instructions on how to reset your password to the "
-"email address you specified"
-msgstr ""
+msgid "We have sent an email with instructions on how to reset your password to the email address you specified"
+msgstr "Мы отправили письмо с инструкциями по сбросу пароля на указанный вами адрес электронной почты"
 
 #: .\templates\accounts\request_activation.html:5
 msgid "Request activation email"
-msgstr ""
+msgstr "Запросить письмо для активации"
 
 #: .\templates\accounts\signup.html:5
 msgid "Registration"
-msgstr ""
+msgstr "Регистрация"
 
 #: .\templates\accounts\signup.html:13
 msgid "Already have an account?"
-msgstr ""
+msgstr "Уже зарегистрированы?"
 
 #: .\templates\burse\translator.html:31
 msgid "Hire"
-msgstr ""
+msgstr "Нанять"
 
 #: .\templates\burse\translator.html:133 .\templates\includes\header.html:29
 #: .\templates\landing\about.html:5 .\templates\landing\index.html:33
-#: .\templates\translator_request\translator_request.html:32
 msgid "About"
-msgstr ""
+msgstr "О сайте"
 
 #: .\templates\burse\translator.html:143
 #: .\templates\projects\includes\projects_nav.html:19
@@ -662,7 +651,7 @@ msgstr ""
 #: .\templates\projects\project_page.html:87
 #: .\templates\translator_request\translator_request.html:21
 msgid "Languages"
-msgstr ""
+msgstr "Языки"
 
 #: .\templates\burse\translator.html:165
 #: .\templates\projects\includes\projects_nav.html:15
@@ -670,172 +659,163 @@ msgstr ""
 #: .\templates\translator_request\request_translator.html:42
 #: .\templates\translator_request\translator_request.html:42
 msgid "Files"
-msgstr ""
+msgstr "Файлы"
 
 #: .\templates\burse\translator.html:183
 #: .\templates\translator_request\request_translator.html:65
 #: .\templates\translator_request\translator_request.html:60
 msgid "File thumbnail"
-msgstr ""
+msgstr "Иконка файла"
 
 #: .\templates\burse\translator.html:199
 #: .\templates\projects\project_files.html:27
 #: .\templates\translator_request\request_translator.html:81
 #: .\templates\translator_request\translator_request.html:76
 msgid "No files"
-msgstr ""
+msgstr "Файлы отсутствуют"
 
 #: .\templates\burse\translator.html:206
 msgid "Ratings"
-msgstr ""
+msgstr "Отзывы"
 
 #: .\templates\burse\translator.html:211
 msgid "No ratings"
-msgstr ""
+msgstr "Нет отзывов"
 
 #: .\templates\burse\translators.html:5
 msgid "Translators"
-msgstr ""
+msgstr "Переводчики"
 
 #: .\templates\burse\translators.html:11
 msgid "No translators"
-msgstr ""
+msgstr "Переводчики отсутствуют"
 
 #: .\templates\dashboard\index.html:6
 #, python-format
-msgid ""
-"\n"
+msgid "\n"
 "        Welcome, %(name)s\n"
 "        "
-msgstr ""
+msgstr "\n"
+"        Добро пожаловать, %(name)s\n"
+"        "
 
 #: .\templates\errors\403.html:6
 msgid "403 Forbidden"
-msgstr ""
+msgstr "403 Запрещено"
 
 #: .\templates\errors\403.html:145
 msgid "Forbidden!"
-msgstr ""
+msgstr "Доступ запрещен!"
 
 #: .\templates\errors\403.html:148
-msgid ""
-"You have been blocked from our site! You think that it is a mistake? Contact "
-"support."
-msgstr ""
+msgid "You have been blocked from our site! You think that it is a mistake? Contact support."
+msgstr "Вы были заблокированы на нашем сайте! Вы думаете, что это ошибка? Обратитесь в службу поддержки."
 
 #: .\templates\errors\403.html:150
-msgid ""
-"You don't have an access to this page! You think that it is a mistake? "
-"Contact support."
-msgstr ""
+msgid "You don't have an access to this page! You think that it is a mistake? Contact support."
+msgstr "У вас нет доступа к этой странице! Вы думаете, что это ошибка? Свяжитесь с поддержкой."
 
 #: .\templates\errors\403.html:155
 msgid "Comment from administraion:"
-msgstr ""
+msgstr "Комментарий администрации:"
 
 #: .\templates\errors\403.html:160 .\templates\errors\404.html:150
 #: .\templates\errors\500.html:150
 msgid "HOME"
-msgstr ""
+msgstr "ГЛАВНАЯ"
 
 #: .\templates\errors\404.html:6
 msgid "404 Not found"
-msgstr ""
+msgstr "404 Не найдено"
 
 #: .\templates\errors\404.html:145
 msgid "Page not found!"
-msgstr ""
+msgstr "Страница не найдена!"
 
 #: .\templates\errors\404.html:147
-msgid ""
-"The page with this url does not exist or it has been moved to a new address. "
-"Do you think this is a mistake? Contact us via the chat in the lower right "
-"corner."
-msgstr ""
+msgid "The page with this url does not exist or it has been moved to a new address. Do you think this is a mistake? Contact us via the chat in the lower right corner."
+msgstr "Страница с этим url не существует или была перемещена на новый адрес. Вы думаете, что это ошибка? Свяжитесь с нами в чате в правом нижнем углу."
 
 #: .\templates\errors\500.html:6
 msgid "500 Internal Server Error"
-msgstr ""
+msgstr "Внутренняя ошибка сервера 500"
 
 #: .\templates\errors\500.html:145
 msgid "Internal Server Error!"
-msgstr ""
+msgstr "Внутренняя ошибка сервера!"
 
 #: .\templates\errors\500.html:147
-msgid ""
-"Something went wrong but we are aware of the problem and are working on a "
-"solution, check back later."
-msgstr ""
+msgid "Something went wrong but we are aware of the problem and are working on a solution, check back later."
+msgstr "Что-то пошло не так, но мы знаем о проблеме и работаем над решением, проверьте позже."
 
 #: .\templates\includes\footer.html:22
 msgid "all rights reserved"
-msgstr ""
+msgstr "все права защищены"
 
 #: .\templates\includes\header-dashboard.html:44
 msgid "Home"
-msgstr ""
+msgstr "Главная"
 
 #: .\templates\includes\header-dashboard.html:49
 #: .\templates\projects\projects_list.html:11
 msgid "Projects"
-msgstr ""
+msgstr "Проекты"
 
 #: .\templates\includes\header-dashboard.html:54
 msgid "Translation requests"
-msgstr ""
+msgstr "Запросы на перевод"
 
 #: .\templates\includes\header-dashboard.html:59
 msgid "Burse"
-msgstr ""
+msgstr "Биржа"
 
 #: .\templates\includes\header-dashboard.html:65
 msgid "Translator requests"
-msgstr ""
+msgstr "Запросы на переводчика"
 
 #: .\templates\includes\header-dashboard.html:71
 msgid "Request translator"
-msgstr ""
+msgstr "Запросить переводчика"
 
 #: .\templates\includes\header-dashboard.html:79
 msgid "Account"
-msgstr ""
+msgstr "Аккаунт"
 
 #: .\templates\includes\header-dashboard.html:88
 msgid "Signout"
-msgstr ""
+msgstr "Выйти"
 
 #: .\templates\includes\header.html:43
 msgid "Dashboard"
-msgstr ""
+msgstr "Панель управления"
 
 #: .\templates\includes\header.html:47
 msgid "Logout"
-msgstr ""
+msgstr "Выйти"
 
 #: .\templates\includes\header.html:52
 msgid "Admin"
-msgstr ""
+msgstr "Админ"
 
 #: .\templates\landing\about.html:6
-msgid ""
-"\n"
+msgid "\n"
 "        <p>About text that will be added soon</p>\n"
 "    "
-msgstr ""
+msgstr "\n"
+"        <p>Текст будет добавлен позже</p>\n"
+"    "
 
 #: .\templates\landing\index.html:30
 msgid "Best service to translate your services"
-msgstr ""
+msgstr "Лучший сервис для перевода ваших сервисов"
 
 #: .\templates\landing\index.html:79
 msgid "Tiers"
-msgstr ""
+msgstr "Тарифы"
 
 #: .\templates\landing\index.html:81
-msgid ""
-"We have generous free tier, lets you to try our features, also if you want "
-"more, you can buy subscription."
-msgstr ""
+msgid "We have generous free tier, lets you to try our features, also if you want more, you can buy subscription."
+msgstr "У нас есть бесплатный уровень, вы можете попробовать наши функции, также если вы хотите больше, вы можете купить подписку."
 
 #: .\templates\landing\index.html:93 .\templates\landing\index.html:122
 msgid "subscription_features_title"
@@ -863,484 +843,486 @@ msgstr ""
 
 #: .\templates\landing\index.html:150
 msgid "An entrepreneurial company?"
-msgstr ""
+msgstr "Предпринимательская компания?"
 
 #: .\templates\landing\index.html:153
 msgid "Contact sales"
-msgstr ""
+msgstr "Связаться с отделом продаж"
 
 #: .\templates\notifications\includes\notification_card.html:14
 msgid "New!"
-msgstr ""
+msgstr "Новое!"
 
 #: .\templates\notifications\notifications.html:5
 msgid "Notifications"
-msgstr ""
+msgstr "Уведомления"
 
 #: .\templates\notifications\notifications.html:12
 msgid "No notifications"
-msgstr ""
+msgstr "Уведомления отсутствуют"
 
 #: .\templates\projects\add_project_language.html:6
 msgid "Add language"
-msgstr ""
+msgstr "Добавить язык"
 
 #: .\templates\projects\add_project_language.html:10
 #: .\templates\projects\project_languages.html:13
 msgid "Add"
-msgstr ""
+msgstr "Добавить"
 
 #: .\templates\projects\add_project_member.html:6
 msgid "Invite user"
-msgstr ""
+msgstr "Пригласить пользователя"
 
 #: .\templates\projects\add_project_member.html:12
 #: .\templates\projects\project_members.html:14
 msgid "Invite"
-msgstr ""
+msgstr "Пригласить"
 
 #: .\templates\projects\create_project.html:5
 msgid "Create project"
-msgstr ""
+msgstr "Создать проект"
 
 #: .\templates\projects\create_project.html:11
 #: .\templates\projects\projects_list.html:14
 #: .\templates\rating\create_rating.html:11
 #: .\templates\translation_request\create_translation_request.html:11
 msgid "Create"
-msgstr ""
+msgstr "Создать"
 
 #: .\templates\projects\includes\file_card.html:14
 msgid "Translate"
-msgstr ""
+msgstr "Перевести"
 
 #: .\templates\projects\includes\file_card.html:16
 msgid "Export"
-msgstr ""
+msgstr "Экспортировать"
 
 #: .\templates\projects\includes\language_card.html:8
 msgid "Source language"
-msgstr ""
+msgstr "Исходный язык"
 
 #: .\templates\projects\includes\language_card.html:11
 msgid "Files count"
-msgstr ""
+msgstr "Количество файлов"
 
 #: .\templates\projects\includes\member_card.html:26
 msgid "Role"
-msgstr ""
+msgstr "Роль"
 
 #: .\templates\projects\includes\member_card.html:34
 msgid "Delete"
-msgstr ""
+msgstr "Удалить"
 
 #: .\templates\projects\includes\member_card.html:39
 msgid "Update role"
-msgstr ""
+msgstr "Обновить роль"
 
 #: .\templates\projects\includes\projects_nav.html:7
 msgid "Info"
-msgstr ""
+msgstr "Информация"
 
 #: .\templates\projects\includes\projects_nav.html:11
 #: .\templates\projects\project_members.html:10
 #: .\templates\projects\project_page.html:64
 msgid "Members"
-msgstr ""
+msgstr "Участники"
 
 #: .\templates\projects\includes\projects_nav.html:23
 msgid "Edit"
-msgstr ""
+msgstr "Редактировать"
 
 #: .\templates\projects\includes\row_card.html:10
 msgid "Not translated yet"
-msgstr ""
+msgstr "Ещё не переведено"
 
 #: .\templates\projects\project_files.html:13
 msgid "Upload"
-msgstr ""
+msgstr "Загрузить"
 
 #: .\templates\projects\project_languages.html:22
 msgid "No languages"
-msgstr ""
+msgstr "Языки отсутствуют"
 
 #: .\templates\projects\project_members.html:23
 msgid "No users"
-msgstr ""
+msgstr "Пользователи отсутствуют"
 
 #: .\templates\projects\project_row_translate.html:8
 msgid "Row id:"
-msgstr ""
+msgstr "ID строки:"
 
 #: .\templates\projects\project_row_translate.html:10
 msgid "Source text:"
-msgstr ""
+msgstr "Исходный текст:"
 
 #: .\templates\projects\project_row_translate.html:13
 msgid "Translation context:"
-msgstr ""
+msgstr "Контекст перевода:"
 
 #: .\templates\projects\project_row_translate.html:16
 msgid "Occurrences"
-msgstr ""
+msgstr "Упоминания в файлах"
 
 #: .\templates\projects\project_rows.html:10
 msgid "No rows"
-msgstr ""
+msgstr "Нет строк"
 
 #: .\templates\projects\projects_list.html:25
 msgid "Owned"
-msgstr ""
+msgstr "Владелец"
 
 #: .\templates\projects\projects_list.html:27
 msgid "Contributed"
-msgstr ""
+msgstr "Участник"
 
 #: .\templates\projects\projects_list.html:34
 msgid "No projects"
-msgstr ""
+msgstr "Проекты отсутствуют"
 
 #: .\templates\projects\update_project_member.html:6
 msgid "Assign role"
-msgstr ""
+msgstr "Назначить роль"
 
 #: .\templates\projects\update_project_member.html:12
 msgid "Update"
-msgstr ""
+msgstr "Обновить"
 
 #: .\templates\rating\create_rating.html:5
 msgid "Create rating"
-msgstr ""
+msgstr "Создать отзыв"
 
 #: .\templates\rating\includes\rating_card.html:17
 msgid "Rating"
-msgstr ""
+msgstr "Отзыв"
 
 #: .\templates\translation_request\create_translation_request.html:5
 msgid "Create translation request"
-msgstr ""
+msgstr "Создать запрос на перевод"
 
 #: .\templates\translation_request\includes\translation_request_card.html:32
 msgid "Translation Request from"
-msgstr ""
+msgstr "Запрос на переводчика от"
 
 #: .\templates\translation_request\translation_request.html:58
 #: .\templates\translation_request\translation_request.html:94
 msgid "Languages to translate"
-msgstr ""
+msgstr "Языки для перевода"
 
 #: .\templates\translation_request\translation_request.html:71
 #: .\templates\translation_request\translation_request.html:113
 msgid "Price"
-msgstr ""
+msgstr "Цена"
 
 #: .\templates\translation_request\translation_request.html:175
 #: .\templates\translator_request\translator_request.html:81
 msgid "Accept"
-msgstr ""
+msgstr "Принять"
 
 #: .\templates\translation_request\translation_request.html:177
 #: .\templates\translation_request\translation_request.html:222
 #: .\templates\translation_request\translation_request.html:230
 #: .\templates\translator_request\translator_request.html:84
 msgid "Reject"
-msgstr ""
+msgstr "Отклонить"
 
 #: .\templates\translation_request\translation_request.html:181
 msgid "Wait for the translator to approve your request before writing messages"
-msgstr ""
+msgstr "Дождитесь подтверждения переводчиком вашего запроса перед написанием сообщений"
 
 #: .\templates\translation_request\translation_request.html:186
 msgid "Request was rejected"
-msgstr ""
+msgstr "Запрос был отклонён"
 
 #: .\templates\translation_request\translation_request.html:190
 msgid "Request closed, you can't write messages anymore"
-msgstr ""
+msgstr "Запрос закрыт, вы больше не можете писать сообщения"
 
 #: .\templates\translation_request\translation_request.html:193
 msgid "Rate translator"
-msgstr ""
+msgstr "Оценить переводчика"
 
 #: .\templates\translation_request\translation_request.html:220
 msgid "Start working"
-msgstr ""
+msgstr "Начать работу"
 
 #: .\templates\translation_request\translation_request.html:225
 msgid "Mark it as finished"
-msgstr ""
+msgstr "Пометить как завершенное"
 
 #: .\templates\translation_request\translation_request.html:233
 msgid "Send for revision"
-msgstr ""
+msgstr "Отправить на доработку"
 
 #: .\templates\translation_request\translation_request.html:235
 msgid "Close"
-msgstr ""
+msgstr "Закрыть"
 
 #: .\templates\translation_request\translation_request_list.html:5
 msgid "Translation Requests"
-msgstr ""
+msgstr "Запрос на перевод"
 
 #: .\templates\translation_request\translation_request_list.html:11
 msgid "No translation requests"
-msgstr ""
+msgstr "Запросы на переводчика отсутствуют"
 
 #: .\templates\translator_request\request_translator.html:7
-msgid ""
-" Your request has been sent to the reviewers, please if\n"
+msgid " Your request has been sent to the reviewers, please if\n"
 "    you have made mistakes please correct them now. "
-msgstr ""
+msgstr " Ваш запрос был отправлен ревьюерам, пожалуйста, если\n"
+"    вы сделали ошибки, пожалуйста, исправьте их сейчас. "
 
 #: .\templates\translator_request\request_translator.html:12
-msgid ""
-" Your request is under review, you cannot edit it until\n"
+msgid " Your request is under review, you cannot edit it until\n"
 "    our team has verified it, stay tuned! "
-msgstr ""
+msgstr " Ваш запрос находится на рассмотрении, вы не можете редактировать его до тех пор, пока\n"
+"    наша команда не проверит его, оставайтесь на связи! "
 
 #: .\templates\translator_request\request_translator.html:17
-msgid ""
-" Your request has been rejected, our team has deemed you\n"
-"    incompetent. Please try to update your bio or upgrade your "
-"qualification. "
-msgstr ""
+msgid " Your request has been rejected, our team has deemed you\n"
+"    incompetent. Please try to update your bio or upgrade your qualification. "
+msgstr " Ваш запрос был отклонен, наша команда сочла вас\n"
+"    некомпетентным. Пожалуйста, попробуйте обновить свою биографию или повысить квалификацию. "
 
 #: .\templates\translator_request\request_translator.html:22
-msgid ""
-" Your request has been successfully accepted! Now\n"
+msgid " Your request has been successfully accepted! Now\n"
 "    companies can hire you for their projects! We advise you to update the\n"
-"    \"About\" section of your profile, you can also update your resume files "
-"via\n"
+"    \"About\" section of your profile, you can also update your resume files via\n"
 "    the same form and your translator status will not be removed. "
-msgstr ""
+msgstr " Ваш запрос был успешно принят! Теперь\n"
+"    компании теперь могут нанять вас для своих проектов! Мы рекомендуем вам обновить раздел \"О себе\"\n"
+"    вашего профиля, Вы также можете обновить файлы резюме через\n"
+"    ту же форму, и статус переводчика не будет удален. "
 
 #: .\templates\translator_request\request_translator.html:28
 msgid "Request Translator"
-msgstr ""
+msgstr "Запросить переводчика"
 
 #: .\templates\translator_request\request_translator.html:30
-msgid ""
-" Proffecional translator? Here you can submit request to\n"
-"    get translator role, some of the fields are already filled for you from "
-"your\n"
-"    account. In the \"About\" field you can write your education, projects "
-"you\n"
-"    have worked on, etc., and you can also attach identity files and "
-"various\n"
-"    diplomas. Here the about field is visible only to you and us, the "
-"public\n"
-"    \"About\" field can be filled in the \"Account\" section. Please do not "
-"spam and\n"
-"    provide real information about yourself, if we think you are spamming "
-"your\n"
+msgid " Proffecional translator? Here you can submit request to\n"
+"    get translator role, some of the fields are already filled for you from your\n"
+"    account. In the \"About\" field you can write your education, projects you\n"
+"    have worked on, etc., and you can also attach identity files and various\n"
+"    diplomas. Here the about field is visible only to you and us, the public\n"
+"    \"About\" field can be filled in the \"Account\" section. Please do not spam and\n"
+"    provide real information about yourself, if we think you are spamming your\n"
 "    account will be irrevocably blocked. "
-msgstr ""
+msgstr " Профессиональный переводчик? Здесь вы можете отправить запрос на\n"
+"    на получение роли переводчика, некоторые поля уже заполнены для вас из вашего\n"
+"    аккаунта. В поле \"О себе\" вы можете написать о своем образовании, проектах, над которыми вы\n"
+"    над которыми вы работали, и т. д., а также приложить документы, удостоверяющие личность, и различные\n"
+"    дипломы. Здесь поле \"О себе\" видно только вам и нам, общественности.\n"
+"    Поле \"О себе\" можно заполнить в разделе \"Аккаунт\". Пожалуйста, не спамьте и\n"
+"    предоставляйте реальную информацию о себе, если мы посчитаем, что вы занимаетесь спамом, ваш\n"
+"    аккаунт будет безвозвратно заблокирован. "
 
 #: .\templates\translator_request\translator_request.html:7
 msgid "Translator Request from"
-msgstr ""
+msgstr "Запрос на переводчика от"
 
 #: .\templates\translator_request\translator_request.html:13
 msgid "Email"
-msgstr ""
+msgstr "Почта"
 
 #: .\templates\translator_request\translator_request.html:17
 msgid "Native language"
-msgstr ""
+msgstr "Родной язык"
+
+#: .\templates\translator_request\translator_request.html:32
+msgctxt "translator request page"
+msgid "About"
+msgstr "Обо мне"
 
 #: .\templates\translator_request\translator_request.html:36
 #: .\templates\translator_request\translator_requests.html:15
 msgid "Status"
-msgstr ""
+msgstr "Статус"
 
 #: .\templates\translator_request\translator_request.html:87
 msgid "Reject & Block"
-msgstr ""
+msgstr "Отклонить и заблокировать"
 
 #: .\templates\translator_request\translator_requests.html:5
 msgid "Translator Requests"
-msgstr ""
+msgstr "Запросы на переводчика"
 
 #: .\templates\translator_request\translator_requests.html:13
 msgid "Author"
-msgstr ""
+msgstr "Автор"
 
 #: .\templates\translator_request\translator_requests.html:14
 msgid "Language"
-msgstr ""
+msgstr "Язык"
 
 #: .\templates\translator_request\translator_requests.html:16
 msgid "Profile"
-msgstr ""
+msgstr "Профиль"
 
 #: .\templates\translator_request\translator_requests.html:25
 msgid "No translator requests"
-msgstr ""
+msgstr "Запросы на переводчика отсутствуют"
 
 #: .\translation_request\apps.py:11
 msgctxt "app name"
 msgid "Translation Request"
-msgstr ""
+msgstr "Запрос на перевод"
 
 #: .\translation_request\models.py:67
 msgctxt "translation request created at field name"
 msgid "created at"
-msgstr ""
+msgstr "дата создания"
 
 #: .\translation_request\models.py:73
 msgctxt "translation request closed at field name"
 msgid "closed at"
-msgstr ""
+msgstr "закрыто в"
 
 #: .\translation_request\models.py:78
 msgctxt "translation request text field name"
 msgid "text"
-msgstr ""
+msgstr "текст"
 
 #: .\translation_request\models.py:81
 msgctxt "translation request status field name"
 msgid "status"
-msgstr ""
+msgstr "статус"
 
 #: .\translation_request\models.py:86
 msgctxt "translation request price field name"
 msgid "price"
-msgstr ""
+msgstr "цена"
 
 #: .\translation_request\models.py:100
 #, python-brace-format
 msgid "Translation Request from {self.author}, ID:{self.pk}"
-msgstr ""
+msgstr "Запрос перевода от {self.author}, ID:{self.pk}"
 
 #: .\translation_request\models.py:107
 msgctxt "translation request verbose name"
 msgid "translation request"
-msgstr ""
+msgstr "запрос на перевод"
 
 #: .\translation_request\models.py:111
 msgctxt "translation request verbose name plural"
 msgid "translation requests"
-msgstr ""
+msgstr "запросы на перевод"
 
 #: .\translation_request\models.py:129
 msgctxt "message content field name"
 msgid "content"
-msgstr ""
+msgstr "содержание"
 
 #: .\translation_request\models.py:132
 msgctxt "translation request timestamp field name"
 msgid "timestamp"
-msgstr ""
+msgstr "временная метка"
 
 #: .\translation_request\models.py:139
 #, python-brace-format
 msgid "Message №{self.pk}"
-msgstr ""
+msgstr "Сообщение № {self.pk}"
 
 #: .\translation_request\models.py:146
 msgctxt "translation request message verbose name"
 msgid "translation request message"
-msgstr ""
+msgstr "сообщение запроса на перевод"
 
 #: .\translation_request\models.py:150
 msgctxt "translation request message verbose name plural"
 msgid "translation request messages"
-msgstr ""
+msgstr "сообщения запроса на перевод"
 
 #: .\translation_request\views.py:115
 msgctxt "error message in views"
 msgid "You do not own the selected project."
-msgstr ""
+msgstr "Вы не владеете выбранным проектом."
 
 #: .\translation_request\views.py:183
 msgctxt "error message in views"
 msgid "Insufficient funds on the account."
-msgstr ""
+msgstr "Недостаточно средств на счете."
 
 #: .\translator_request\apps.py:11
 msgctxt "app name"
 msgid "TranslatorRequest"
-msgstr ""
+msgstr "Запрос переводчика"
 
 #: .\translator_request\models.py:14
 msgid "Sent"
-msgstr ""
+msgstr "Отправлен"
 
 #: .\translator_request\models.py:15
 msgid "Under review"
-msgstr ""
+msgstr "На рассмотрении"
 
 #: .\translator_request\models.py:16
 msgid "Accepted"
-msgstr ""
+msgstr "Принят"
 
 #: .\translator_request\models.py:17
 msgid "Rejected"
-msgstr ""
+msgstr "Отклонён"
 
 #: .\translator_request\models.py:55
 msgctxt "status field name"
 msgid "status"
-msgstr ""
+msgstr "статус"
 
 #: .\translator_request\models.py:72
 msgctxt "translator_request field name"
 msgid "translator request"
-msgstr ""
+msgstr "запрос на переводчика"
 
 #: .\translator_request\models.py:85
 msgctxt "from field name"
 msgid "from status"
-msgstr ""
+msgstr "из статуса"
 
 #: .\translator_request\models.py:90
 msgctxt "to field name"
 msgid "to status"
-msgstr ""
+msgstr "в статус"
 
 #: .\translator_request\models.py:100
 msgctxt "timestamp field name"
 msgid "timestamp"
-msgstr ""
+msgstr "временная метка"
 
 #: .\translator_request\views.py:135
 msgctxt "translator request update success"
 msgid "Your request to become a translator has been updated"
-msgstr ""
+msgstr "Ваш запрос на переводчика обновлён"
 
 #: .\translator_request\views.py:146
 msgctxt "translator request create success"
 msgid "Your request to become a translator has been sent"
-msgstr ""
+msgstr "Ваш запрос на переводчика отправлен"
 
 #: .\translator_request\views.py:162
 msgctxt "translator request on review error"
 msgid "Your request is currently under review."
-msgstr ""
+msgstr "Ваш запрос на рассмотрении."
 
-#: .\transletter\settings.py:142
+#: .\transletter\settings.py:154
 msgid "English"
-msgstr ""
+msgstr "Английский"
 
-#: .\transletter\settings.py:143
+#: .\transletter\settings.py:155
 msgid "Russian"
-msgstr ""
+msgstr "Русский"
 
 #: .\transletter\validators.py:14
 #, python-format
-msgid ""
-"Ensure this file size is not greater than %(max_size)s. Your file size is "
-"%(size)s."
-msgstr ""
+msgid "Ensure this file size is not greater than %(max_size)s. Your file size is %(size)s."
+msgstr "Убедитесь, что этот размер файла не превышает %(max_size)s. Ваш размер файла %(size)s."
 
 #: .\transletter\validators.py:18
 #, python-format
-msgid ""
-"Ensure this file size is not less than %(min_size)s. Your file size is "
-"%(size)s."
-msgstr ""
+msgid "Ensure this file size is not less than %(min_size)s. Your file size is %(size)s."
+msgstr "Убедитесь, что этот размер файла не меньше, чем %(min_size)s. Ваш размер файла %(size)s."
 
 #: .\transletter\validators.py:21
 #, python-format
 msgid "Files of type %(content_type)s are not supported."
-msgstr ""
+msgstr "Файлы типа %(content_type)s не поддерживаются."
+

@@ -590,12 +590,12 @@ class UpdateTranslationFileView(LoginRequiredMixin, View):
                     file_object,
                     str(file_object.file),
                 )
-            except Exception as e:
+            except Exception:
                 messages.error(
                     request,
                     pgettext_lazy(
                         "error message in views",
-                        f"Failed to parse file! {e}",
+                        "Failed to parse file!",
                     ),
                 )
                 return redirect(
