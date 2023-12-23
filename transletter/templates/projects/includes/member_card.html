@@ -1,6 +1,6 @@
 {% load static i18n thumbnail %}
 <div class="col mb-5">
-    <div class="card h-100 shadow-sm item_card is-revealing zoomable-card">
+    <div class="card h-100 shadow-sm item_card is-revealing">
         {% thumbnail member.user.account.avatar "300x300" as avatar %}
             <img class="card-img-top card-img-bottom img-fluid" src="{{ avatar.url }}">
         {% empty %}
@@ -23,7 +23,7 @@
             {% if member.user.first_name != "" %}{{ member.user.last_name }}{% endif %}
         </h5>
         <p class="card-text text-muted">{{ member.account.about|truncatechars_html:80|striptags|safe }}</p>
-        <p class="card-text text-muted">{% translate "Role:" %} {{ member.get_role_display }}</p>
+        <p class="card-text text-muted">{% translate "Role" %}: {{ member.get_role_display }}</p>
         <div class="d-flex justify-content-between align-items-center">
             <div class="btn-group">
                 {% if active_user_role.role == "owner" or active_user_role.role == "admin" %}

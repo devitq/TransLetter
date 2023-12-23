@@ -4,7 +4,7 @@ from django.core.exceptions import PermissionDenied
 from django.db import models
 from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
-from django.urls import reverse_lazy
+from django.urls import reverse, reverse_lazy
 from django.utils.translation import pgettext_lazy
 from django.views.generic import CreateView, DetailView, ListView, View
 
@@ -253,30 +253,46 @@ class UpdateTranslationRequestStatusView(LoginRequiredMixin, View):
                         content="The translator has rejected request",
                     )
                 elif translation_request.status == "AC" and to_status == "IP":
-                    translation_request.status = to_status
-                    translation_request.save()
                     exist = ProjectMembership.objects.filter(
                         user=translation_request.translator,
                         project=translation_request.project,
                     )
                     if not exist:
+                        translation_request.status = to_status
+                        translation_request.save()
                         ProjectMembership.objects.create(
                             user=translation_request.translator,
                             project=translation_request.project,
                             role="hired_translator",
                         )
-                    url = reverse_lazy(
-                        "projects:project_page",
-                        args={"slug": translation_request.project.slug},
-                    )
-                    TranslationRequestMessage.objects.create(
-                        translation_request=translation_request,
-                        author=None,
-                        content=(
-                            "The translator has been added to the "
-                            f'<a href="{url}">project</a> and can begin work'
-                        ),
-                    )
+                        url = request.build_absolute_uri(
+                            reverse(
+                                "projects:project_page",
+                                kwargs={
+                                    "slug": translation_request.project.slug,
+                                },
+                            ),
+                        )
+                        TranslationRequestMessage.objects.create(
+                            translation_request=translation_request,
+                            author=None,
+                            content=(
+                                "The translator has been added to the "
+                                f'<a href="{url}">project</a> and can begin '
+                                "work"
+                            ),
+                        )
+                    else:
+                        messages.error(
+                            request,
+                            pgettext_lazy(
+                                "error message in views",
+                                (
+                                    "It is not possible to add a translator to"
+                                    " a project because he is already in it."
+                                ),
+                            ),
+                        )
                 elif translation_request.status == "AC" and to_status == "RJ":
                     translation_request.status = to_status
                     translation_request.save()

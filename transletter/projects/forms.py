@@ -1,5 +1,5 @@
 from django import forms
-from django.utils.translation import pgettext
+from django.utils.translation import pgettext_lazy
 
 from projects import models
 from transletter.mixins import BaseFormMixin
@@ -24,18 +24,26 @@ class CreateProjectForm(forms.ModelForm, BaseFormMixin):
 
 
 class AddProjectMemberForm(forms.Form, BaseFormMixin):
-    email_address = forms.EmailField(
-        help_text=pgettext(
+    email = forms.EmailField(
+        label=pgettext_lazy("add member form", "Email"),
+        help_text=pgettext_lazy(
             "add member form",
             "Enter the user's email address",
         ),
     )
-    mail_header = forms.CharField(
-        help_text=pgettext("add member form", "Enter a title for the mail"),
+    email_header = forms.CharField(
+        label=pgettext_lazy("add member form", "Email header"),
+        help_text=pgettext_lazy(
+            "add member form",
+            "Enter the title of the email",
+        ),
         max_length=50,
     )
-    mail_text = forms.CharField(
-        help_text=pgettext("add member form", "Enter the text of the email"),
+    email_text = forms.CharField(
+        help_text=pgettext_lazy(
+            "add member form",
+            "Enter the text of the email",
+        ),
         widget=forms.Textarea(),
     )
 
@@ -47,8 +55,8 @@ class AddProjectMemberForm(forms.Form, BaseFormMixin):
         model = models.Project
         fields = (
             "email_address",
-            "mail_header",
-            "mail_text",
+            "email_header",
+            "email_text",
         )
 
 
@@ -57,7 +65,7 @@ CHOICES = [
     for key, value in models.ProjectMembership.ROLES
     if key not in ["owner", "hired_translator"]
 ]
-blank_choice = [("", pgettext("add member form", "--- Choose role ---"))]
+blank_choice = [("", pgettext_lazy("add member form", "--- Choose role ---"))]
 
 
 class UpdateProjectMemberForm(forms.Form, BaseFormMixin):
@@ -95,3 +103,49 @@ class ProjectAvatarChangeForm(forms.ModelForm, BaseFormMixin):
     class Meta:
         model = models.Project
         fields = ("avatar",)
+
+
+class TranslationFileForm(forms.ModelForm, BaseFormMixin):
+    def __init__(self, *args, **kwargs):
+        super(TranslationFileForm, self).__init__(*args, **kwargs)
+        self.set_field_attributes()
+
+    class Meta:
+        model = models.TranslationFile
+        fields = ("file", "project_language")
+        widgets = {
+            "project_language": forms.Select(attrs={"class": "form-control"}),
+        }
+
+
+class UpdateTranslationFileForm(forms.ModelForm, BaseFormMixin):
+    def __init__(self, *args, **kwargs):
+        super(UpdateTranslationFileForm, self).__init__(*args, **kwargs)
+        self.set_field_attributes()
+
+    class Meta:
+        model = models.TranslationFile
+        fields = ("file",)
+
+
+class TranslationRowEditForm(forms.ModelForm, BaseFormMixin):
+    def __init__(self, *args, **kwargs):
+        super(TranslationRowEditForm, self).__init__(*args, **kwargs)
+        self.set_field_attributes()
+
+    class Meta:
+        model = models.TranslationRow
+        fields = ("msg_str",)
+        labels = {
+            "msg_str": pgettext_lazy("translation edit label", "Translation"),
+        }
+
+
+class AddLanguageForm(forms.ModelForm, BaseFormMixin):
+    def __init__(self, *args, **kwargs):
+        super(AddLanguageForm, self).__init__(*args, **kwargs)
+        self.set_field_attributes()
+
+    class Meta:
+        model = models.ProjectLanguage
+        fields = ("lang_code",)

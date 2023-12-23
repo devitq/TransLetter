@@ -41,7 +41,7 @@ urlpatterns = [
         name="activate_project_member",
     ),
     path(
-        "<slug:slug>/members/delete_member/<int:user_id>/",
+        "<slug:slug>/members/<int:user_id>/delete/",
         projects.views.DeleteProjectMemberView.as_view(),
         name="delete_project_member",
     ),
@@ -51,14 +51,29 @@ urlpatterns = [
         name="update_project_member",
     ),
     path(
+        "<slug:slug>/languages/",
+        projects.views.ProjectLanguagesView.as_view(),
+        name="project_languages",
+    ),
+    path(
+        "<slug:slug>/languages/add/",
+        projects.views.AddProjectLangugeView.as_view(),
+        name="add_project_language",
+    ),
+    path(
         "<slug:slug>/files/",
         projects.views.ProjectFilesView.as_view(),
         name="project_files",
     ),
     path(
-        "<slug:slug>/files/upload_file/",
+        "<slug:slug>/files/upload/",
         projects.views.ProjectFilesUploadView.as_view(),
         name="project_files_upload",
+    ),
+    path(
+        "<slug:slug>/files/<int:file_id>/update",
+        projects.views.UpdateTranslationFileView.as_view(),
+        name="update_translation_file",
     ),
     path(
         "<slug:slug>/files/<int:pk>/",

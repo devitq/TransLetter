@@ -16,7 +16,7 @@ urlpatterns = [
         name="translation_request_detail",
     ),
     path(
-        "new/<int:translator_id>",
+        "create/<int:translator_id>",
         translation_request.views.CreateTranslationRequest.as_view(),
         name="create_translation_request",
     ),

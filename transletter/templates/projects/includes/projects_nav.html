@@ -15,6 +15,10 @@
                href="{% url 'projects:project_files' slug=slug %}">{% translate "Files" %}</a>
         </li>
         <li class="nav-item">
+            <a class="nav-link{% if view_name == 'projects:project_languages' %} active{% else %} text-muted{% endif %}"
+               href="{% url 'projects:project_languages' slug=slug %}">{% translate "Languages" %}</a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link{% if view_name == 'projects:edit_project' %} active{% else %} text-muted{% endif %}"
                href="{% url 'projects:edit_project' slug=slug %}">{% translate "Edit" %}</a>
         </li>
