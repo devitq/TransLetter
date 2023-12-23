@@ -98,7 +98,11 @@ class ProjectLanguage(models.Model):
         on_delete=models.CASCADE,
         related_name="languages",
     )
-    lang_code = models.CharField(max_length=10, choices=LANGUAGES)
+    lang_code = models.CharField(
+        pgettext_lazy("project languge lang code field name", "language"),
+        max_length=10,
+        choices=LANGUAGES,
+    )
 
     def __str__(self) -> str:
         language_dict = dict(self.LANGUAGES)
@@ -124,7 +128,9 @@ class TranslationFile(models.Model):
     project_language = models.ForeignKey(
         ProjectLanguage,
         on_delete=models.CASCADE,
+        related_name="files",
     )
+    metadata = models.JSONField(null=True, blank=True)
     file = models.FileField(
         upload_to=get_path_for_file,
         validators=[
@@ -152,13 +158,13 @@ class TranslationRow(models.Model):
     translation_file = models.ForeignKey(
         TranslationFile,
         on_delete=models.CASCADE,
+        related_name="rows",
     )
 
     class Meta:
         constraints = [
             models.UniqueConstraint(
                 fields=[
-                    "msg_str",
                     "msg_id",
                     "msg_context",
                     "translation_file",
@@ -172,9 +178,14 @@ class TranslationComment(models.Model):
     translation_row = models.ForeignKey(
         TranslationRow,
         on_delete=models.CASCADE,
+        related_name="comments",
     )
     comment = models.TextField(
         pgettext_lazy("comment field name", "comment"),
     )
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    author = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="translation_comments",
+    )
     created_at = models.DateTimeField(auto_now_add=True, null=True)

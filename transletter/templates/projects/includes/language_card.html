@@ -1,0 +1,14 @@
+{% load i18n thumbnail %}
+<div class="col">
+    <div class="card h-100 shadow-sm item_card is-revealing zoomable-card">
+        <div class="card-body">
+            <h5 class="card-title text-white">
+                {{ language.get_lang_code_display }}
+                {% if language.lang_code == language.project.source_lang %}
+                    <span class="badge rounded-pill text-bg-primary">{% translate "Source language" %}</span>
+                {% endif %}
+            </h5>
+            <p>{% translate "Files count" %}: {{ language.files.count }}</p>
+        </div>
+    </div>
+</div>

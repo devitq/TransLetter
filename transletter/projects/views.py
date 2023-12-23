@@ -5,11 +5,12 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.core.mail import EmailMultiAlternatives
-from django.db import models
+from django.db import IntegrityError, models
 from django.http import FileResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
+from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.utils.translation import pgettext_lazy
 from django.views.generic import CreateView, FormView, ListView, View
@@ -22,12 +23,13 @@ from projects.decorators import (
     project_owner_decorator,
 )
 from projects.forms import (
+    AddLanguageForm,
     AddProjectMemberForm,
     CreateProjectForm,
     ProjectAvatarChangeForm,
     ProjectChangeForm,
     TranslationFileForm,
-    TranslationRowEdit,
+    TranslationRowEditForm,
     UpdateProjectMemberForm,
     UpdateTranslationFileForm,
 )
@@ -396,6 +398,62 @@ class ProjectPageView(LoginRequiredMixin, ListView):
 class ProjectLanguagesView(LoginRequiredMixin, ListView):
     template_name = "projects/project_languages.html"
     model = projects.models.ProjectLanguage
+    context_object_name = "languages"
+
+    def get_queryset(self):
+        slug = self.kwargs.get("slug")
+        return (
+            projects.models.ProjectLanguage.objects.filter(
+                project__slug=slug,
+            )
+            .prefetch_related("files")
+            .select_related("project")
+        )
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        slug = self.kwargs.get("slug")
+        context["slug"] = slug
+        return context
+
+
+@method_decorator(project_admin_decorator, name="dispatch")
+class AddProjectLangugeView(LoginRequiredMixin, CreateView):
+    template_name = "projects/add_project_language.html"
+    form_class = AddLanguageForm
+    model = projects.models.ProjectLanguage
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        slug = self.kwargs.get("slug")
+        context["slug"] = slug
+        return context
+
+    def form_valid(self, form):
+        try:
+            slug = self.kwargs.get("slug")
+            project = get_object_or_404(projects.models.Project, slug=slug)
+            form.instance.project = project
+            return super().form_valid(form)
+        except IntegrityError:
+            messages.error(
+                self.request,
+                pgettext_lazy(
+                    "error message in views",
+                    "This language is already exist!",
+                ),
+            )
+            return render(
+                self.request,
+                self.template_name,
+                {"form": form, "slug": slug},
+            )
+
+    def get_success_url(self):
+        return reverse_lazy(
+            "projects:project_languages",
+            kwargs={"slug": self.kwargs.get("slug")},
+        )
 
 
 @method_decorator(can_access_project_decorator, name="dispatch")
@@ -406,8 +464,12 @@ class ProjectFilesView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         slug = self.kwargs.get("slug")
-        return projects.models.TranslationFile.objects.filter(
-            project_language__project__slug=slug,
+        return (
+            projects.models.TranslationFile.objects.filter(
+                project_language__project__slug=slug,
+            )
+            .select_related("project_language")
+            .order_by("project_language__lang_code")
         )
 
     def get_context_data(self, **kwargs):
@@ -472,7 +534,7 @@ class ProjectFilesUploadView(LoginRequiredMixin, View):
                     ),
                 ),
             )
-            return redirect("projects:project_files_upload", slug)
+            return redirect("projects:project_files", slug)
 
         project_languages = projects.models.ProjectLanguage.objects.filter(
             project__slug=slug,
@@ -528,12 +590,12 @@ class UpdateTranslationFileView(LoginRequiredMixin, View):
                     file_object,
                     str(file_object.file),
                 )
-            except Exception:
+            except Exception as e:
                 messages.error(
                     request,
                     pgettext_lazy(
                         "error message in views",
-                        "Failed to parse file!",
+                        f"Failed to parse file! {e}",
                     ),
                 )
                 return redirect(
@@ -554,7 +616,7 @@ class UpdateTranslationFileView(LoginRequiredMixin, View):
                     ),
                 ),
             )
-            return redirect("projects:update_translation_file", slug, file_id)
+            return redirect("projects:project_files", slug)
 
         return render(
             request,
@@ -577,7 +639,7 @@ class ProjectFileRowsView(LoginRequiredMixin, ListView):
         pk = self.kwargs.get("pk")
         return projects.models.TranslationRow.objects.filter(
             translation_file_id=pk,
-        )
+        ).order_by("-created_at")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -588,32 +650,41 @@ class ProjectFileRowsView(LoginRequiredMixin, ListView):
 @method_decorator(can_access_project_decorator, name="dispatch")
 class ProjectRowsTranslateView(LoginRequiredMixin, FormView):
     template_name = "projects/project_row_translate.html"
-    form_class = TranslationRowEdit
+    form_class = TranslationRowEditForm
 
     def get(self, request, slug, file_pk, row_pk):
-        try:
-            row = projects.models.TranslationRow.objects.get(
-                translation_file_id=file_pk,
-                id=row_pk,
-            )
-        except projects.models.TranslationRow.DoesNotExist:
-            return redirect("projects:project_files_translate", slug, file_pk)
+        row = get_object_or_404(
+            projects.models.TranslationRow,
+            translation_file_id=file_pk,
+            id=row_pk,
+        )
+        form = TranslationRowEditForm(instance=row)
         return render(
             request,
             self.template_name,
             context={
-                "row_info": row,
+                "form": form,
+                "slug": slug,
             },
         )
 
     def post(self, request, slug, file_pk, row_pk):
-        msg_str = request.POST["msg_str"]
-        row_object = projects.models.TranslationRow.objects.get(
+        row = get_object_or_404(
+            projects.models.TranslationRow,
             translation_file_id=file_pk,
             id=row_pk,
         )
-        row_object.msg_str = msg_str
-        row_object.save()
+        form = TranslationRowEditForm(request.POST, instance=row)
+        form.save()
+        # fmt: off
+        (
+            form.instance.
+            translation_file
+            .project_language
+            .project.last_activity
+        ) = timezone.now()
+        # fmt: on
+        form.instance.translation_file.project_language.project.save()
         return redirect("projects:project_files_translate", slug, file_pk)
 
 
@@ -633,13 +704,13 @@ class ProjectFileExportView(LoginRequiredMixin, ListView):
         if str(file_object.file).endswith(".po"):
             export_filename = export_po_file(
                 rows,
-                str(file_object.file),
+                file_object,
                 slug,
             )
         elif str(file_object.file).endswith(".json"):
             export_filename = export_json_file(
                 rows,
-                str(file_object.file),
+                file_object,
                 slug,
             )
         return FileResponse(open(export_filename, "rb"), as_attachment=True)

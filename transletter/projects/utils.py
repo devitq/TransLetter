@@ -13,49 +13,74 @@ __all__ = ()
 
 def parse_file_and_create_translations(language_file, file_path):
     file_path = settings.MEDIA_ROOT / file_path
-    file_path = str(file_path)
+
     existing_rows = TranslationRow.objects.filter(
         translation_file=language_file,
     )
-    existing_rows_dict = {row.msg_id: row for row in existing_rows}
+    existing_rows_dict = {
+        (row.msg_id, row.msg_context): row for row in existing_rows
+    }
+
     added = 0
     updated = 0
     deleted = 0
 
-    with Path(file_path).open() as file:
-        if file_path.endswith(".po"):
+    with file_path.open() as file:
+        if file_path.suffix == ".po":
             po = polib.pofile(file_path)
+            metadata_keys = [
+                "Project-Id-Version",
+                "Report-Msgid-Bugs-To",
+                "POT-Creation-Date",
+                "PO-Revision-Date",
+                "Last-Translator",
+                "Language-Team",
+                "Language",
+                "MIME-Version",
+                "Content-Type",
+                "Content-Transfer-Encoding",
+                "Plural-Forms",
+            ]
+            metadata = {
+                key: po.metadata.get(key)
+                for key in metadata_keys
+                if po.metadata.get(key)
+            }
+            language_file.metadata = metadata
+            language_file.save()
             for entry in po:
-                msg_id = entry.msgid
-                msg_str = entry.msgstr
-                msg_context = entry.msgctxt
-                occurrences = entry.occurrences
+                key_tuple = (entry.msgid, entry.msgctxt)
+                existing_row = existing_rows_dict.get(key_tuple)
 
-                if msg_id in existing_rows_dict:
-                    existing_rows_dict[msg_id].msg_context = msg_context
-                    existing_rows_dict[msg_id].occurrences = occurrences
-                    existing_rows_dict[msg_id].save()
+                if existing_row:
+                    existing_row.msg_context = entry.msgctxt
+                    existing_row.occurrences = entry.occurrences
+                    existing_row.save()
                     updated += 1
                 else:
                     TranslationRow.objects.create(
-                        msg_id=msg_id,
-                        msg_str=msg_str,
-                        msg_context=msg_context,
+                        msg_id=entry.msgid,
+                        msg_str=entry.msgstr,
+                        msg_context=entry.msgctxt,
                         translation_file=language_file,
-                        occurrences=occurrences,
+                        occurrences=entry.occurrences,
                     )
                     added += 1
-
             deleted_rows = existing_rows.exclude(
                 msg_id__in=[entry.msgid for entry in po],
             )
             deleted = deleted_rows.count()
             deleted_rows.delete()
 
-        elif file_path.endswith(".json"):
+        elif file_path.suffix == ".json":
             data = json.load(file)
             for msg_id, msg_str in data.items():
-                if msg_id in existing_rows_dict:
+                key_tuple = (msg_id, None)
+                existing_row = existing_rows_dict.get(key_tuple)
+
+                if existing_row:
+                    existing_row.msg_str = msg_str
+                    existing_row.save()
                     updated += 1
                 else:
                     TranslationRow.objects.create(
@@ -72,13 +97,13 @@ def parse_file_and_create_translations(language_file, file_path):
     return added, updated, deleted
 
 
-def export_po_file(rows, file_path, project_slug):
-    file_path = settings.MEDIA_ROOT / file_path
+def export_po_file(rows, file_object, project_slug):
     project_id = projects.models.Project.objects.get(slug=project_slug).id
-    file_path = str(file_path)
-    filename = file_path.rsplit("/")[-1]
 
-    po = polib.pofile(file_path)
+    po = polib.POFile()
+    if file_object.metadata:
+        po.metadata = file_object.metadata
+
     seed = uuid.uuid4()
     export_filepath = (
         settings.MEDIA_ROOT / f"projects/{str(project_id)}/export/{str(seed)}/"
@@ -94,12 +119,12 @@ def export_po_file(rows, file_path, project_slug):
         for row in rows
     ]
 
-    filename = str(filename).rsplit("/")[-1]
+    filename = file_object.filename()
 
     for row in rows:
         entry = polib.POEntry(
             msgid=row[0],
-            msgstr=str(row[2]),
+            msgstr=row[2],
             msgctxt=row[1],
             occurrences=row[3],
         )
@@ -109,11 +134,8 @@ def export_po_file(rows, file_path, project_slug):
     return export_filepath / filename
 
 
-def export_json_file(rows, file_path, project_slug):
-    file_path = settings.MEDIA_ROOT / file_path
+def export_json_file(rows, file_object, project_slug):
     project_id = projects.models.Project.objects.get(slug=project_slug).id
-    file_path = str(file_path)
-    filename = file_path.rsplit("/")[-1]
     seed = uuid.uuid4()
 
     export_filepath = (
@@ -127,7 +149,7 @@ def export_json_file(rows, file_path, project_slug):
 
     rows_data = {row.msg_id: row.msg_str for row in rows}
 
-    filename = str(filename).rsplit("/")[-1]
+    filename = file_object.filename()
 
     with Path(export_filepath / filename).open(
         "w",

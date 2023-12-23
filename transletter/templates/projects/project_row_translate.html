@@ -1,35 +1,28 @@
 {% extends "base-dashboard.html" %}
+{% load static i18n field_verbose_name occurrences_output %}
 {% block main %}
-    {% load static i18n %}
-    <div class="card h-100 shadow-sm is-revealing">
-        <div class="card-body">
-            <input type="button"
-                   value="Previous Page"
-                   onClick="javascript:history.go(-1);"
-                   class="btn btn-primary">
-            <form method="post">
-                {% csrf_token %}
-                <h2>
-                    {% translate "Row id:" %} {{ row_info.id }}
-                    <br>
-                    {% translate "Message text:" %} <i>{{ row_info.msg_id }}</i>
-                    <br>
-                    {% if row_info.msg_context %}
-                        {% translate "Message context:" %} <i>{{ row_info.msg_context }}</i>
-                        <br>
-                    {% else %}
-                        {% translate "No context" %}
-                    {% endif %}
-                    {% translate "Translation now:" %}
-                    {% if row_info.msg_str %}
-                        {{ row_info.msg_str }}
-                    {% else %}
-                        {% translate "Not yet" %}
-                    {% endif %}
-                </h2>
-                <input type="text" name="msg_str">
-                <button type="submit">{% translate "Save" %}</button>
-            </form>
+    <div class="container mt-3 mb-3">
+        {% include "projects/includes/projects_nav.html" %}
+        <div class="card shadow-sm mt-3">
+            <div class="card-body">
+                <h5 class="card-title text-white">{% translate "Row id:" %} {{ form.instance.id }}</h5>
+                <p class="card-text">
+                    {% translate "Source text:" %} <i>{{ form.instance.msg_id }}</i>
+                </p>
+                <p class="card-text">
+                    {% translate "Translation context:" %} <i>{{ form.instance.msg_context|default:"N/A" }}</i>
+                </p>
+                <p class="card-text">
+                    {% translate "Occurrences" %}: <i>{{ form.instance.occurrences|default:"N/A"|pretty_occurrences }}</i>
+                </p>
+                <p class="card-text">{% get_verbose_field_name form.instance "created_at" %}: {{ form.instance.created_at }} (UTC)</p>
+                <p class="card-text">{% get_verbose_field_name form.instance "updated_at" %}: {{ form.instance.updated_at }} (UTC)</p>
+                <form method="post">
+                    {% csrf_token %}
+                    {% include "includes/form.html" %}
+                    <input class="btn btn-primary" type="submit" value="{% translate 'Save' %}">
+                </form>
+            </div>
         </div>
     </div>
 {% endblock main %}

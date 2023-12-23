@@ -128,11 +128,24 @@ class UpdateTranslationFileForm(forms.ModelForm, BaseFormMixin):
         fields = ("file",)
 
 
-class TranslationRowEdit(forms.ModelForm, BaseFormMixin):
+class TranslationRowEditForm(forms.ModelForm, BaseFormMixin):
     def __init__(self, *args, **kwargs):
-        super(TranslationRowEdit, self).__init__(*args, **kwargs)
+        super(TranslationRowEditForm, self).__init__(*args, **kwargs)
         self.set_field_attributes()
 
     class Meta:
         model = models.TranslationRow
         fields = ("msg_str",)
+        labels = {
+            "msg_str": pgettext_lazy("translation edit label", "Translation"),
+        }
+
+
+class AddLanguageForm(forms.ModelForm, BaseFormMixin):
+    def __init__(self, *args, **kwargs):
+        super(AddLanguageForm, self).__init__(*args, **kwargs)
+        self.set_field_attributes()
+
+    class Meta:
+        model = models.ProjectLanguage
+        fields = ("lang_code",)
