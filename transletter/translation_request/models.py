@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _, pgettext_lazy
 from djmoney.models.fields import MoneyField
+from djmoney.models.validators import MinMoneyValidator
 
 from accounts.models import User
 from projects.models import Project
@@ -88,6 +89,7 @@ class TranslationRequest(models.Model):
         decimal_places=4,
         default_currency="USD",
         currency_choices=(("USD", "Dollar"),),
+        validators=[MinMoneyValidator(0)],
     )
     languages = models.JSONField(
         pgettext_lazy("languages field name", "languages"),
