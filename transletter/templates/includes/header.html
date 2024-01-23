@@ -46,7 +46,9 @@
                                 <form method="post" id="logoutForm" action="{% url 'accounts:logout' %}">
                                     {% csrf_token %}
                                 </form>
-                                <a onclick="document.getElementById('logoutForm').submit();" href="#" class="nav-link">{% translate "Logout" %}</a>
+                                <a onclick="document.getElementById('logoutForm').submit();"
+                                   href="#"
+                                   class="nav-link">{% translate "Logout" %}</a>
                             </li>
                         {% endif %}
                         {% if request.user.is_staff %}
@@ -69,9 +71,7 @@
                                     {{ language.name_local }}
                                 </option>
                             {% endfor %}
-                            <option value="{{ language.code }}" disabled>
-                                {% translate "Russian" %} (Soon)
-                            </option>
+                            <option value="{{ language.code }}" disabled>{% translate "Russian" %} (Soon)</option>
                         </select>
                     </form>
                 </div>

@@ -75,10 +75,7 @@ class ResumeFile(models.Model):
 
     def __str__(self) -> str:
         verbose = _(
-            (
-                f"{self.resume.user.username}'s"
-                f" resume file, ID:{self.id}"
-            ),
+            (f"{self.resume.user.username}'s" f" resume file, ID:{self.id}"),
         )
         return str(verbose)
 
