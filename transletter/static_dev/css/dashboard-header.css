@@ -21,6 +21,7 @@ body {
   font-family: var(--body-font);
   font-size: var(--normal-font-size);
   transition: 0.5s;
+  height: 100%;
 }
 #main-pd {
   margin: var(--header-height) 0 0 0;

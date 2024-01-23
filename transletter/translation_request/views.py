@@ -59,12 +59,7 @@ class TranslationRequestView(LoginRequiredMixin, DetailView):
             form.instance.translation_request = translation_request
             form.instance.save()
             form = MessageForm()
-        translation_request.refresh_from_db()
-        return render(
-            template_name=self.template_name,
-            context={"translation_request": translation_request, "form": form},
-            request=request,
-        )
+        return redirect(request.path)
 
     def get_translation_request(self, pk):
         translation_request = (

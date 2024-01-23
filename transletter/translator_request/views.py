@@ -93,7 +93,14 @@ class RequestTranslatorView(LoginRequiredMixin, View):
         except Exception:
             request_status = "NN"
 
-        if form.is_valid() and request_status in "SERJACNN":
+        if not form.is_valid():
+            return render(
+                request,
+                template_name=self.template_name,
+                context={"form": form},
+            )
+
+        if request_status in "SERJACNN":
             resume = form["resume_form"]
             files = request.FILES.getlist("files_form-file")
 

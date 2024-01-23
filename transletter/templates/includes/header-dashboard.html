@@ -30,6 +30,9 @@
     {% with request.resolver_match.view_name as view_name %}
         <nav class="nav">
             <div>
+                <form method="post" id="logoutForm" action="{% url 'accounts:logout' %}">
+                    {% csrf_token %}
+                </form>
                 <a href="{% url 'dashboard:index' %}" class="nav_logo">
                     <img src="{% static 'img/transletter.png' %}"
                          alt="Logo"
@@ -83,9 +86,9 @@
                     <i class='bx bxs-lock-alt nav_icon'></i>
                     <span class="nav_name">{% translate "Change password" %}</span>
                 </a>
-                <a href="{% url 'accounts:logout' %}" class="nav_link">
+                <a onclick="document.getElementById('logoutForm').submit();" href="#" class="nav_link">
                     <i class='bx bx-log-out nav_icon'></i>
-                    <span class="nav_name">{% translate "Signout" %}</span>
+                    <span class="nav_name">{% translate "Logout" %}</span>
                 </a>
             </div>
         </nav>

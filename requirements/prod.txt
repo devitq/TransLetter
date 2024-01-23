@@ -1,4 +1,4 @@
-Django==4.2.*
+Django==5.0.1
 django-betterforms==2.0.0
 django-cleanup==8.0.0
 django-money==3.4.1

@@ -1,9 +1,6 @@
 from django.contrib import admin
-from django.core.exceptions import ValidationError
-from django.utils.translation import pgettext_lazy as _
 
 from projects import models
-from projects.utils import parse_file_and_create_translations
 
 
 __all__ = ()
@@ -30,33 +27,7 @@ class ProjectLanguageAdmin(admin.ModelAdmin):
 
 
 class TranslationFileAdmin(admin.ModelAdmin):
-    actions = ("create_translation_rows_from_file",)
     list_display = ("filename", "project_language")
-
-    def create_translation_rows_from_file(self, request, queryset):
-        for language_file in queryset:
-            try:
-                parse_file_and_create_translations(
-                    language_file,
-                    str(language_file.file),
-                )
-                self.message_user(
-                    request,
-                    f"{_('success in admin', 'TranslationRows created for')} "
-                    f"{language_file.file}",
-                    level="SUCCESS",
-                )
-            except ValidationError as e:
-                self.message_user(
-                    request,
-                    f"{_('error in admin', 'Error:')} {str(e)}",
-                    level="ERROR",
-                )
-
-    create_translation_rows_from_file.short_description = _(
-        "short description in admin",
-        "Create TranslationRows from file",
-    )
 
 
 class ProjectAdmin(admin.ModelAdmin):

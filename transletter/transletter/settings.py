@@ -152,7 +152,8 @@ elif DB_NAME == "postgresql":
 LANGUAGE_CODE = os.getenv("DEFAULT_LANGUAGE_CODE", "en-us")
 LANGUAGES = (
     ("en", _("English")),
-    ("ru", _("Russian")),
+    # ("ru", _("Russian")), noqa: E800
+    # Russian language is under developement
 )
 LOCALE_PATHS = [
     BASE_DIR / "locale",

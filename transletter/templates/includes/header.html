@@ -43,8 +43,10 @@
                                    class="nav-link{% if view_name == 'dashboard:index' %} active{% endif %}">{% translate "Dashboard" %}</a>
                             </li>
                             <li class="nav-item">
-                                <a href="{% url 'accounts:logout' %}"
-                                   class="nav-link{% if view_name == 'accounts:logout' %} active{% endif %}">{% translate "Logout" %}</a>
+                                <form method="post" id="logoutForm" action="{% url 'accounts:logout' %}">
+                                    {% csrf_token %}
+                                </form>
+                                <a onclick="document.getElementById('logoutForm').submit();" href="#" class="nav-link">{% translate "Logout" %}</a>
                             </li>
                         {% endif %}
                         {% if request.user.is_staff %}
@@ -64,9 +66,12 @@
                             {% for language in languages %}
                                 <option value="{{ language.code }}"
                                         {% if language.code == LANGUAGE_CODE %}selected{% endif %}>
-                                    {{ language.name_local }} ({{ language.code }})
+                                    {{ language.name_local }}
                                 </option>
                             {% endfor %}
+                            <option value="{{ language.code }}" disabled>
+                                {% translate "Russian" %} (Soon)
+                            </option>
                         </select>
                     </form>
                 </div>
